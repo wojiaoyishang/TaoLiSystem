@@ -32,7 +32,7 @@ def loadPlugin(exec_code):
     Loading = False
     oled.fill(0)
     oled.show()
-    
+    gc.collect()
     exec(exec_code, globals(), locals())
     del exec_code
     gc.collect()
