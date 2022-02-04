@@ -109,10 +109,10 @@ class MorseType():
                 elif touchPad_N.read() <= 400:
                     self.pos = min(self.pos + 1, len(self.text) - 1)
                     break
-                elif touchPad_Y.read() <= 400:
+                elif touchPad_T.read() <= 400:
                     self.capital = not self.capital
                     break
-                elif touchPad_O.read() <= 400:
+                elif touchPad_H.read() <= 400:
                     self.text = self.text[:self.pos] + _ + self.text[self.pos + 1:]
                     self.pos = max(self.pos - 1, 0)
                     break
