@@ -17,6 +17,7 @@ class TXTreader():
         self.i = 0
         # 屏幕输出行
         self.lines = self._format(self.content)
+        del self.content
         
     def start(self):
         """开始阅读"""
