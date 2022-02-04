@@ -78,7 +78,7 @@ class MorseType():
             # 记录当前时间
             t = time.ticks_ms()
             while True:
-                time.sleep_ms(50)
+                time.sleep_ms(70)
                 if button_a.value() + button_b.value() == 0:
                     _ = self.text
                     del self
