@@ -5,6 +5,7 @@
 from mpython import *
 import time
 import _thread
+import parrot
 import TaoLiSystem.config as config
 import TaoLiSystem.wifi
 
