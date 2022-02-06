@@ -37,6 +37,7 @@ class ItemSelector():
             oled.show()
             
             while True:
+                gc.collect()
                 if touchPad_T.read() <= 400:
                     self.a = 0
                     break
