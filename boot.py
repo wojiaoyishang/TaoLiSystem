@@ -10,6 +10,8 @@ import time  # 时间
 import _thread   # 导入线程模块
 # 引入图片文件
 import TaoLiSystem.image
+import micropython
+micropython.alloc_emergency_exception_buf(10000)
 
 Loading = True # 控制是否继续加载
 
