@@ -35,6 +35,7 @@ class HomePage():
             elif touchPad_Y.read() <= 400:
                 self.tools = True
                 self.detailTZB()
+            self.checkEvent()
             # 日期时间的绘制
             oled.fill(0)
             t = time.localtime()
@@ -81,17 +82,17 @@ class HomePage():
     
     def checkEvent(self):
         """初次之外要看看用户是否按下的按钮"""
-        while config.get_value("page") == 'home':
-            if button_a.value() + button_b.value() == 0:
-                pass
-            elif button_a.value() == 0:
-                print("按下 A 键，进入 选项")
-                config.set_value("page", "setting") 
-                return True
-            elif button_b.value() == 0 and not self.tools:
-                print("按下 B 键，进入 插件")
-                config.set_value("page", "plugin") 
-                return True
-            elif button_b.value() == 0 and self.tools:
-                self.tools = False
-                time.sleep(0.5)
+
+        if button_a.value() + button_b.value() == 0:
+            pass
+        elif button_a.value() == 0:
+            print("按下 A 键，进入 选项")
+            config.set_value("page", "setting") 
+            return True
+        elif button_b.value() == 0 and not self.tools:
+            print("按下 B 键，进入 插件")
+            config.set_value("page", "plugin") 
+            return True
+        elif button_b.value() == 0 and self.tools:
+            self.tools = False
+            time.sleep(0.5)
