@@ -47,7 +47,6 @@ class TXTreader():
                     self.i = min(self.i + 1, len(self.lines) - 1)
                     break
                 elif touchPad_H.read() <= 400:
-                    def self.lines
                     del self
                     return
 
