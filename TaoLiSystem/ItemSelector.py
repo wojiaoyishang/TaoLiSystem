@@ -1,6 +1,7 @@
 # 用于选择页面的模块
 from mpython import *
 import _thread
+import gc
 
 class ItemSelector():
     def __init__(self, items, title):
