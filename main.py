@@ -54,13 +54,6 @@ oled.fill(0)
 oled.show()
 time.sleep(1)
 
-
-def checkEvent():
-    while True:
-        homePage.checkEvent()
-
-# 查查事件
-_thread.start_new_thread( checkEvent, () )
 while True:
     homePage.show()
     settingPage.show()
