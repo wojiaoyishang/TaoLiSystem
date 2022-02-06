@@ -3,6 +3,7 @@
 
 # 导入 mpython 支持库
 from mpython import *
+import gc
 
 # 食用说明：
 # A 向上翻页、B 向下翻页、T 显示基本信息、H 退出阅读、P 上移一行、N 下移一行
@@ -24,6 +25,7 @@ class TXTreader():
         while True:
             self._show()
             while True:
+                gc.collect()
                 if button_a.value() == 0:
                     self.i = max(self.i - 4, 0)
                     break
