@@ -11,6 +11,7 @@ import _thread   # 导入线程模块
 # 引入图片文件
 import TaoLiSystem.image
 import micropython
+import gc
 micropython.alloc_emergency_exception_buf(10000)
 
 Loading = True # 控制是否继续加载
@@ -19,6 +20,7 @@ def Loading_page():
     boot_image = TaoLiSystem.image.boot_image()
     i = 1  # 控制加载点的个数
     while Loading:
+        gc.collect()
         time.sleep(0.5)
         if not Loading:
             break
