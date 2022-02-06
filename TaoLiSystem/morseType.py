@@ -2,6 +2,7 @@
 # 此页面由以赏想出来，由皮卡丘支持制作！
 from mpython import *
 import time
+import gc
 
 # 显示区
 #
@@ -78,6 +79,7 @@ class MorseType():
             # 记录当前时间
             t = time.ticks_ms()
             while True:
+                gc.collect()
                 time.sleep_ms(70)
                 if button_a.value() + button_b.value() == 0:
                     _ = self.text
