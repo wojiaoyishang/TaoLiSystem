@@ -23,19 +23,16 @@ class HomePage():
         self.no_wifi_image = TaoLiSystem.image.no_wifi()
         self.banner_x = 0
         self.banner_text = "System was made for Pikachu & Niko & TaoLi"
-        self.tools = False
         return
     
     def show(self):
         while config.get_value("page") == 'home':
+            self.checkEvent()
             # 小工具调用
             if touchPad_P.read() <= 400:
-                self.tools = True
                 self.detailZKB()
             elif touchPad_Y.read() <= 400:
-                self.tools = True
                 self.detailTZB()
-            self.checkEvent()
             # 日期时间的绘制
             oled.fill(0)
             t = time.localtime()
@@ -60,7 +57,7 @@ class HomePage():
     
     def detailZKB(self):
         """掌控板信息"""
-        while self.tools:
+        while True:
             oled.fill(0)
             oled.DispChar("掌控板传感器信息", 0, 0)
             oled.hline(0, 14, 128, 1)
@@ -68,9 +65,12 @@ class HomePage():
             oled.DispChar("声音值:%d" % (sound.read()) ,0 ,32)
             oled.DispChar("加速度(x,y,z):(%d,%d,%d)" % (accelerometer.get_x(), accelerometer.get_y(), accelerometer.get_z()), 0, 48)
             oled.show()
+            if button_b.value() == 0:
+                break
+            
     def detailTZB(self):
         """拓展版信息"""
-        while self.tools:
+        while True:
             oled.fill(0)
             oled.DispChar("拓展板信息", 0, 0)
             oled.hline(0, 14, 128, 1)
@@ -79,20 +79,22 @@ class HomePage():
             except:
                 oled.DispChar("电池电量-mV(未连接拓展板)" ,0 ,16 , 1, True)
             oled.show()
+            
+            if button_b.value() == 0:
+                break
     
     def checkEvent(self):
         """初次之外要看看用户是否按下的按钮"""
-
+ 
         if button_a.value() + button_b.value() == 0:
             pass
         elif button_a.value() == 0:
             print("按下 A 键，进入 选项")
             config.set_value("page", "setting") 
             return True
-        elif button_b.value() == 0 and not self.tools:
+        elif button_b.value() == 0:
             print("按下 B 键，进入 插件")
             config.set_value("page", "plugin") 
             return True
-        elif button_b.value() == 0 and self.tools:
-            self.tools = False
-            time.sleep(0.5)
+
+
