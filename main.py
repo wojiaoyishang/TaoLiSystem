@@ -9,6 +9,7 @@ import gc
 import _thread   # 导入线程模块
 
 # 导入陶丽库中的模块
+import TaoLiSystem.function
 import TaoLiSystem.config as config
 from TaoLiSystem.ItemSelector import ItemSelector as ItemSelector
 
@@ -54,7 +55,15 @@ oled.fill(0)
 oled.show()
 time.sleep(1)
 
+
+
 while True:
-    homePage.show()
-    settingPage.show()
-    pluginPage.show()
+    try:
+        homePage.show()
+        settingPage.show()
+        pluginPage.show()
+    except MemoryError as error:
+        TaoLiSystem.function.loadingPage("出现了内存错误！请稍后再试！", 10, 2)
+        continue
+        
+
