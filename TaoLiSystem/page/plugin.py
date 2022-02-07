@@ -58,7 +58,8 @@ class PluginPage():
                 try:
                     result = urequests.get("http://119.91.220.81:5908/TLCSPlugins")
                     pluginDict = result.json()
-                except:
+                except BaseException as error:
+                    print(str(error))
                     TaoLiSystem.function.waitingPage("加载", "失败", "QAQ")
                     oled.show()
                     time.sleep(1)
@@ -114,12 +115,12 @@ class PluginPage():
         oled.show()
         
         try:
-            result = urequests.get(url)
-            r = result.content.decode()
             Filename = url[url.rfind("/") + 1:]
-            with open("TaoLiSystem/plugin/" + Filename, "w") as f:
-                f.write(r)
-        except:
+            with open("TaoLiSystem/plugin/" + Filename, "wb") as f:
+                f.write(urequests.get(url).content)
+                
+        except BaseException as error:
+            print(str(error))
             TaoLiSystem.function.waitingPage("下载", "失败", "QAQ")
             oled.show()
             time.sleep(1)
@@ -169,3 +170,4 @@ class PluginPage():
         self.loadPluginFunction(exec_code)
         return
     
+
