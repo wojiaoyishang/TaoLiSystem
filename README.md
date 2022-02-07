@@ -13,36 +13,30 @@
 
 ```
 TaoLiSystem
-│  boot.py
-│  IRlearn.py
-│  ITCIPweb.py
-│  main.py
-│  tips.py
-└─TaoLiSystem
-    │  config.json
-    │  config.py
-    │  function.py
-    │  image.py
-    │  ItemSelector.py
-    │  loader.py
-    │  morseType.py
-    │  TXTreader.py
-    │  wifi.py
-    │
-    ├─font
-    │      arlrdbd.py
-    │      HYShiGuangTiJ.py
-    │
-    ├─page
-    │      home.py
-    │      plugin.py
-    │      setting.py
-    │
-    ├─picture
-    │      loadingPage.bmp
-    │      waitingPage.bmp
-    │
-    └─plugin
+│  boot.py                  # 掌控板启动一定会运行的文件，非必要，这里面设计了开机动画
+│  main.py                  # 陶丽系统主要引导文件，从这里开始会调用 TaoLiSystem 文件夹内的文件
+│  tips.py                  # 没什么用的文件，用于开发者开发时记录的“记事本”
+└─TaoLiSystem               # 陶丽系统的核心文件会放在 TaoLiSystem 中
+    │  config.json          # 陶丽系统的配置文件
+    │  config.py            # 陶丽系统调用配置文件的模块
+    │  function.py          # 陶丽系统整合的使用函数的模块
+    │  image.py             # 陶丽系统存储小图片的模块
+    │  ItemSelector.py      # 陶丽系统的物品选择器模块
+    │  loader.py            # 陶丽系统的初始化加载
+    │  morseType.py         # 陶丽系统的摩尔斯电码输入模块
+    │  TXTreader.py         # 陶丽系统的文本阅读模块
+    │  wifi.py              # 陶丽系统用于控制wifi的模块
+    ├─font                  # 陶丽系统的调用的字体所放的目录
+    │      arlrdbd.py       # Arial Rounded MT Bold 字体 (个人使用，不得商用)
+    │      HYShiGuangTiJ.py # 汉仪时光体简 Regular 字体 (个人使用，不得商用)
+    ├─page                  # 陶丽系统页面存放目录
+    │      home.py          # 陶丽系统主页源码
+    │      plugin.py        # 陶丽系统插件页源码
+    │      setting.py       # 陶丽系统设置页源码
+    ├─picture               # 陶丽系统图片放置目录
+    │      loadingPage.bmp  # 加载页面图片
+    │      waitingPage.bmp  # 等待页面图片
+    └─plugin                # 插件存放目录
 ```
 
 
