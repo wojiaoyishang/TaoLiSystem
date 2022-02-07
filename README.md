@@ -76,7 +76,7 @@ TaoLiSystem
 
 (3) 主页页面实例
 
-![输入图片说明](image5.png)
+![输入图片说明](README_IMAGE/image5.png)
 
 3.  选择器页面（设置页面、插件选择页面）
 
@@ -87,7 +87,7 @@ TaoLiSystem
 
 (3) 选择器页面实例
 
-![输入图片说明](image6.png)
+![输入图片说明](README_IMAGE/image6.png)
 
 4.  文本阅读页面(WIFI信息页面、插件信息页面)
 
@@ -98,9 +98,9 @@ TaoLiSystem
 
 (3) 文本阅读页面实例
 
-![输入图片说明](image7.png)
+![输入图片说明](README_IMAGE/image7.png)
 
-![输入图片说明](image8.png)
+![输入图片说明](README_IMAGE/image8.png)
 
 5.  摩尔斯电码输入页面
 
@@ -111,7 +111,7 @@ TaoLiSystem
 
 (3) 摩尔斯电码输入页面实例
 
-![输入图片说明](image9.png)
+![输入图片说明](README_IMAGE/image9.png)
 
 
 #### 开发说明
