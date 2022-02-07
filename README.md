@@ -39,13 +39,29 @@ TaoLiSystem
     └─plugin                # 插件存放目录
 ```
 
-
-
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  因为源码即是完整的程序，所以第一步就是克隆整个仓库。这一步相信大家都非常内涵，这里不过多介绍。
+2.  向掌控板内烧录固件。开发时所使用的固件为 mpython 提供的 掌控板官方固件v2.3.3 (2021-12-20) ，实际测试下来 v2.3.X 的固件均可使用此系统。
+(1)  烧录固件的过程我们只提供一种不太靠谱但是简单的方法，如果大家想用更高级的刷入方法，请参考官方文档：https://mpython.readthedocs.io/zh/master/board/flashburn.html
+(2)  下载 mpython IDE，下载链接：https://mpythonsoftware.readthedocs.io/ , 安装好后，使用数据线链接您的掌控板并打开 IDE。此时 IDE 会自动连接，若没有请点击上方的"未连接"-"连接COMX"：
+
+![输入图片说明](README_IMAGE/image.png)
+
+(3) 根据操作连接上掌控板后，点击右上角的“设置”-“烧录固件”
+
+![输入图片说明](README_IMAGE/image2.png)
+
+(4) 在弹出的页面中选择最新的固件并烧录
+
+![输入图片说明](README_IMAGE/image3.png)
+
+3. 在烧录完成固件之后就是上传陶丽系统的所有文件了， mPython IDE 虽然设计的非常容易上手，但是在与掌控板文件交互的方面做的非常糟糕，所以想要上传文件我这里有两个建议：使用其它的IDE连接掌控板上传或者慢慢使用mpython慢慢上传。
+4. 这里我们还是用 mpython 介绍，当然我们更推荐使用其它 IDE 如：Thonny、BXY（测试的时候死活连不上我的掌控板，不知道为什么）
+
+![输入图片说明](README_IMAGE/image4.png)
+
+5. 在控制台内输入 machine.reset() 重置掌控板即可体验陶丽系统。
 
 #### 使用说明
 
