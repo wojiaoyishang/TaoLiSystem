@@ -12,7 +12,7 @@ import _thread   # 导入线程模块
 import TaoLiSystem.image
 import micropython
 import gc
-micropython.alloc_emergency_exception_buf(10000)
+micropython.alloc_emergency_exception_buf(100)
 
 Loading = True # 控制是否继续加载
 
