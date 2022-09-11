@@ -10,6 +10,10 @@
 
 下面我将介绍桃丽系统的各个框架。
 
+#### 视频演示
+
+[https://www.bilibili.com/video/BV1Hi4y1f7fC?spm_id_from=333.999.0.0](https://www.bilibili.com/video/BV1Hi4y1f7fC?spm_id_from=333.999.0.0)
+
 #### 软件架构
 
 ```
