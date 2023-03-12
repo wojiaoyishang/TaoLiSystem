@@ -56,7 +56,7 @@ class PluginPage():
                 oled.show()
                 
                 try:
-                    result = urequests.get("http://119.91.220.81:5908/TLCSPlugins")
+                    result = urequests.get("https://lovepikachu.top/TLCSPlugins")
                     pluginDict = result.json()
                 except BaseException as error:
                     print(str(error))
