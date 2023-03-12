@@ -56,7 +56,7 @@ class PluginPage():
                 oled.show()
                 
                 try:
-                    result = urequests.get("https://lovepikachu.top/TLCSPlugins")
+                    result = urequests.get("http://wojiaoyishang.gitee.io/taolisystem/index.json")
                     pluginDict = result.json()
                 except BaseException as error:
                     print(str(error))
