@@ -95,7 +95,4 @@ def show():
         oled.show()
 
 def close():
-    if 'TaoLiSystem.modules.seniverse' in sys.modules:
-        del sys.modules['TaoLiSystem.modules.seniverse']
-    if 'TaoLiSystem.page.weatherFun' in sys.modules:
-        del sys.modules['TaoLiSystem.page.weatherFun']
+    return

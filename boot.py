@@ -2,7 +2,11 @@
 import os
 import time
 import machine
+import micropython
 from mpython import *
+
+# 设定最小RAM
+micropython.alloc_emergency_exception_buf(4000)
 
 if button_a.value() == 0 and button_b.value() == 0:  # 两个按钮同时按下
     while button_a.value() == 0 and button_b.value() == 0:

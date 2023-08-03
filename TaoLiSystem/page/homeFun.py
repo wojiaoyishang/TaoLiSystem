@@ -1,4 +1,5 @@
 # 主页的功能实现
+import sys
 import time
 import random
 from mpython import *
@@ -142,3 +143,22 @@ def randomINT():
         
     time.sleep(1)
 
+def statusShow():
+    """状态查看"""
+    
+    while touchPad_N.read() <= touchPad_sensitivity:
+        sysgui.draw_rect_empty(1, 1, 126, 62)
+        
+        try:
+            battery_level = __import__("parrot").get_battery_level()
+            del sys.modules["parrot"]
+            
+            sysgui.draw_string_center("拓展板电池电压:%fV" % (battery_level / 1000), 40)
+        except:
+            sysgui.draw_string_center("设备不支持", 40)
+        
+        
+        
+        
+        
+        

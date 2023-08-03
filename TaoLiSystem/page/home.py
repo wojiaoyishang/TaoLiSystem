@@ -28,7 +28,7 @@ button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.even
 # 主页是否需要提示
 tip = configData.read("system", "homeTipped") != "1"
 if tip:
-    sysgui.messageBox("你好呀~\n欢迎使用陶丽系统。", yes_text="你好？")
+    sysgui.messageBox("你好呀~\n欢迎使用桃丽系统。", yes_text="你好？")
     sysgui.messageBox("看来你是第一次\n使用这个系统。", yes_text="嗯嗯")
     sysgui.messageBox("那让我偷偷告诉你\n在主页按AB键可以\n切换页面哦！", yes_text="我明白了")
     configData.write("system", "homeTipped", "1")
@@ -89,12 +89,15 @@ def show():
     elif touchPad_Y.read() <= touchPad_sensitivity :
         randomINT()
         screenOff_timeout = screenOff_timeout_setting
+    elif touchPad_N.read() <= touchPad_sensitivity :
+        statusShow()
+        screenOff_timeout = screenOff_timeout_setting
     
     oled.show()
     pre_time = t
     
 def close():
-    if 'TaoLiSystem.page.homeFun' in sys.modules:
-        del sys.modules['TaoLiSystem.page.homeFun']
     albbhp_font_fp.close()
     gui_fp.close()
+
+    

@@ -1,3 +1,4 @@
+import os
 from mpython import *
 from TaoLiSystem.core import config, sysgui
 
@@ -35,6 +36,18 @@ def syncTime():
         return True
     except:
         return False
+
+def delete_folder(folder):
+    """文件夹，包含有文件的文件夹"""
+    if folder[-1] != "/":
+        folder += "/"
+    for file_info in os.ilistdir(folder):
+        if file_info[1] == 16384:  # 是文件夹
+            delete_folder(folder + "/" + file_info[0])
+            os.rmdir(folder + "/" + file_info[0])
+        else:
+            print("* 删除文件 %s" % (folder + "/" + file_info[0]))
+            os.remove(folder + "/" + file_info[0])
 
 def debug(g, l, v=None):
     """变量监控与调试工具 使用方法 utils.debug(globals(), locals())"""

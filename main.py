@@ -20,18 +20,21 @@ def importModule(name):
 utils.importModule = importModule
 
 # 全部页面模块
-pages = {-1: "TaoLiSystem.page.setting", 0: "TaoLiSystem.page.home", 1: "TaoLiSystem.page.weather"}
+pages = {-1: "TaoLiSystem.page.setting", 0: "TaoLiSystem.page.home", 1: "TaoLiSystem.page.weather", 2: "TaoLiSystem.page.plugin"}
 page = pages[0]  # 当前页面
 
 # 当前页面编号
 page_id = 0  # 按下 A 编号减一，按下 B 编号加一
 wait_close = False  # 是否准备关闭
 
+# 此模块加载的模块，结束后释放
+imported_not_modules = list(sys.modules.keys())
+
 # 此刻的模块
 imported_page = utils.importModule(page)
 
 def close_module():
-    global page, imported_page
+    global page, imported_page, imported_not_modules
     
     print("释放页面前运存大小:", gc.mem_free())
     
@@ -40,10 +43,12 @@ def close_module():
     oled.show()
     
     imported_page.close()
-    gc.collect()
     
-    del sys.modules[imported_page.__name__]
-    
+    for m in list(sys.modules.keys()):
+        if m not in imported_not_modules:
+            print("* 删除多加载的模块:" + m)
+            del sys.modules[m]
+ 
     gc.collect()
 
     print("释放页面后运存大小:", gc.mem_free())
@@ -112,8 +117,8 @@ while True:
         if wait_close:
             button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.event_pressed  # 暂时禁用
             wait_close = False
-            button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
             close_module()  # 释放页面
+            button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
             imported_page = utils.importModule(page)
             continue
         

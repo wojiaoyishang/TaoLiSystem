@@ -106,6 +106,7 @@ def wifi_setting():
                                                "WIFI强度RSSI：" + str(available_networks[selected_network_index][3]) + "\n" +
                                                "WIFI加密方式：" + ['开放', 'WEP', 'WPA_PSK', 'WPA_PSK', 'WPA_WPA2_PSK', 'MAX'][available_networks[selected_network_index][4]])
                     sysgui.txtStreamReader(text_buffer, "WIFI详情")
+                    text_buffer.close()
                 elif operation_index == 2:  # 实时跟踪
                     def draw_info(wifi_info):
                         oled.fill(0)
@@ -259,6 +260,7 @@ def system_setting():
             try:
                 f = open("./TaoLiSystem/COPYRIGHT", "r")
                 sysgui.txtStreamReader(f, "关于此系统")
+                f.close()
                 def draw_qr():
                     __import__("gui").UI(oled).qr_code('https://gitee.com/wojiaoyishang/TaoLiSystem', 3, 3)
                     oled.DispChar("扫描查看", 70, 10)

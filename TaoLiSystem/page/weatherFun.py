@@ -15,6 +15,9 @@ URL_NOW_WEATHER_API = "https://api.seniverse.com/v3/weather/now.json?key=SMhSshU
 URL_SUGGESTION_WEATHER_API = "https://api.seniverse.com/v3/life/suggestion.json?key=SMhSshUxuTL0GLVLS"  # 今日建议
 
 def draw_main():
+    if "wifi" not in global_var or not global_var.get("wifi").sta.isconnected():
+        draw_error()
+        return
     if global_var.get('weather_got') is None:
         sysgui.draw_string_center("▲今日天气▲", 0)
         sysgui.draw_string_center("按下 P 键", 16)
