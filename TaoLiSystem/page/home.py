@@ -44,6 +44,7 @@ def button_callback(_):
 def show():
     global pre_time, screenOff_timeout
     
+    
     t = time.localtime()
     
     # 熄屏逻辑
@@ -82,10 +83,13 @@ def show():
     # oled.line(61, 1, 61, 49, 1)
     
     # 判断是否按下触摸按键
-    if(touchPad_P.read() <= touchPad_sensitivity):
+    if touchPad_P.read() <= touchPad_sensitivity :
         drawStopwatch()
         screenOff_timeout = screenOff_timeout_setting
-
+    elif touchPad_Y.read() <= touchPad_sensitivity :
+        randomINT()
+        screenOff_timeout = screenOff_timeout_setting
+    
     oled.show()
     pre_time = t
     

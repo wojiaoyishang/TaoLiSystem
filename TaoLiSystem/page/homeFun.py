@@ -1,5 +1,6 @@
 # 主页的功能实现
 import time
+import random
 from mpython import *
 
 from TaoLiSystem.core import sysgui, utils
@@ -91,7 +92,7 @@ def drawStopwatch():
             oled.show()
         elif not start:
             exit_var = True
-            button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
+            button_a.event_pressed, button_b.event_pressed  = button_a_callback_o, button_b_callback_o
         elif start:
             recoder_times.append(previousTime_recoder)
             oled.fill_rect(0, 48, 128, 64, 0)
@@ -120,7 +121,7 @@ def drawStopwatch():
             continue
         
         while not exit_var and not start:
-            if touchPad_P.read() <= touchPad_sensitivity:
+            if touchPad_P.read() <= touchPad_sensitivity and len(recoder_times) != 0:
                 _ = []
                 for r in recoder_times:
                     string_time = utils.convert_ms_to_hms(r)
@@ -128,3 +129,16 @@ def drawStopwatch():
                 sysgui.itemSelector("历史记录", _)
                 sysgui.draw_rect_empty(1, 1, 126, 62, draw_stopping)
                 oled.show()
+                
+def randomINT():
+    """投色子"""
+    time_ = time.time()
+    
+    while time.time() - time_ <= 2:
+        sysgui.draw_rect_empty(1, 1, 126, 62)
+        oled.DispChar("你投到的数字是", 23, 10)
+        sysgui.draw_string_from_bin(59, 25, albbhp_font_fp, "%d" % random.randint(1, 6), albbhp_map)
+        oled.show()
+        
+    time.sleep(1)
+

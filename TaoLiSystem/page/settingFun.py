@@ -202,7 +202,6 @@ def date_setting():
             configData.write("system", "autoSyncTime", "0" if configData.read("system", "autoSyncTime") == "1" else "1")
  
 def system_setting():
-    global touchPad_sensitivity
     selected_option_id = 0
 
     while True:

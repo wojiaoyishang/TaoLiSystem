@@ -3,11 +3,11 @@ import time
 import sys
 from mpython import *
 
-from TaoLiSystem.core import sysgui
+from TaoLiSystem.core import sysgui, utils
 from TaoLiSystem.modules import bin2picture
 from TaoLiSystem.core.config import *
 
-from . import settingFun
+from TaoLiSystem.page import settingFun
 
 setting_id = 0  # 当前设置项
 enter_time = 3 # 进入设置项倒计时

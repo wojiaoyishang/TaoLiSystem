@@ -40,6 +40,8 @@ def close_module():
     oled.show()
     
     imported_page.close()
+    gc.collect()
+    
     del sys.modules[imported_page.__name__]
     
     gc.collect()
