@@ -10,7 +10,7 @@ from TaoLiSystem.core.config import *
 from TaoLiSystem.page import settingFun
 
 setting_id = 0  # 当前设置项
-enter_time = 3 # 进入设置项倒计时
+enter_time = 3  # 进入设置项倒计时
 
 # 是否需要提示
 tip1 = configData.read("system", "settingTipped") != "1"  # 设置选择页面
@@ -35,11 +35,12 @@ def button_a_callback(_):
 # 按钮事件
 def button_b_callback(_):
     global setting_id
-    setting_id = max(0, setting_id - 1)
     if setting_id == 0:
         setting_id = -1
         button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o  # 还原按钮绑定
         button_b.event_pressed(0)
+        return
+    setting_id = max(0, setting_id - 1)
 
 button_a.event_pressed = button_a_callback
 button_b.event_pressed = button_b_callback
@@ -73,7 +74,7 @@ def show():
     
     _ = setting_id
     # 等待按钮事件
-    while _ == setting_id:     
+    while _ == setting_id:   # 改变说明按键中断，改变了 setting_id 的值
         time.sleep(0.1)
         oled.show()
         
@@ -81,12 +82,12 @@ def show():
         oled.fill_rect(0, 49, int(128 * (enter_time / 3)), 64, 1)
         
         # 判断是否按下触摸按键
-        if(touchPad_P.read() < touchPad_sensitivity):
+        if touchPad_P.read() < touchPad_sensitivity:
             enter_time -= 1
             
             # 提示背景
             oled.fill_rect(0, 49, int(128 * (enter_time / 3)), 64, 1)
-            sysgui.draw_string_center("还需长按 %d 秒" % (enter_time), 49, mode=TextMode.rev)
+            sysgui.draw_string_center("进入还需长按 %d 秒" % (enter_time), 49, mode=TextMode.rev)
             
             if enter_time <= 0:
                 enter_time = 3

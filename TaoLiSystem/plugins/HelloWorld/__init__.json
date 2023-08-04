@@ -1,1 +1,1 @@
-{"name": "你好世界！", "description": "这是一个示例插件，你可以模仿这个插件来达成一些功能"}
+{"name": "你好世界", "brief": "Hello world", "author": "Yishang", "version": "1.0.0", "description": "这是一个示例插件，你可以模仿这个插件来达成一些功能", "ico_bin": "ico.bin", "ico_pos": 0}

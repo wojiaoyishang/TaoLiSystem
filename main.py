@@ -20,21 +20,20 @@ def importModule(name):
 utils.importModule = importModule
 
 # 全部页面模块
-pages = {-1: "TaoLiSystem.page.setting", 0: "TaoLiSystem.page.home", 1: "TaoLiSystem.page.weather", 2: "TaoLiSystem.page.plugin"}
-page = pages[0]  # 当前页面
+pages = ["TaoLiSystem.page.setting", "TaoLiSystem.page.home", "TaoLiSystem.page.plugin"]
+page_id = 1  # 当前页面
 
 # 当前页面编号
-page_id = 0  # 按下 A 编号减一，按下 B 编号加一
 wait_close = False  # 是否准备关闭
 
 # 此模块加载的模块，结束后释放
 imported_not_modules = list(sys.modules.keys())
 
 # 此刻的模块
-imported_page = utils.importModule(page)
+imported_page = utils.importModule(pages[page_id])
 
 def close_module():
-    global page, imported_page, imported_not_modules
+    global page_id, imported_page, imported_not_modules
     
     print("释放页面前运存大小:", gc.mem_free())
     
@@ -54,30 +53,21 @@ def close_module():
     print("释放页面后运存大小:", gc.mem_free())
 
 def button_a_callback(_):
-    global page_id, page, wait_close
+    global page_id, wait_close
     
-    if pages.get(page_id - 1) is None or wait_close:
-        return
+    page_id = max(0, page_id - 1)
     
+    print("* 即将加载页面:", pages[page_id])
     wait_close = True
-    
-    page_id -= 1
-    page = pages.get(page_id)
-    
-    print("* 即将加载页面:", page)
     
 def button_b_callback(_):
     global page_id, page, wait_close
     
-    if pages.get(page_id + 1) is None or wait_close:
-        return
+    page_id = min(len(pages) - 1, page_id + 1)
     
+    print("* 即将加载页面:", pages[page_id])
     wait_close = True
     
-    page_id += 1
-    page = pages.get(page_id)
-    
-    print("* 即将加载页面:", page)
 
 # 初始化设置
 sysgui.tipBox("系统正在初始化......", 0)
@@ -112,6 +102,8 @@ if "wifi" in global_var and global_var.get("wifi").sta.isconnected() and configD
 button_a.event_pressed = button_a_callback
 button_b.event_pressed = button_b_callback
 
+print("加载完毕运存大小:", gc.mem_free())
+
 while True:
     try:
         if wait_close:
@@ -119,7 +111,7 @@ while True:
             wait_close = False
             close_module()  # 释放页面
             button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
-            imported_page = utils.importModule(page)
+            imported_page = utils.importModule(pages[page_id])
             continue
         
         imported_page.show() 
