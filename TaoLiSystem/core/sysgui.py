@@ -407,6 +407,7 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
             elif touchPad_N.read() <= touchPad_sensitivity:  # 下一页
                 if t == "":
                     if messageBox("阅读已结束是否退出？", yes_text="是的", no_text="取消"):
+                        button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
                         return
                     else:
                         stringIO.seek(begin_seek)
