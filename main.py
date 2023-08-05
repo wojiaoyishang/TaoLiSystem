@@ -45,7 +45,15 @@ def close_module():
     
     for m in list(sys.modules.keys()):
         if m not in imported_not_modules:
-            print("* 删除多加载的模块:" + m)
+            i = 0
+            for l in dir(sys.modules[m]):
+                try:
+                    setattr(sys.modules[m], l, None)
+                    i += 1
+                    # print("* 删除多加载模块对象:%s %s" % (m, l))
+                except AttributeError:
+                    continue
+            print("* 删除多加载的模块:%s (对象个数:%d)" % (m, i))
             del sys.modules[m]
  
     gc.collect()

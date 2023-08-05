@@ -66,9 +66,12 @@ def show():
         tip1 = False
         if sysgui.messageBox("长按 P 进入插件"):
             configData.write("system", "settingTipped", "1") 
+
+    t = time.localtime()  # 用秒数来动态绘制
+    
+    sysgui.tipBox("正在获取信息......", 0)
     
     oled.fill(0)
-    t = time.localtime()  # 用秒数来动态绘制
     
     if plugin_id != 0:
         oled.DispChar("◀", 1, 24)
@@ -76,7 +79,7 @@ def show():
     if plugin_id != len(plugins_name) - 1:
         oled.DispChar("▶", 114, 24)
         oled.DispChar("B", 106, 24)
-    else:
+    if plugin_id == 0:
         oled.DispChar("<A", 0, 0)
     
     # 获取插件信息
@@ -125,6 +128,7 @@ def show():
             if enter_time <= 0:
                 enter_time = 3
                 
+                sysgui.tipBox("打开插件中......", 0)
                 # 加载插件
                 load_plugin()
                 
@@ -161,17 +165,33 @@ def load_plugin():
     gc.collect()  # 加载前摇
     print("* 加载插件 %s (%s)，RAM:%d" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
     imported_modules_before = list(sys.modules.keys())
+    
+    # 记录原先按钮事件
+    button_a_callback_o1, button_b_callback_o1 = button_a.event_pressed, button_b.event_pressed
+    button_a.event_pressed, button_b.event_pressed = None, None
     imported_module = utils.importModule("TaoLiSystem.plugins." + plugins_folder[plugin_id])
+    
+    # 还原
+    button_a.event_pressed, button_b.event_pressed = button_a_callback_o1, button_b_callback_o1
 
     del imported_module
-    print("* 插件 %s (%s) 加载完成，清理中......" % (plugins_folder[plugin_id], plugins_name[plugin_id]))
+    print("* 插件 %s (%s) 加载完成，清理中...... (RAM:%d)" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
     # 删除加载的所有内容
     for m in list(sys.modules.keys()):
         if m not in imported_modules_before:
+            i = 0
+            for l in dir(sys.modules[m]):
+                try:
+                    setattr(sys.modules[m], l, None)
+                    i += 1
+                    # print("* 删除多加载模块对象:%s %s" % (m, l))
+                except AttributeError:
+                    continue
             del sys.modules[m]
-            print("* 删除多加载模块:%s" % m)
+            gc.collect()
+            print("* 删除多加载模块:%s (对象个数:%d) (RAM:%d)" % (m, i, gc.mem_free()))
     
-    del m
+    del m, button_a_callback_o1, button_b_callback_o1, i
     gc.collect()
     print("* 插件 %s (%s) 完毕，RAM:%d" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
 

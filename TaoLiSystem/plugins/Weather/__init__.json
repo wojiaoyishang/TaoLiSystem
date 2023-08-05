@@ -1,0 +1,1 @@
+{"name": "知心天气", "brief": "查看目前与预报天气", "author": "Yishang", "version": "1.0.0", "description": "修改官方的示例程序，调用知心天气API获取天气情况。", "ico_bin": "ico.bin", "ico_pos": 0}
