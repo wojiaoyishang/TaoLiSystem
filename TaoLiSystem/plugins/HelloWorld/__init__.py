@@ -1,14 +1,23 @@
 from mpython import *
 
 import math
+import urequests
 
 Dx = None
 
 Dy = None
+
+KEEP_MODULES = ['urequests']
+
 while True:
     if touchPad_N.read() <= 250:
         break
-
+    
+    elif touchPad_O.read() <= 250:
+        if KEEP_MODULES:
+            KEEP_MODULES.pop()
+            print("1")
+        
     for i in range(1, 361, 10):
         oled.fill(0)
         oled.circle(30, 32, 20, 1)

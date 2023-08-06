@@ -170,15 +170,20 @@ def load_plugin():
     button_a_callback_o1, button_b_callback_o1 = button_a.event_pressed, button_b.event_pressed
     button_a.event_pressed, button_b.event_pressed = None, None
     imported_module = utils.importModule("TaoLiSystem.plugins." + plugins_folder[plugin_id])
-    
+    # 记录保留的模块
+    try:
+        KEEP_MODULES = imported_module.KEEP_MODULES.copy()
+    except AttributeError:
+        KEEP_MODULES = []
     # 还原
     button_a.event_pressed, button_b.event_pressed = button_a_callback_o1, button_b_callback_o1
 
     del imported_module
     print("* 插件 %s (%s) 加载完成，清理中...... (RAM:%d)" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
+    print("* 保留模块列表:", KEEP_MODULES)
     # 删除加载的所有内容
     for m in list(sys.modules.keys()):
-        if m not in imported_modules_before:
+        if m not in imported_modules_before and m not in KEEP_MODULES:
             i = 0
             for l in dir(sys.modules[m]):
                 try:
@@ -190,8 +195,37 @@ def load_plugin():
             del sys.modules[m]
             gc.collect()
             print("* 删除多加载模块:%s (对象个数:%d) (RAM:%d)" % (m, i, gc.mem_free()))
+            
+    # 如果动态改变了保留的模块
+    if 'keep_modules' in global_var and plugins_folder[plugin_id] in global_var['keep_modules']:
+        for m in global_var['keep_modules'][plugins_folder[plugin_id]]:
+            if m not in KEEP_MODULES:
+                i = 0
+                for l in dir(sys.modules[m]):
+                    try:
+                        setattr(sys.modules[m], l, None)
+                        i += 1
+                        # print("* 删除保留模块对象:%s %s" % (m, l))
+                    except AttributeError:
+                        continue
+                del sys.modules[m]
+                gc.collect()
+                print("* 删除保留模块:%s (对象个数:%d) (RAM:%d)" % (m, i, gc.mem_free()))
     
-    del m, button_a_callback_o1, button_b_callback_o1, i
+        global_var['keep_modules'][plugins_folder[plugin_id]] = KEEP_MODULES
+    
+    if 'keep_modules' not in global_var:
+        global_var['keep_modules'] = {}
+    
+    if len(KEEP_MODULES) != 0:
+        global_var['keep_modules'][plugins_folder[plugin_id]] = KEEP_MODULES
+    elif plugins_folder[plugin_id] in global_var['keep_modules']:
+        del global_var['keep_modules'][plugins_folder[plugin_id]]
+    
+    if len(global_var['keep_modules']) == 0:
+        del global_var['keep_modules']
+                
+    del m, button_a_callback_o1, button_b_callback_o1, i, KEEP_MODULES
     gc.collect()
     print("* 插件 %s (%s) 完毕，RAM:%d" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
 
