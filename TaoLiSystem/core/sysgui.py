@@ -415,10 +415,13 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
                     history_seek.append(begin_seek)
                 break
 
-def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr", "stuvwx", "yz", ".?!=;:*"]):
+def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr", "stuvwx", "yz", ".?!=;:*"], input_callback=None):
     """
     输入文本
     """
+    if input_callback is None:
+        input_callback = lambda origin_text, input_text, text_pos: (origin_text[:text_pos] + input_text + text[text_pos:], text_pos + 1)
+        
     a_pressed = b_pressed = False
     
     # 记录原本按钮绑定函数
@@ -496,8 +499,7 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
                         button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
                         return text
                 elif choice_text:
-                    text = text[:text_pos] + (choice_text[choice_pos].upper() if capsLock else choice_text[choice_pos]) + text[text_pos:]
-                    text_pos += 1
+                    text, text_pos = input_callback(text, choice_text[choice_pos].upper() if capsLock else choice_text[choice_pos], text_pos)
                 break
             elif b_pressed:
                 b_pressed = False
