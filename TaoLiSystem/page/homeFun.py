@@ -153,7 +153,7 @@ def statusShow():
         battery_level = __import__("parrot").get_battery_level()
         del sys.modules["parrot"]
         
-        sysgui.draw_string_center("拓展板电池电压:" + str(round(battery_level // 1000, 2)) + "V", 20)
+        sysgui.draw_string_center("拓展板电池电压:" + str(battery_level) + "mV", 20)
     except:
         sysgui.draw_string_center("设备不支持", 20)
     
