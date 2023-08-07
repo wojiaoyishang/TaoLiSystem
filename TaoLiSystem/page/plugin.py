@@ -231,5 +231,3 @@ def load_plugin():
 
 def close():
     return
-
-show()
