@@ -66,7 +66,10 @@ def debug(g, l, v=None):
             if len(user) == 1:
                 return
             elif len(user) == 2:
-                return eval(user[1], globals(), locals())
+                try:
+                    return eval(user[1], globals(), locals())
+                except BaseException as e:
+                    print(str(e))
         elif user[0] == "help":
             print(HELP_TEXT)
         elif user[0] == "var":
