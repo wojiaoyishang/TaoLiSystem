@@ -51,7 +51,7 @@ def delete_folder(folder):
 
 def debug(g, l, v=None):
     """变量监控与调试工具 使用方法 utils.debug(globals(), locals())"""
-    HELP_TEXT = "g 变量是全局参数，l 变量是局部参数，v 变量是额外用户提供的变量" + \
+    HELP_TEXT = "g 变量是全局参数，l 变量是局部参数，v 变量是额外用户提供的变量\n" + \
                 "help -- 查看帮助\n" + \
                 "return [参数] -- 退出调试，返回参数\n" + \
                 "var [变量名] -- 查看变量\n" + \
