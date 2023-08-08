@@ -47,4 +47,6 @@ configData = Config()
 touchPad_sensitivity = configData.read("system", "touchPad_sensitivity")
 if touchPad_sensitivity is None or touchPad_sensitivity.strip() == "0":
     touchPad_sensitivity = 250
+else:
+    touchPad_sensitivity = int(touchPad_sensitivity)
     
