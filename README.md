@@ -1,7 +1,7 @@
 # 桃丽系统是什么
 
 <p align="center">
-  <img src="IMAGES/image0.png" />
+  <img src="IMAGES/welcome_TaoLiSystem_gif.gif" />
 </p>
 
 **如何使用？如何开发？点击查看 -> [帮助文档](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/instruction.html)**
