@@ -200,6 +200,15 @@ def load_plugin():
     if 'keep_modules' in global_var and plugins_folder[plugin_id] in global_var['keep_modules']:
         for m in global_var['keep_modules'][plugins_folder[plugin_id]]:
             if m not in KEEP_MODULES:
+                
+                keep = False
+                # 看看其它插件有没有保留
+                for other_f in global_var['keep_modules'].keys():
+                    if other_f != plugins_folder[plugin_id] and m in global_var['keep_modules'][other_f]:
+                        keep = True
+                if keep:
+                    continue
+        
                 i = 0
                 for l in dir(sys.modules[m]):
                     try:

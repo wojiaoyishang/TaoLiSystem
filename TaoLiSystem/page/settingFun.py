@@ -203,6 +203,7 @@ def date_setting():
             configData.write("system", "autoSyncTime", "0" if configData.read("system", "autoSyncTime") == "1" else "1")
  
 def system_setting():
+    global touchPad_sensitivity
     selected_option_id = 0
 
     while True:
@@ -240,6 +241,8 @@ def system_setting():
                     timeout = value
                     
         elif selected_option_id == 1:  # 触摸设置
+            button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.event_pressed  # 记录原先的按钮
+            button_a.event_pressed, button_b.event_pressed = None, None
             while True:
                 oled.fill(0)
                 sysgui.draw_string_center("按下 P 测试触摸按键", 0)
@@ -250,6 +253,7 @@ def system_setting():
                 
                 if button_a.value() == 0 and button_b.value() == 0:
                     configData.write("system", "touchPad_sensitivity", str(touchPad_sensitivity))
+                    button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
                     break
                 elif button_a.value() == 0:
                     touchPad_sensitivity -= 10
