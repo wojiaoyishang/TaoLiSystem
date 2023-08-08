@@ -132,8 +132,6 @@ class Game():
             return True
         elif button_a.value() == 1 and self.pressed:
             self.pressed = False
-        if button_b.value() == 1:
-            self.game_state == 4
         return False
 
     # 开机画面
@@ -191,14 +189,12 @@ class Game():
 
     def run(self):
         while True:
-            if self.game_state == 0: self.game_start()
+            if button_b.value() == 0: break
+            elif self.game_state == 0: self.game_start()
             elif self.game_state == 1: self.game_waiting()
             elif self.game_state == 2: self.game_running()
             elif self.game_state == 3: self.game_over()
-            elif self.game_state == 4: break
 
-
-
-sysgui.tip0Box("A键开始/跳跃\nB键退出")
+sysgui.tipBox("长按 B 退出", 1)
 game=Game(gap_size = 16)
 game.run()

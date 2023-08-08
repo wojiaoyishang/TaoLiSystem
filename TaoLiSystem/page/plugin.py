@@ -170,6 +170,7 @@ def load_plugin():
     button_a_callback_o1, button_b_callback_o1 = button_a.event_pressed, button_b.event_pressed
     button_a.event_pressed, button_b.event_pressed = None, None
     imported_module = utils.importModule("TaoLiSystem.plugins." + plugins_folder[plugin_id])
+    sysgui.tipBox("清理内存中......", 0)
     # 记录保留的模块
     try:
         KEEP_MODULES = imported_module.KEEP_MODULES.copy()
