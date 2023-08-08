@@ -1,8 +1,10 @@
 # 桃丽系统是什么
 
-![输入图片说明](IMAGES/welcome_TaoLiSystem_gif.gif)
+<p align="center">
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/welcome_TaoLiSystem_gif.gif" />
+</p>
 
-如何使用？如何开发？点击查看 -> [帮助文档](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/instruction.html)
+**如何使用？如何开发？点击查看 -> [帮助文档](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/instruction.html)**
 
 桃丽系统是掌控板界面设计的一个方案，旨在将零散的代码汇集起来，便于同学老师编程。将掌控板变成一个确切、功能完善的设备。此系统由以赏独立开发，特献给他高一的信息老师，陶丽老师（顺带一提，并不是百度搜到的那个陶丽老师哦！）。系统开发时参考了大量的文献资料，感谢每一位提供文献的小伙伴！
 
@@ -20,20 +22,34 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 
 # 快速浏览
 
+**安装方法查看 [快速安装](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html)**
+
+**使用方法查看 [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html)**
+
+<div align="center">
+
 |  |  |  |
 |---------------------|---------------------|---------------------|
 |![输入图片说明](IMAGES/image1.png)|![输入图片说明](IMAGES/image2.png)|![输入图片说明](IMAGES/image3.png)|
 |主界面|设置界面|插件界面|
 
+</div>
+
 + 全屏选择页面
 
-![输入图片说明](IMAGES/image4.png)
+<p align="center">
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/image4.png" />
+</p>
 
 + 物品选择页面
 
-![输入图片说明](IMAGES/image5.png)
+<p align="center">
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/image5.png" />
+</p>
 
 + 文字输入页面
 
-![输入图片说明](IMAGES/image6.png)
+<p align="center">
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/image6.png" />
+</p>
 
