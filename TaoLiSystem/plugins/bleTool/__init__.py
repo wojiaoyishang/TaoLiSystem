@@ -167,7 +167,7 @@ while not exit_loop:
         sysgui.draw_string_center("<O 左键> <N 右键>", 32)
         sysgui.draw_string_center("<PYTH ↑←↓→>", 47)
     else:
-        sysgui.draw_string_center("<A 功能> <B 断开>" if len(HID_remote.hid_device.connections) != 0 else ("<A 功能> <B " + "停播" + ">" if advertise_toggle else "起播" + ">"), 1)
+        sysgui.draw_string_center("<A 功能> <B 断开>" if len(HID_remote.hid_device.connections) != 0 else ("<A 功能> <B 停播>" if advertise_toggle else "<A 功能> <B 起播>"), 1)
         sysgui.draw_string_center("键盘模式", 16)
         sysgui.draw_string_center("<O 字符> <N 更多>", 32)
         sysgui.draw_string_center("<PYTH ↑←↓→>", 47)
