@@ -142,6 +142,9 @@ if utils.isEnableWIFI():
     if not sysgui.messageBox("继续将会禁用WIFI。", yes="好的", no="算了"):
         raise ValueError("用户终止执行。")
 
+if not utils.isEnableBluetooth():
+    utils.enableBluetooth()
+
 sysgui.tipBox("正在启动蓝牙HID......", 0)
 
 # 创建对象
