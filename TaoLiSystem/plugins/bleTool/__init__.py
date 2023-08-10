@@ -1,9 +1,9 @@
 import time
 
-from mpython_ble.application import HID
+from .mpython_ble.application import HID
 from mpython import *
 
-from TaoLiSystem.core import sysgui
+from TaoLiSystem.core import sysgui, utils
 from TaoLiSystem.core.config import *
 
 # 常量
@@ -130,13 +130,17 @@ NOUSE_KeyboardCode = {
 
 
 # 读取配置
-HID_NAME = configData.read("bleTool", "HID_NAME", "mPython-HID")  # HID_名字
+HID_NAME = configData.read("system", "bluetooth_name", "mPython-HID")  # HID_名字
 
 # 变量
 advertise_toggle = True
 function_mode = False
 control_tip = ""
 exit_loop = False
+
+if utils.isEnableWIFI():
+    if not sysgui.messageBox("继续将会禁用WIFI。", yes="好的", no="算了"):
+        raise ValueError("用户终止执行。")
 
 sysgui.tipBox("正在启动蓝牙HID......", 0)
 

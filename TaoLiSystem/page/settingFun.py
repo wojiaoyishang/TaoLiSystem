@@ -9,6 +9,71 @@ from mpython import *
 from TaoLiSystem.core import sysgui, utils
 from TaoLiSystem.core.config import *
 
+def connect_setting():
+    selected_option_id = 0
+    while True:
+        selected_option_id = sysgui.itemSelector("无线网络选项", ["WIFI选项", "蓝牙选项"], selected_id=selected_option_id)
+        
+        if selected_option_id is None:
+            return
+        
+        if selected_option_id == 0:
+            wifi_setting()
+        else:
+            bluetooth_setting()
+            
+def bluetooth_setting():
+    selected_option_id = 0
+    while True:
+        gc.collect()
+        
+        # 判断蓝牙是否开启
+        bluetooth_options = []
+        
+        if 'bluetooth_BLE' not in global_var:
+            bluetooth_options.append("(×)蓝牙状态")
+        else:
+            bluetooth_options.append("(√)蓝牙状态")
+        
+        bluetooth_options.append("设置蓝牙名称")
+        
+        selected_option_id = sysgui.itemSelector("蓝牙选项", bluetooth_options, selected_id=selected_option_id)
+        
+        if selected_option_id is None:
+            return
+        
+        if bluetooth_options[selected_option_id] == "(×)蓝牙状态":
+            if utils.isEnableWIFI():
+                if sysgui.messageBox("蓝牙和WIFI只能\n开启一个，继续？", yes_text="是的", no_text="取消"):
+                    utils.disableWIFI()
+                    print("蓝牙开启前运存大小:", gc.mem_free())
+                    sysgui.tipBox("开启蓝牙中......", 0)
+                    utils.enableBluetooth()
+                    sysgui.tipBox("蓝牙已启用", 1)
+                    print("蓝牙开启后运存大小:", gc.mem_free())
+                    continue
+            else:
+                print("蓝牙开启前运存大小:", gc.mem_free())
+                sysgui.tipBox("开启蓝牙中......", 0)
+                utils.enableBluetooth()
+                sysgui.tipBox("蓝牙已启用", 1)
+                print("蓝牙开启后运存大小:", gc.mem_free())
+        elif bluetooth_options[selected_option_id] == "(√)蓝牙状态":
+#             print("蓝牙关闭前运存大小:", gc.mem_free())
+#             sysgui.tipBox("关闭蓝牙中......", 0)
+#             utils.disableBluetooth()
+#             sysgui.tipBox("蓝牙已关闭", 1)
+#             print("蓝牙关闭后运存大小:", gc.mem_free())
+            if sysgui.messageBox("mPython代码限制\n必须重启哦。", yes_text="好", no_text="算了"):
+                machine.reset()
+        elif bluetooth_options[selected_option_id] == "设置蓝牙名称":
+            if utils.messageBox("需要输入新的名称。"):
+                name = utils.textTypeBox()
+                configData.write("system", "bluetooth_name", name)
+                utils.tipBox("修改成功！")
+            
+        
+    
 def wifi_setting():
     selected_option_id = 0
     
@@ -19,7 +84,7 @@ def wifi_setting():
         if 'wifi' not in global_var:
             wifi_options = ["(×)WIFI状态"]
         else:
-            if global_var['wifi'].sta.isconnected():
+            if utils.isEnableWIFI():
                 wifi_options = ["(√)WIFI状态", "断开连接",
                            "(×)自动连接" if not configData.read("system", "autoConnectWIFI") == "1" else "(√)自动连接",
                            "查看详情"]
@@ -28,18 +93,30 @@ def wifi_setting():
                            "(×)自动连接" if not configData.read("system", "autoConnectWIFI") == "1" else "(√)自动连接",
                            "扫描并连接"]
         
-        selected_option_id = sysgui.itemSelector("无线网络选项", wifi_options, selected_id=selected_option_id)
+        selected_option_id = sysgui.itemSelector("WIFI选项", wifi_options, selected_id=selected_option_id)
         
         if selected_option_id is None:
             return
         
         if wifi_options[selected_option_id] == "(×)WIFI状态":
-            # 开启无线
-            print("WIFI开启前运存大小:", gc.mem_free())
-            sysgui.tipBox("开启WIFI中......", 0)
-            utils.enableWIFI()
-            sysgui.tipBox("WIFI已启用", 1)
-            print("WIFI开启后运存大小:", gc.mem_free())
+            if utils.isEnableBluetooth():
+                if sysgui.messageBox("WIFI和蓝牙只能\n开启一个，继续？", yes_text="是的", no_text="取消"):
+                    if not sysgui.messageBox("mPython代码限制，\n会导致重启，继续？", yes_text="是的", no_text="取消"):
+                        continue
+                    utils.disableBluetooth()
+                    # 开启无线
+                    print("WIFI开启前运存大小:", gc.mem_free())
+                    sysgui.tipBox("开启WIFI中......", 0)
+                    utils.enableWIFI()
+                    sysgui.tipBox("WIFI已启用", 1)
+                    print("WIFI开启后运存大小:", gc.mem_free())
+                    continue
+            else:
+                print("WIFI开启前运存大小:", gc.mem_free())
+                sysgui.tipBox("开启WIFI中......", 0)
+                utils.enableWIFI()
+                sysgui.tipBox("WIFI已启用", 1)
+                print("WIFI开启后运存大小:", gc.mem_free())
         elif wifi_options[selected_option_id] == "(√)WIFI状态":  # 扫描连接
             # 关闭无线
             print("WIFI关闭前运存大小:", gc.mem_free())

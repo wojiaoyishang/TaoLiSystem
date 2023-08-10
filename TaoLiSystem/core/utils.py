@@ -1,6 +1,9 @@
 import os
+import bluetooth
+
 from mpython import *
-from TaoLiSystem.core import config, sysgui
+from TaoLiSystem.core import sysgui
+from TaoLiSystem.core.config import *
 
 importModule = None  # main.py 会给赋值
 
@@ -20,14 +23,32 @@ def convert_ms_to_hms(milliseconds):
 
     return int(hours), int(minutes), int(seconds), int(remaining_ms)
 
+def isEnableWIFI():
+    return 'wifi' in global_var and global_var['wifi'].sta.isconnected()
+
 def enableWIFI():
-    config.global_var['wifi'] = wifi()
-    config.global_var['wifi'].sta.active(True)
+    global_var['wifi'] = wifi()
+    global_var['wifi'].sta.active(True)
 
 def disableWIFI():
-    config.global_var['wifi'].sta.disconnect()
-    config.global_var['wifi'].sta.active(False)
-    del config.global_var['wifi']
+    if isEnableWIFI():
+        global_var['wifi'].sta.disconnect()
+        global_var['wifi'].sta.active(False)
+        del global_var['wifi']
+
+def isEnableBluetooth():
+    return 'bluetooth_BLE' in global_var
+
+def enableBluetooth():
+    global_var['bluetooth_BLE'] = bluetooth.BLE()
+    global_var['bluetooth_BLE'].active(True)
+
+def disableBluetooth():
+    if isEnableBluetooth():
+        global_var['bluetooth_BLE'].active(False)
+        del global_var['bluetooth_BLE']
+    else:
+        bluetooth.BLE().active(False)
 
 def syncTime():
     ntptime = __import__("ntptime")  # 动态导入

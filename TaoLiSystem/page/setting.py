@@ -23,7 +23,7 @@ gui_fp = open("TaoLiSystem/static/setting.bin", "rb")
 button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.event_pressed
 
 # 设置项对应设置
-settings = [["无线网络选项", "调整互联网设置", 0, 'wifi_setting'],  # 名称 介绍 gui图片在文件setting.bin中对应的位置 执行函数名
+settings = [["无线网络选项", "调整互联网设置", 0, 'connect_setting'],  # 名称 介绍 gui图片在文件setting.bin中对应的位置 执行函数名
             ["日期时间选项", "调整日期时间", 78, 'date_setting'],
             ["掌控板选项", "设定掌控板偏好", 184, 'system_setting']]
 

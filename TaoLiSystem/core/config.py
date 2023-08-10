@@ -7,16 +7,20 @@ class Config:
 
     def _load_config(self):
         config = {}
-        with open(self.filename, 'r') as f:
-            section = ""
-            for line in f:
-                line = line.strip()
-                if line.startswith('[') and line.endswith(']'):
-                    section = line[1:-1]
-                    config[section] = {}
-                elif '=' in line:
-                    key, value = [item.strip() for item in line.split('=', 1)]
-                    config[section][key] = value
+        try:
+            f = open(self.filename, 'r')
+        except OSError:
+            f = open(self.filename, 'w')
+        section = ""
+        for line in f:
+            line = line.strip()
+            if line.startswith('[') and line.endswith(']'):
+                section = line[1:-1]
+                config[section] = {}
+            elif '=' in line:
+                key, value = [item.strip() for item in line.split('=', 1)]
+                config[section][key] = value
+        f.close()
         return config
 
     def read(self, section, key, default=None):
