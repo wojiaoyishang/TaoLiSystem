@@ -544,8 +544,7 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
                 break
             elif touchPad_H.read() <= touchPad_sensitivity:
                 if function_mode:
-                    text = text[:text_pos] + " " + text[text_pos:]
-                    text_pos += 1
+                    text, text_pos = input_callback(text, " ", text_pos)
                 elif not choice_text:
                     if now_pos + 2 <= len(all_text) - 2:
                         choice_text = all_text[now_pos + 2]

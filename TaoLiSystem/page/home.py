@@ -14,7 +14,7 @@ gc.collect()
 
 # 用于熄屏倒计时
 if configData.read("system", "ScreenOffStatus") == "1":
-    screenOff_timeout_setting = int(configData.read("system", "ScreenOffTimeout"))
+    screenOff_timeout_setting = int(configData.read("system", "ScreenOffTimeout", "-1"))
 else:
     screenOff_timeout_setting = -1
 screenOff_timeout = screenOff_timeout_setting
@@ -36,10 +36,10 @@ if tip:
 # 熄屏唤醒
 def button_callback(_):
     global button_a_callback_o, button_b_callback_o, screenOff_timeout
+    button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o  # 还原按钮
     screenOff_timeout = screenOff_timeout_setting
     oled.poweron()
     oled.show()
-    button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o  # 还原按钮
 
 def show():
     global pre_time, screenOff_timeout
@@ -49,7 +49,7 @@ def show():
     
     # 熄屏逻辑
     if pre_time[5] != t[5]:
-        if screenOff_timeout == 0:
+        if screenOff_timeout != -1 and screenOff_timeout <= 0:
             oled.poweroff()  # 关闭电源
             button_a.event_pressed, button_b.event_pressed = button_callback, button_callback  # 禁用原先的按钮
             return
