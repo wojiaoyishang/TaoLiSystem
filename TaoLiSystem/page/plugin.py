@@ -178,13 +178,21 @@ def load_plugin():
             KEEP_MODULES = []
         del imported_module
     except BaseException as e:
-        print("* 插件错误:", str(e))
+        print("-" * 30)
+        buffer = uio.StringIO()
+        sys.print_exception(e, buffer)
+        traceback_str = buffer.getvalue()
+        buffer.close()
+        
+        print("* 插件运行时抛出了一个错误: ")
+        print(traceback_str, end="")
+        print("-" * 30)
+        
         KEEP_MODULES = []
     sysgui.tipBox("清理内存中......", 0)
     # 还原
     button_a.event_pressed, button_b.event_pressed = button_a_callback_o1, button_b_callback_o1
 
-    
     print("* 插件 %s (%s) 加载完成，清理中...... (RAM:%d)" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
     print("* 保留模块列表:", KEEP_MODULES)
     # 删除加载的所有内容
@@ -246,3 +254,4 @@ def load_plugin():
 
 def close():
     return
+
