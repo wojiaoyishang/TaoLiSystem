@@ -176,6 +176,7 @@ def load_plugin():
             KEEP_MODULES = imported_module.KEEP_MODULES.copy()
         except AttributeError:
             KEEP_MODULES = []
+        del imported_module
     except BaseException as e:
         print("* 插件错误:", str(e))
         KEEP_MODULES = []
@@ -183,7 +184,7 @@ def load_plugin():
     # 还原
     button_a.event_pressed, button_b.event_pressed = button_a_callback_o1, button_b_callback_o1
 
-    del imported_module
+    
     print("* 插件 %s (%s) 加载完成，清理中...... (RAM:%d)" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
     print("* 保留模块列表:", KEEP_MODULES)
     # 删除加载的所有内容
