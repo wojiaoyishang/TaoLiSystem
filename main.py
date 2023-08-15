@@ -12,6 +12,9 @@ from TaoLiSystem.core.config import *
 gc.collect()
 print("可用总运存大小:", gc.mem_free())
 
+if button_a.value() == 0:  # 按下 A 键就退出。
+    raise BaseException("Stop by user.")
+
 # 导入模块函数
 def importModule(name):
     exec("import " + name + " as pikachu_import_module")
