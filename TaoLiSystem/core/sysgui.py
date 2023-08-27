@@ -4,7 +4,7 @@ import ustruct
 
 from mpython import *
 
-from ..modules import bin2picture
+#from ..modules import bin2picture
 from TaoLiSystem.core.config import *
 
 # 便于绘制数字
@@ -260,7 +260,77 @@ def tipBox(content, t=3):
     time.sleep(t)
     button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
 
-def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
+
+def txtReader_DispChar(s, x=0, y=0, mode=TextMode.normal, auto_return=True, screen_width=oled.width, screen_height=oled.height, dispchar=True):
+    row = 0
+    str_width = 0
+    if oled.f is None:
+        return
+    
+    for c in s:
+        data = oled.f.GetCharacterData(c)
+        if data is None:
+            if auto_return is True:
+                x = x + oled.f.width
+            else:
+                x = x + screen_width
+            continue
+        width, bytes_per_line = ustruct.unpack('HH', data[:4])
+        # print('character [%d]: width = %d, bytes_per_line = %d' % (ord(c)
+        # , width, bytes_per_line))
+        if auto_return is True:
+            if x > screen_width - width or c == "\n":
+                str_width += oled.width - x
+                x = 0
+                row += 1
+                y += oled.f.height
+                if y > (screen_height - oled.f.height)+0:
+                    return c
+        if dispchar:
+            for h in range(0, oled.f.height):
+                w = 0
+                i = 0
+                while w < width:
+                    mask = data[4 + h * bytes_per_line + i]
+                    if (width - w) >= 8:
+                        n = 8
+                    else:
+                        n = width - w
+                    py = y + h
+                    page = py >> 3
+                    bit = 0x80 >> (py % 8)
+                    for p in range(0, n):
+                        px = x + w + p
+                        c = 0
+                        if (mask & 0x80) != 0:
+                            if mode == TextMode.normal or \
+                                    mode == TextMode.trans:
+                                c = 1
+                            if mode == TextMode.rev:
+                                c = 0
+                            if mode == TextMode.xor:
+                                c = oled.buffer[page * (oled.width if auto_return is True else 128) + px] & bit
+                                if c != 0:
+                                    c = 0
+                                else:
+                                    c = 1
+                            oled.pixel(px, py, c)
+                        else:
+                            if mode == TextMode.normal:
+                                c = 0
+                                oled.pixel(px, py, c)
+                            if mode == TextMode.rev:
+                                c = 1
+                                oled.pixel(px, py, c)
+                        mask = mask << 1
+                    w = w + 8
+                    i = i + 1
+        x = x + width + 1
+        str_width += width + 1
+    return None
+
+
+def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8, screen_height=64, disp_function=txtReader_DispChar):
     """
     实现文本流阅读。
 
@@ -284,6 +354,15 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
     def button_b_callback(_):
         nonlocal b_pressed
         b_pressed = True
+    
+    def yield_read(size=1):  # 迭代读取对象
+        nonlocal prev_charpos
+        c = True
+        while c:
+            prev_charpos = stringIO.tell()
+            c = stringIO.read(size)
+            if c:
+                yield c
             
     button_a.event_pressed = button_a_callback
     button_b.event_pressed = button_b_callback
@@ -292,48 +371,27 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
     oled.hline(0, 28, 128, 1)
     bookmarks_pos = None  # 是否移动书签
 
+    prev_charpos = None  # 每页多用于检测位置
+    
     while True:
         begin_seek = stringIO.tell()  # 开始光标位置
         oled.fill(0)
-        text = ""
-        text_width = 0
-        t = True
-        for line_number in range(64 // 16):
-            while t:
-                t = stringIO.read(1)
-                text += t
-                if t == "\n":  # 换行
-                    single_text_width = 0
-                    break
-                single_text_width = get_character_width(t)
-                text_width += single_text_width
-                if text_width > screen_width - single_text_width:
-                    break
-            if t:
-                _ = text[-1]  # 记录多的字符
-                text_width = single_text_width
-                text = text[:-1]
-                if bookmarks_pos is None:
-                    oled.DispChar(text, 0, line_number * 16)
-                    oled.show()
-                if _ != "\n":
-                    text = _
-                else:
-                    text = ""
-            else:
-                if bookmarks_pos is None:
-                    oled.DispChar(text, 0, line_number * 16)
-                    oled.show()
-                break
         
+        extra_char = disp_function(s=yield_read(), screen_width=screen_width, screen_height=screen_height, dispchar=bookmarks_pos is None)
+        
+        if extra_char:
+            stringIO.seek(prev_charpos)
+            
         if bookmarks_pos is not None and stringIO.tell() < bookmarks_pos:
             history_seek.append(begin_seek)
             continue
         elif bookmarks_pos is not None:
+            if len(history_seek) == 0:
+                history_seek.append(0)
             bookmarks_pos = None
-            oled.show()
             continue
         
+        oled.show()
         
         while True:
             if a_pressed:
@@ -348,7 +406,7 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
                 elif select_id == 0:
                     button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
                     return
-                    
+
                 stringIO.seek(begin_seek)
                 break
             elif b_pressed:
@@ -402,18 +460,21 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8):
                 else:
                     bookmarks.append(["书签" + str(len(bookmarks) + 1), begin_seek])
                     tipBox("书签" + str(len(bookmarks)) + "已添加！", 1)
+
                 stringIO.seek(begin_seek)
                 break
             elif touchPad_N.read() <= touchPad_sensitivity:  # 下一页
-                if t == "":
+                if extra_char is None:
                     if messageBox("阅读已结束是否退出？", yes_text="是的", no_text="取消"):
                         button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
                         return
                     else:
+                        
                         stringIO.seek(begin_seek)
                 else:
                     history_seek.append(begin_seek)
                 break
+
 
 def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr", "stuvwx", "yz", ".?!=;:*"], input_callback=None):
     """
@@ -559,4 +620,5 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
                     capsLock = not capsLock
                 break
                
+
 
