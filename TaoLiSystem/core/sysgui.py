@@ -4,7 +4,7 @@ import ustruct
 
 from mpython import *
 
-#from ..modules import bin2picture
+from ..modules import bin2picture
 from TaoLiSystem.core.config import *
 
 # 便于绘制数字
