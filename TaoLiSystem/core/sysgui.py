@@ -262,18 +262,15 @@ def tipBox(content, t=3):
 
 
 def txtReader_DispChar(s, x=0, y=0, mode=TextMode.normal, auto_return=True, screen_width=oled.width, screen_height=oled.height, dispchar=True):
+    new_line = False
     row = 0
     str_width = 0
     if oled.f is None:
         return
     
     for c in s:
-        if c == "\n":
-            x = 0
-            row += 1
-            y += oled.f.height
-            continue
-            
+        if new_line:
+            return c
         data = oled.f.GetCharacterData(c)
         if data is None:
             if auto_return is True:
@@ -282,16 +279,23 @@ def txtReader_DispChar(s, x=0, y=0, mode=TextMode.normal, auto_return=True, scre
                 x = x + screen_width
             continue
         width, bytes_per_line = ustruct.unpack('HH', data[:4])
+        if c == "\n":
+            width = -1
         # print('character [%d]: width = %d, bytes_per_line = %d' % (ord(c)
         # , width, bytes_per_line))
         if auto_return is True:
-            if x > screen_width - width:
+            if x > screen_width - width or c == "\n":
                 str_width += oled.width - x
                 x = 0
                 row += 1
                 y += oled.f.height
                 if y > (screen_height - oled.f.height)+0:
-                    return c
+                    if c == "\n":
+                        new_line = True
+                    else:
+                        return c
+
+
         if dispchar:
             for h in range(0, oled.f.height):
                 w = 0
