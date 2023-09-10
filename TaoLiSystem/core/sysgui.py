@@ -631,4 +631,3 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
                 break
                
 
-
