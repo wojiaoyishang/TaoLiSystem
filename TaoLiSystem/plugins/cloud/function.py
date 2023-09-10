@@ -1,6 +1,7 @@
 import gc
 import os
 import uio
+import sys
 from mpython import *
 
 from TaoLiSystem.core import sysgui, utils
@@ -20,13 +21,14 @@ del i
 
 def randpikachu():
     sysgui.tipBox("与 TFT 屏幕通讯......", 0)
-    
+    utils.gc_collect()
+
     try:
         # 初始化 TFT
         spi = SPI(2, baudrate=20000000, mosi=Pin(eval(spi_pins[3])), sck=Pin(eval(spi_pins[4])))
         tft = ILI9341(spi, cs=Pin(eval(spi_pins[0])), dc=Pin(eval(spi_pins[2])), rst=Pin(eval(spi_pins[1])), w=320, h=240, r=0)
     except BaseException as e:
-        gc.collect()
+        utils.gc_collect()
         
         if sysgui.messageBox("与 TFT 通讯出现错误！", yes_text="详情", no_text="返回"):
             f = uio.StringIO(str(e))
@@ -34,8 +36,8 @@ def randpikachu():
             f.close()
         
         return
-    gc.collect()
-    
+    utils.gc_collect()
+    print(gc.mem_free())
     try:
         tft.fill(0)
         tft.DispChar("与掌控板通讯中......", 0, 0, color565(255, 255, 255), buffer_char_line=1, buffer_width=None)
@@ -67,7 +69,7 @@ def randpikachu():
         del c
         
         r.close()
-        gc.collect()
+        utils.gc_collect()
         sysgui.tipBox("正在显示图片......", 0)
         
         tft.refresh()
@@ -75,7 +77,7 @@ def randpikachu():
         #tft.DispChar("皮卡丘插画：", 0, 0, color565(255, 255, 255), buffer_char_line=1, buffer_width=None)
 
         f.seek(0)
-        gc.collect()
+        utils.gc_collect()
         tft.DispBmp(bmpr.BMPFileReader(f), 0, 0, 16)
         f.close()
         spi.deinit()
@@ -86,13 +88,11 @@ def randpikachu():
         sysgui.tipBox("正在清理临时文件......", 0)
         os.remove("temp.bmp")
     except BaseException as e:
-        gc.collect()
-        
+        utils.gc_collect()
         if sysgui.messageBox("出现错误了......", yes_text="详情", no_text="返回"):
             f = uio.StringIO(str(e))
             sysgui.txtStreamReader(f, "报错")
             f.close()
-            
         spi.deinit()
     
 def tft_pin_setting():
@@ -116,23 +116,37 @@ def tft_pin_setting():
         sysgui.tipBox("保存成功。", 1)
         
 def randHorrorStory():
-    gc.collect()
+    utils.gc_collect()
+    
+    selection_id = sysgui.itemSelector("选择功能", ["在掌控板上显示", "在TFT上显示"])
+    
+    if selection_id is None:
+        return 
+    
     # 请求服务器
     sysgui.tipBox("正在与服务器通讯......", 0)
-    r = urequests.get("http://lab.lovepikachu.top/api/randpika?format=bmp&resize_width=240")
-    response_json = r.json()
-    r.close()
-    if response_json['success'] == False:
-        sysgui.tipBox("服务器拒绝请求!\n" + str(response_json['msg']))
-        spi.deinit()
-        del tft, spi
-        return
+    r = urequests.get("http://lab.lovepikachu.top/api/randHorrorStory?type=text")
     
-    gc.collect()
+    f = open("temp.txt", "wb+")
     
-    f = uio.StringIO(response_json["data"]["content"])
-    del response_json
-    sysgui.txtStreamReader(f, "随机鬼故事")
+    c = r.recv(1024)
+    
+    while c:
+        f.write(c)
+        c = r.recv(1024)     
+    del c
     f.close()
+    
+    
+    utils.gc_collect()
+    
+    f = open("temp.txt", "r")
+    
+    if selection_id == 0:
+        sysgui.txtStreamReader(f, "随机鬼故事")
+        
+    f.close()
+    
+    os.remove("temp.txt")
     
     

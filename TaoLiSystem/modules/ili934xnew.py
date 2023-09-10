@@ -292,6 +292,7 @@ class ILI9341:
 
         # Calculate buffer size based on buffer_char_line and buffer_width
         buffer_height = oled.f.height * buffer_char_line
+        print(gc.mem_free(), buffer_width * buffer_height * 2)
         buf = bytearray(buffer_width * buffer_height * 2)  # 2 bytes per pixel for RGB565
         fb = framebuf.FrameBuffer(buf, buffer_width, buffer_height, framebuf.RGB565)
 

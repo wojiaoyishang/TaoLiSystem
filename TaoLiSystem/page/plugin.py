@@ -128,7 +128,7 @@ def show():
             if enter_time <= 0:
                 enter_time = 3
                 
-                sysgui.tipBox("打开插件中......", 0)
+                
                 # 加载插件
                 load_plugin()
                 
@@ -162,6 +162,27 @@ def show():
 def load_plugin():
     global plugin_id, plugins_folder, plugins_name
     
+    selection_id = sysgui.itemSelector("运行插件", ["直接加载", "重启到初始化后加载", "重启到初始化前加载"])
+    
+    if selection_id is None:
+        return
+    
+    if selection_id == 1:
+        # 重启执行
+        f = open("bootconfig", "w")
+        f.write('{"mode": "pluginrun", "module": "' + plugins_folder[plugin_id] + '", "priority": 1}')
+        f.close()
+        import machine
+        machine.reset()
+    elif selection_id == 2:
+        # 重启执行
+        f = open("bootconfig", "w")
+        f.write('{"mode": "pluginrun", "module": "' + plugins_folder[plugin_id] + '", "priority": 0}')
+        f.close()
+        import machine
+        machine.reset()
+    
+    sysgui.tipBox("打开插件中......", 0)
     gc.collect()  # 加载前摇
     print("* 加载插件 %s (%s)，RAM:%d" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
     imported_modules_before = list(sys.modules.keys())
@@ -176,7 +197,7 @@ def load_plugin():
             KEEP_MODULES = imported_module.KEEP_MODULES.copy()
         except AttributeError:
             KEEP_MODULES = []
-        del imported_module
+        
     except BaseException as e:
         print("-" * 30)
         buffer = uio.StringIO()
@@ -199,13 +220,15 @@ def load_plugin():
     for m in list(sys.modules.keys()):
         if m not in imported_modules_before and m not in KEEP_MODULES:
             i = 0
-            for l in dir(sys.modules[m]):
-                try:
-                    setattr(sys.modules[m], l, None)
-                    i += 1
-                    # print("* 删除多加载模块对象:%s %s" % (m, l))
-                except AttributeError:
-                    continue
+            if sys.modules[m] == imported_module:
+                imported_module = None
+                for l in dir(sys.modules[m]):
+                    try:
+                        setattr(sys.modules[m], l, None)
+                        i += 1
+                        # print("* 删除多加载模块对象:%s %s" % (m, l))
+                    except AttributeError:
+                        continue
             del sys.modules[m]
             gc.collect()
             print("* 删除多加载模块:%s (对象个数:%d) (RAM:%d)" % (m, i, gc.mem_free()))
@@ -224,13 +247,15 @@ def load_plugin():
                     continue
         
                 i = 0
-                for l in dir(sys.modules[m]):
-                    try:
-                        setattr(sys.modules[m], l, None)
-                        i += 1
-                        # print("* 删除保留模块对象:%s %s" % (m, l))
-                    except AttributeError:
-                        continue
+                if sys.modules[m] == imported_module:
+                    imported_module = None
+                    for l in dir(sys.modules[m]):
+                        try:
+                            setattr(sys.modules[m], l, None)
+                            i += 1
+                            # print("* 删除多加载模块对象:%s %s" % (m, l))
+                        except AttributeError:
+                            continue
                 del sys.modules[m]
                 gc.collect()
                 print("* 删除保留模块:%s (对象个数:%d) (RAM:%d)" % (m, i, gc.mem_free()))
@@ -254,4 +279,3 @@ def load_plugin():
 
 def close():
     return
-

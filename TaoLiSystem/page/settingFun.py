@@ -81,10 +81,10 @@ def wifi_setting():
         gc.collect()
 
         # 判断 WIFI 是否开启
-        if 'wifi' not in global_var:
+        if not utils.isEnableWIFI():
             wifi_options = ["(×)WIFI状态"]
         else:
-            if utils.isEnableWIFI():
+            if utils.isConnectWIFI():
                 wifi_options = ["(√)WIFI状态", "断开连接",
                            "(×)自动连接" if not configData.read("system", "autoConnectWIFI") == "1" else "(√)自动连接",
                            "查看详情"]
@@ -126,7 +126,7 @@ def wifi_setting():
             print("WIFI关闭后运存大小:", gc.mem_free())
         elif wifi_options[selected_option_id] == "扫描并连接":
             sysgui.tipBox("扫描 WIFI 中......", 0)
-            available_networks = global_var['wifi'].sta.scan()
+            available_networks = wifi().sta.scan()
             print("扫描到的WIFI：", available_networks)
             if len(available_networks) == 0:
                 sysgui.tipBox("没有扫描到WIFI！\n请尝试重启WIFI服务", 0)
@@ -154,9 +154,9 @@ def wifi_setting():
                         sysgui.messageBox("请输入WIFI密码")
                         wifi_password = sysgui.textTypeBox()
                     
-                    global_var['wifi'].sta.connect(available_networks[selected_network_index][0].decode(), wifi_password)
+                    wifi().sta.connect(available_networks[selected_network_index][0].decode(), wifi_password)
                     time_ = time.time()
-                    while global_var['wifi'].sta.status() == 1001:
+                    while wifi().sta.status() == 1001:
                         if time.time() - time_ >= 10:
                             break
                         sysgui.tipBox("连接WIFI中(%ds)......" % int(time.time() - time_), 0)
@@ -166,11 +166,11 @@ def wifi_setting():
                         continue
                     else:
                         status_message = {1000: "未连接", 1001: "正在连接", 202: "密码错误", 201: "接入点没有回复",
-                                   1010: "WIFI连接成功", 203: "方式请求错误", 200: "连接超时", 204: "握手超时"}[global_var['wifi'].sta.status()]
+                                   1010: "WIFI连接成功", 203: "方式请求错误", 200: "连接超时", 204: "握手超时"}[wifi().sta.status()]
                         
                         sysgui.tipBox(status_message, 1)
                         
-                        if global_var['wifi'].sta.status() == 1010:
+                        if wifi().sta.status() == 1010:
                             if sysgui.messageBox("下次是否自动连接？", yes_text="好啊~", no_text="不了~"):
                                 configData.write("system", "autoConnectWIFI", "1")
                                 configData.write("system", "autoConnectWIFI_ssid", available_networks[selected_network_index][0].decode())
@@ -196,25 +196,25 @@ def wifi_setting():
                     while True:
                         if button_a.value() == 0:
                             break
-                        track_networks = wlan.scan()
+                        track_networks = wifi().sta.scan()
                         for network in track_networks:
                             if network[1] == available_networks[selected_network_index][1]:
                                 draw_info(network)
         elif wifi_options[selected_option_id] == "断开连接":
-            global_var['wifi'].sta.disconnect()
+            wifi().sta.disconnect()
             sysgui.tipBox("断开连接成功！", 1)
         elif wifi_options[selected_option_id] == "查看详情":
-            ip, subnet, gateway, dns = global_var['wifi'].sta.ifconfig()
+            ip, subnet, gateway, dns = wifi().sta.ifconfig()
             config_data = [ip, subnet, gateway, dns]
             config_data_descriptions = ["本机地址：" + ip, "电子掩码："+ subnet, "网关：" + gateway, "DNS服务器：" + dns]
-            selected_config_id = sysgui.itemSelector("网络详情", config_data_descriptions, screen_width=128)
+            selected_config_id = sysgui.itemSelector("网络详情", config_data_descriptions)
             
             if sysgui.itemSelector("设置", ["查看", "设置"]):  # 设置
                 sysgui.messageBox("请输入新值")
                 new_value = sysgui.textTypeBox()
                 config_data[selected_config_id] = new_value
                 try:
-                    global_var['wifi'].sta.ifconfig(config_data)
+                    wifi().sta.ifconfig(config_data)
                     sysgui.tipBox("设置成功！", 1)
                 except:
                     sysgui.tipBox("值不正确！", 1)
