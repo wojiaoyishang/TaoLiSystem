@@ -9,8 +9,10 @@ from TaoLiSystem.core import sysgui, utils
 from TaoLiSystem.core.config import *
 
 # 清理一下掌控板启动完毕之后的内存冗余
-gc.collect()
-print("可用总运存大小:", gc.mem_free())
+print("可用总运存大小:", utils.gc_collect())
+
+if button_a.value() == 0:  # 按下 A 键就退出。
+    raise BaseException("Stop by user.")
 
 # 导入模块函数
 def importModule(name):
@@ -18,6 +20,28 @@ def importModule(name):
     return pikachu_import_module
 
 utils.importModule = importModule
+
+bootconfig = {}
+
+# 重启加载插件
+try:
+    import os
+    import json
+    f = open("bootconfig", "r")
+    bootconfig = json.load(f)
+    f.close()
+    if not bootconfig.get("keep", False):
+        os.remove("bootconfig")
+    del f, os, json
+except:
+    pass
+
+if bootconfig.get("mode") == "pluginrun" and bootconfig.get("priority") == 0:
+    sysgui.tipBox("加载插件中......", 0)
+    print("插件可用运存：", utils.gc_collect())
+    importModule("TaoLiSystem.plugins." + bootconfig.get("module"))
+    import machine
+    machine.reset()
 
 # 全部页面模块
 pages = ["TaoLiSystem.page.setting", "TaoLiSystem.page.home", "TaoLiSystem.page.plugin"]
@@ -35,7 +59,7 @@ imported_page = utils.importModule(pages[page_id])
 def close_module():
     global page_id, imported_page, imported_not_modules
     
-    print("释放页面前运存大小:", gc.mem_free())
+    print("释放页面前运存大小:", utils.gc_collect())
     
     oled.fill(0)
     sysgui.draw_string_center("Loading......", 24)
@@ -56,9 +80,9 @@ def close_module():
             print("* 删除多加载的模块:%s (对象个数:%d)" % (m, i))
             del sys.modules[m]
  
-    gc.collect()
+    utils.gc_collect()
 
-    print("释放页面后运存大小:", gc.mem_free())
+    print("释放页面后运存大小:", utils.gc_collect())
 
 def button_a_callback(_):
     global page_id, wait_close
@@ -82,11 +106,11 @@ sysgui.tipBox("系统正在初始化......", 0)
 # 连接 WIFI
 if configData.read("system", "autoConnectWIFI") == "1":
     utils.enableWIFI()
-    global_var['wifi'].sta.connect(configData.read("system", "autoConnectWIFI_ssid"),
+    wifi().sta.connect(configData.read("system", "autoConnectWIFI_ssid"),
                                           configData.read("system", "autoConnectWIFI_password"))
     
     time_ = time.time()
-    while global_var['wifi'].sta.status() == 1001:
+    while wifi().sta.status() == 1001:
         if time.time() - time_ >= 10:
             break
         sysgui.tipBox("连接WIFI中(%ds)......" % int(time.time() - time_), 0)
@@ -95,22 +119,29 @@ if configData.read("system", "autoConnectWIFI") == "1":
         sysgui.tipBox("连接超时！", 1)
     else:
         message = {1000: "未连接", 1001: "正在连接", 202: "密码错误", 201: "接入点没有回复",
-                   1010: "WIFI连接成功", 203: "方式请求错误", 200: "连接超时", 204: "握手超时"}[global_var['wifi'].sta.status()]
+                   1010: "WIFI连接成功", 203: "方式请求错误", 200: "连接超时", 204: "握手超时"}[wifi().sta.status()]
         
         sysgui.tipBox(message, 1)
 
 # 同步时间
-if "wifi" in global_var and global_var.get("wifi").sta.isconnected() and configData.read("system", "autoSyncTime") == "1":
+if utils.isConnectWIFI() and configData.read("system", "autoSyncTime") == "1":
     sysgui.tipBox("同步时间中......", 0)
     if utils.syncTime():
         sysgui.tipBox("同步时间成功！", 0)
     else:
         sysgui.tipBox("同步时间失败......", 0)
-    
+
+if bootconfig.get("mode") == "pluginrun" and bootconfig.get("priority") == 1:
+    sysgui.tipBox("加载插件中......", 0)
+    print("插件可用运存：", utils.gc_collect())
+    importModule("TaoLiSystem.plugins." + bootconfig.get("module"))
+    import machine
+    machine.reset()
+
 button_a.event_pressed = button_a_callback
 button_b.event_pressed = button_b_callback
 
-print("加载完毕运存大小:", gc.mem_free())
+print("加载完毕运存大小:", utils.gc_collect())
 
 while True:
     try:

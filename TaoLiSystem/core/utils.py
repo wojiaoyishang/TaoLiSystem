@@ -1,4 +1,5 @@
 import os
+import gc
 import bluetooth
 
 from mpython import *
@@ -24,24 +25,26 @@ def convert_ms_to_hms(milliseconds):
     return int(hours), int(minutes), int(seconds), int(remaining_ms)
 
 def isEnableWIFI():
-    return 'wifi' in global_var and global_var['wifi'].sta.isconnected()
+    return wifi().sta.active()
+
+def isConnectWIFI():
+    return wifi().sta.isconnected()
 
 def enableWIFI():
-    global_var['wifi'] = wifi()
-    global_var['wifi'].sta.active(True)
+    wifi().sta.active(True)
 
 def disableWIFI():
     if isEnableWIFI():
-        global_var['wifi'].sta.disconnect()
-        global_var['wifi'].sta.active(False)
-        del global_var['wifi']
+        wifi().sta.disconnect()
+        wifi().sta.active(False)
 
 def isEnableBluetooth():
-    return 'bluetooth_BLE' in global_var
+    import bluetooth
+    return bluetooth.BLE().active()
 
 def enableBluetooth():
-    global_var['bluetooth_BLE'] = bluetooth.BLE()
-    global_var['bluetooth_BLE'].active(True)
+    import bluetooth
+    return bluetooth.BLE().active(True)
 
 def disableBluetooth():
     if isEnableBluetooth():
@@ -69,6 +72,21 @@ def delete_folder(folder):
         else:
             print("* 删除文件 %s" % (folder + "/" + file_info[0]))
             os.remove(folder + "/" + file_info[0])
+
+def gc_collect():
+    """反复清理"""
+    m = gc.mem_free()
+    n = 3
+    gc.collect()
+    while n > 0:
+        if m == gc.mem_free():
+            gc.collect()
+            n -= 1
+        else:
+            m = gc.mem_free()
+            gc.collect()
+            n = 3
+    return m
 
 def debug(g, l, v=None):
     """变量监控与调试工具 使用方法 utils.debug(globals(), locals())"""
