@@ -1,1 +1,13 @@
-TapLiSystem/config/*
+# 系统配置文件
+TaoLiSystem/config/*
+
+# 构建文件和 Python 的缓存文件
+_build
+__pycache__
+
+# 用于编译但是不提交的文件
+mpy-cross-v6.exe
+mpy-cross-v4.exe
+
+# 只提交一个常用的
+# mpy-cross-v5.exe

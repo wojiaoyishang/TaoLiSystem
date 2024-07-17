@@ -1,7 +1,7 @@
 # 陶丽系统介绍
 
 <p align="center">
-  <img src="IMAGES/welcome_TaoLiSystem_gif.gif" />
+  <img src="resource/IMAGES/welcome_TaoLiSystem_gif.gif" />
 </p>
 
 **2023年8月更新了桃丽系统v2.0.0版本，进行了全面重置，原版本查看分支v1.0.0。**
@@ -32,7 +32,7 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 
 |  |  |  |
 |---------------------|---------------------|---------------------|
-|![输入图片说明](IMAGES/image1.png)|![输入图片说明](IMAGES/image2.png)|![输入图片说明](IMAGES/image3.png)|
+|![输入图片说明](resource/IMAGES/image1.png)|![输入图片说明](resource/IMAGES/image2.png)|![输入图片说明](resource/IMAGES/image3.png)|
 |主界面|设置界面|插件界面| 
 
 </div>
@@ -40,18 +40,18 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 + 全屏选择页面
 
 <p align="center">
-  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/image4.png" />
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/resource/IMAGES/image4.png" />
 </p>
 
 + 物品选择页面
 
 <p align="center">
-  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/image5.png" />
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/resource/IMAGES/image5.png" />
 </p>
 
 + 文字输入页面
 
 <p align="center">
-  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/IMAGES/image6.png" />
+  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/resource/IMAGES/image6.png" />
 </p>
 

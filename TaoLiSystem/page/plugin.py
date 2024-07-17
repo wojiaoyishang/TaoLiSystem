@@ -111,7 +111,7 @@ def show():
     # 等待触摸事件
     _ = plugin_id
     while _ == plugin_id:     
-        time.sleep(0.1)
+        time.sleep_ms(100)
         oled.show()
         
         # 提示背景

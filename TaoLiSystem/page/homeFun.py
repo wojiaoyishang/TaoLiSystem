@@ -141,7 +141,7 @@ def randomINT():
         sysgui.draw_string_from_bin(59, 25, albbhp_font_fp, "%d" % random.randint(1, 6), albbhp_map)
         oled.show()
         
-    time.sleep(1)
+    time.sleep_ms(1000)
 
 def statusShow():
     """状态查看"""
@@ -157,7 +157,7 @@ def statusShow():
     except:
         sysgui.draw_string_center("设备不支持", 20)
     
-    time.sleep(3)
+    time.sleep_ms(3000)
         
         
         

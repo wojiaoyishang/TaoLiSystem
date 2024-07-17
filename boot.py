@@ -17,6 +17,7 @@ if button_a.value() == 0 and button_b.value() == 0:  # 两个按钮同时按下
             try:  # 文件是否存在oDC
                 os.rename("main.py.bak", "main.py.bak_")
             except OSError:
+                oled.fill(0)
                 oled.DispChar("main.py.bak文件不存在！或已经运行备份代码。", 0, 0, auto_return=True)
                 time.sleep(3)
                 oled.show()

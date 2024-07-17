@@ -75,7 +75,7 @@ def show():
     _ = setting_id
     # 等待按钮事件
     while _ == setting_id:   # 改变说明按键中断，改变了 setting_id 的值
-        time.sleep(0.1)
+        time.sleep_ms(100)
         oled.show()
         
         # 提示背景

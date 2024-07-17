@@ -5,7 +5,7 @@
 from mpython import *
 from framebuf import FrameBuffer
 import framebuf
-import time, uos,urandom
+import time, urandom
 
 from TaoLiSystem.core import sysgui
 from TaoLiSystem.core.config import *

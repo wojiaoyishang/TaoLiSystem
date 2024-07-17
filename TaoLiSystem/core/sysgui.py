@@ -257,7 +257,7 @@ def tipBox(content, t=3):
     # 提示
     draw_rect_empty(1, 1, 126, 62, lambda : draw_string_center(content, 0, ex=True))
     oled.show()
-    time.sleep(t)
+    time.sleep_ms(t * 1000)
     button_a.event_pressed, button_b.event_pressed = button_a_callback_o, button_b_callback_o
 
 
