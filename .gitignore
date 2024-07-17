@@ -5,6 +5,9 @@ TaoLiSystem/config/*
 _build
 __pycache__
 
+# IDEA
+.idea
+
 # 用于编译但是不提交的文件
 mpy-cross-v6.exe
 mpy-cross-v4.exe
