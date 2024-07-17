@@ -486,7 +486,7 @@ def txtStreamReader(stringIO, title, bookmarks=[], screen_width=128+8, screen_he
                 break
 
 
-def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr", "stuvwx", "yz", ".?!=;:*"], input_callback=None):
+def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr", "stuvwx", "yz", ".~-=_;:?!*"], input_callback=None):
     """
     输入文本
     """
@@ -529,7 +529,7 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
             if show_tip[0]:
                 show_tip[0] = False
                 draw_rect_empty(14, 1, 100, 26)
-                draw_string_center("按B退出", 18, ex=True)
+                draw_string_center("按B返回", 18, ex=True)
             draw_string_center("[←P] [N→]\n[T 回删] [H 空格]", -14, ex=True)
         elif choice_text:  # 开始打字
             if show_tip[1]:
@@ -565,10 +565,14 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
         while True:
             if a_pressed:
                 a_pressed = False
-                if choice_text is None or function_mode:
+                if choice_text is None and not function_mode:
                     if messageBox("完成输入？", yes_text="是的", no_text="再想想"):
                         button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
                         return text
+                if choice_text is None and function_mode:
+                    if not messageBox("放弃输入？", yes_text="返回", no_text="是的"):
+                        button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
+                        return ""
                 elif choice_text:
                     text, text_pos = input_callback(text, choice_text[choice_pos].upper() if capsLock else choice_text[choice_pos], text_pos)
                 break
@@ -623,9 +627,10 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
                     choice_pos = len(choice_text) - 1
                 break
             elif touchPad_O.read() <= touchPad_sensitivity:
-                if not choice_text:
-                    if now_pos + 3 <= len(all_text) - 3:
-                        choice_text = all_text[now_pos + 3]
+                if not choice_text:  # 感谢 罗米奇 修改的 O 键无效问题
+                    next_pos = now_pos + 3
+                    if next_pos < len(all_text):
+                        choice_text = all_text[next_pos]
                 else:
                     capsLock = not capsLock
                 break

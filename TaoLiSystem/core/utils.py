@@ -1,5 +1,6 @@
 import os
 import gc
+import sys
 import bluetooth
 
 from mpython import *
@@ -43,15 +44,18 @@ def isEnableBluetooth():
     return bluetooth.BLE().active()
 
 def enableBluetooth():
-    import bluetooth
-    return bluetooth.BLE().active(True)
+    global global_var
+    ble = bluetooth.BLE()
+    result = ble.active(True)
+    if result:
+        global_var['bluetooth_BLE'] = ble
+    return result
 
 def disableBluetooth():
-    if isEnableBluetooth():
+    global global_var
+    if 'bluetooth_BLE' in global_var:
         global_var['bluetooth_BLE'].active(False)
         del global_var['bluetooth_BLE']
-    else:
-        bluetooth.BLE().active(False)
 
 def syncTime():
     ntptime = __import__("ntptime")  # 动态导入
@@ -87,6 +91,23 @@ def gc_collect():
             gc.collect()
             n = 3
     return m
+
+def compare_and_clean_modules(imported_not_modules, KEEP_MODULES=[]):
+    """比较而后清理多于的模块"""
+    for m in list(sys.modules.keys()):
+        if m not in imported_not_modules and m not in KEEP_MODULES:
+            i = 0
+            for l in dir(sys.modules[m]):
+                try:
+                    setattr(sys.modules[m], l, None)
+                    i += 1
+                    # print("* 删除多加载模块对象:%s %s" % (m, l))
+                except AttributeError:
+                    continue
+            print("* 删除多加载的模块:%s (对象个数:%d)" % (m, i))
+            del sys.modules[m]
+ 
+    gc_collect()
 
 def debug(g, l, v=None):
     """变量监控与调试工具 使用方法 utils.debug(globals(), locals())"""
@@ -125,3 +146,4 @@ def debug(g, l, v=None):
         elif user[0] == "exe":
             cmd = " ".join(user[1:])
             print("exec返回结果:", exec(cmd, globals(), locals()))
+

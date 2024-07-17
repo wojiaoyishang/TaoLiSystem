@@ -217,27 +217,12 @@ def load_plugin():
     print("* 插件 %s (%s) 加载完成，清理中...... (RAM:%d)" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
     print("* 保留模块列表:", KEEP_MODULES)
     # 删除加载的所有内容
-    for m in list(sys.modules.keys()):
-        if m not in imported_modules_before and m not in KEEP_MODULES:
-            i = 0
-            if sys.modules[m] == imported_module:
-                imported_module = None
-                for l in dir(sys.modules[m]):
-                    try:
-                        setattr(sys.modules[m], l, None)
-                        i += 1
-                        # print("* 删除多加载模块对象:%s %s" % (m, l))
-                    except AttributeError:
-                        continue
-            del sys.modules[m]
-            gc.collect()
-            print("* 删除多加载模块:%s (对象个数:%d) (RAM:%d)" % (m, i, gc.mem_free()))
+    utils.compare_and_clean_modules(imported_modules_before, KEEP_MODULES)
             
     # 如果动态改变了保留的模块
     if 'keep_modules' in global_var and plugins_folder[plugin_id] in global_var['keep_modules']:
         for m in global_var['keep_modules'][plugins_folder[plugin_id]]:
             if m not in KEEP_MODULES:
-                
                 keep = False
                 # 看看其它插件有没有保留
                 for other_f in global_var['keep_modules'].keys():

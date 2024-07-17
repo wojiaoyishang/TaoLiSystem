@@ -1,8 +1,13 @@
 # 系统各项小设置函数定义
+# 2024.7.17 蓝牙内容的增加与修改感谢 罗米奇
+# 2024.7.17 更新了主页选择
+import os
 import gc
-import machine
-import time
 import uio
+import sys
+import machine
+import ubinascii
+import time
 
 from mpython import *
 
@@ -21,7 +26,24 @@ def connect_setting():
             wifi_setting()
         else:
             bluetooth_setting()
-            
+
+def enable_bluetooth():
+    print("蓝牙开启前运存大小:", gc.mem_free())
+    sysgui.tipBox("开启蓝牙中......", 0)
+    if utils.enableBluetooth():
+        global_var['bluetooth_BLE'] = True  # 启用蓝牙时设置键
+    utils.enableBluetooth()
+    sysgui.tipBox("蓝牙已启用", 1)
+    print("蓝牙开启后运存大小:", gc.mem_free())
+    
+def disable_bluttooth():
+    print("蓝牙关闭前运存大小:", gc.mem_free())
+    sysgui.tipBox("关闭蓝牙中......", 0)
+    utils.disableBluetooth()
+    global_var.pop('bluetooth_BLE', None)  # 禁用蓝牙时安全地删除键
+    sysgui.tipBox("蓝牙已关闭", 1)
+    print("蓝牙关闭后运存大小:", gc.mem_free())
+
 def bluetooth_setting():
     selected_option_id = 0
     while True:
@@ -36,42 +58,41 @@ def bluetooth_setting():
             bluetooth_options.append("(√)蓝牙状态")
         
         bluetooth_options.append("设置蓝牙名称")
+        bluetooth_options.append("查看蓝牙信息")
         
         selected_option_id = sysgui.itemSelector("蓝牙选项", bluetooth_options, selected_id=selected_option_id)
         
         if selected_option_id is None:
             return
         
-        if bluetooth_options[selected_option_id] == "(×)蓝牙状态":
+        if bluetooth_options[selected_option_id] == "(×)蓝牙状态":    
             if utils.isEnableWIFI():
                 if sysgui.messageBox("蓝牙和WIFI只能\n开启一个，继续？", yes_text="是的", no_text="取消"):
                     utils.disableWIFI()
-                    print("蓝牙开启前运存大小:", gc.mem_free())
-                    sysgui.tipBox("开启蓝牙中......", 0)
-                    utils.enableBluetooth()
-                    sysgui.tipBox("蓝牙已启用", 1)
-                    print("蓝牙开启后运存大小:", gc.mem_free())
+                    enable_bluetooth()
                     continue
             else:
-                print("蓝牙开启前运存大小:", gc.mem_free())
-                sysgui.tipBox("开启蓝牙中......", 0)
-                utils.enableBluetooth()
-                sysgui.tipBox("蓝牙已启用", 1)
-                print("蓝牙开启后运存大小:", gc.mem_free())
+                enable_bluetooth()
+                
         elif bluetooth_options[selected_option_id] == "(√)蓝牙状态":
-#             print("蓝牙关闭前运存大小:", gc.mem_free())
-#             sysgui.tipBox("关闭蓝牙中......", 0)
-#             utils.disableBluetooth()
-#             sysgui.tipBox("蓝牙已关闭", 1)
-#             print("蓝牙关闭后运存大小:", gc.mem_free())
+            disable_bluttooth()
             if sysgui.messageBox("mPython代码限制\n必须重启哦。", yes_text="好", no_text="算了"):
                 machine.reset()
         elif bluetooth_options[selected_option_id] == "设置蓝牙名称":
-            if utils.messageBox("需要输入新的名称。"):
-                name = utils.textTypeBox()
+            if sysgui.messageBox("需要输入新的名称。"):
+                name = sysgui.textTypeBox()
                 configData.write("system", "bluetooth_name", name)
-                utils.tipBox("修改成功！")
-            
+                sysgui.tipBox("修改成功！")
+        elif bluetooth_options[selected_option_id] == "查看蓝牙信息": 
+            bluetooth_name = configData.read("system", "bluetooth_name")
+            bluetooth_address = ubinascii.hexlify(machine.unique_id()).decode().upper()
+            formatted_address = ":".join([bluetooth_address[i:i+2] for i in range(0, len(bluetooth_address), 2)])
+            if bluetooth_name is None or bluetooth_name.strip() == "":
+                # 在这里处理bluetooth_name为空或全是空格的情况
+                name = "mpython-HID"
+                configData.write("system", "bluetooth_name", name)
+                bluetooth_name = "（空）"   # 或者您可以设置默认的蓝牙名称
+            sysgui.messageBox("蓝牙地址：\n" + formatted_address + "\n设备名称：" + bluetooth_name)
         
     
 def wifi_setting():
@@ -262,9 +283,13 @@ def date_setting():
                     sysgui.tipBox("时间设置成功！", 1)
                     break
                 else:
-                    sysgui.messageBox("需要输入新的" + "年月日时分秒"[date_option-1] + "。")
+                    index_name = "年月日时分秒"[date_option - 1]
+                    sysgui.messageBox("需要输入新的" + index_name + "。")
                     value = int(sysgui.textTypeBox(all_text=["0123456789"]))
-                    datetime[date_option-1] = value
+                    # 重新映射时间，RTC时间和索引不同 Issue:I9KT1M 感谢 @FsdTS233
+                    datetime[dict(zip("年月日时分秒", [0,1,2,4,5,6]))[index_name]] = value
+                    
+                    
         
         elif selected_option_id == 1:  # 立刻同步时间
             if "wifi" not in global_var or not global_var.get("wifi").sta.isconnected():
@@ -285,7 +310,7 @@ def system_setting():
 
     while True:
         gc.collect()
-        selected_option_id = sysgui.itemSelector("掌控板设置", ["熄屏设置", "触摸设置", "关于此系统"],
+        selected_option_id = sysgui.itemSelector("掌控板设置", ["熄屏设置", "主页设置", "触摸设置", "关于此系统"],
                                                  selected_id=selected_option_id)
         
         if selected_option_id is None:
@@ -316,8 +341,32 @@ def system_setting():
                         configData.write("system", "ScreenOffStatus", "0")  # 非法输入则拒绝，如果改配置文件强制设置，那就自作自受吧！
                     configData.write("system", "ScreenOffTimeout", value)
                     timeout = value
-                    
-        elif selected_option_id == 1:  # 触摸设置
+        elif selected_option_id == 1:  # 主页设置
+            while True:
+                home = configData.read("system", "homePage", "default")
+                home_setting_choice = sysgui.itemSelector("主页设置", ["默认主页:" + home, "个性化设置"])
+                
+                if home_setting_choice == 0:  # 选择主页
+                    homes = [file for file in os.listdir("TaoLiSystem/page/home")]
+                    home = homes[sysgui.itemSelector("选择默认主页", homes)]
+                    configData.write("system", "homePage", home)
+                    if sysgui.messageBox("设置成功，\n是否立刻重启？", yes_text="是的", no_text="稍后"):
+                        machine.reset()
+                elif home_setting_choice == 1:  # 主页设置
+                    sysgui.tipBox("加载中......")
+                    imported_modules = list(sys.modules.keys())
+                    setting = getattr(utils.importModule("TaoLiSystem.page.home." + home), "setting")
+                    if setting:
+                        setting()
+                    else:
+                        sysgui.tipBox("这个主页没有设置。")
+                    sysgui.tipBox("清理中......")
+                    utils.compare_and_clean_modules(imported_modules)
+                else:
+                    break
+
+            
+        elif selected_option_id == 2:  # 触摸设置
             button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.event_pressed  # 记录原先的按钮
             button_a.event_pressed, button_b.event_pressed = None, None
             while True:
@@ -361,5 +410,4 @@ def system_setting():
                 sysgui.messageBox("谢谢各位的支持！", yes_text="不用谢")
             except OSError:
                 sysgui.tipBox("版权文件不存在！", 1)
-        
-                
+ 
