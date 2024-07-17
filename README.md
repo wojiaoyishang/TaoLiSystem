@@ -22,9 +22,17 @@ bit的介绍，这吸引了我的注意。便促使了我从信息老师陶丽�
 
 > **⚠️注意** 2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 。
 
-|                          如何使用？如何开发？点击查看                          |
-|:----------------------------------------------------------------:|
-| [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) |
+<table style="width: 100%;">
+  <tr>
+    <th>如何使用？如何开发？点击查看</th>
+  </tr>
+  <tr>
+    <td style="text-align: center;">
+      <a href="https://lab.lovepikachu.top/ebook/taolisystem/index.html">帮助文档</a>
+    </td>
+  </tr>
+</table>
+
 
 # 掌控板介绍
 
@@ -36,9 +44,25 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 
 # 快速浏览
 
-|                                      安装方法                                      |                                    使用方法                                    |
-|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|
-| [快速安装](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html) | [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html) |
+<table style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px;">安装方法</th>
+      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px;">使用方法</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">
+        <a href="https://lab.lovepikachu.top/ebook/taolisystem/welcome/quickstart.html">快速安装</a>
+      </td>
+      <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">
+        <a href="https://lab.lovepikachu.top/ebook/taolisystem/welcome/detail.html">使用说明</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 <div align="center">
 
