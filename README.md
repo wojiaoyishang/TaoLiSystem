@@ -22,18 +22,6 @@ bit的介绍，这吸引了我的注意。便促使了我从信息老师陶丽�
 
 > **⚠️注意** 2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 。
 
-<table style="width: 100%;">
-  <tr>
-    <th>如何使用？如何开发？点击查看</th>
-  </tr>
-  <tr>
-    <td style="text-align: center;">
-      <a href="https://lab.lovepikachu.top/ebook/taolisystem/index.html">帮助文档</a>
-    </td>
-  </tr>
-</table>
-
-
 # 掌控板介绍
 
 掌控板是创客教育专家委员会、猫友汇、广大一线老师共同提出需求并与创客教育行业优秀企业代表共同参与研发的教具、学具，是一块为教育而生的开源硬件，也是一个公益项目。
@@ -42,36 +30,16 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 
 关于掌控板的更多信息可以参考 mPython掌控板文档 。顺带一提，上面的GIF是修改自官方的掌控板动态图片的。
 
+|                          如何使用？如何开发？点击查看                          |                                      安装方法                                      |                                    使用方法                                    |
+|:----------------------------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|
+| [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) | [快速安装](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html) | [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html) |
+
 # 快速浏览
-
-<table style="width: 100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px;">安装方法</th>
-      <th style="text-align: center; border: 1px solid #dddddd; padding: 8px;">使用方法</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">
-        <a href="https://lab.lovepikachu.top/ebook/taolisystem/welcome/quickstart.html">快速安装</a>
-      </td>
-      <td style="text-align: center; border: 1px solid #dddddd; padding: 8px;">
-        <a href="https://lab.lovepikachu.top/ebook/taolisystem/welcome/detail.html">使用说明</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<div align="center">
 
 |                                       |                                       |                                       |
 |---------------------------------------|---------------------------------------|---------------------------------------|
 | ![输入图片说明](resource/IMAGES/image1.png) | ![输入图片说明](resource/IMAGES/image2.png) | ![输入图片说明](resource/IMAGES/image3.png) |
 | 主界面                                   | 设置界面                                  | 插件界面                                  | 
-
-</div>
 
 + 全屏选择页面
 
