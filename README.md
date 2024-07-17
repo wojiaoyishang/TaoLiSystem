@@ -15,12 +15,14 @@ bit的介绍，这吸引了我的注意。便促使了我从信息老师陶丽�
 
 > **⚠️注意** 2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇](https://gitee.com/romich) 提供的修正。
 > 另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行
-> Python 代码的工具。
-> 关于桃丽系统文档，由于 Gitee Page
->
-的服务调整，帮助文档已迁移到我自己的服务器上。点击这里查看 [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) 。
+> Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。
+> 点击这里查看 [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) 。
 
 > **⚠️注意** 2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 。
+
+- 开发说明: [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html)
+- 安装方法: [快速安装](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html)
+- 使用方法: [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html)
 
 # 掌控板介绍
 
@@ -29,10 +31,6 @@ bit的介绍，这吸引了我的注意。便促使了我从信息老师陶丽�
 mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双核芯片，使用当下最流行的Python编程语言，以便您轻松地将代码从电脑传输到掌控板中，从而体验程序创作的无穷乐趣！
 
 关于掌控板的更多信息可以参考 mPython掌控板文档 。顺带一提，上面的GIF是修改自官方的掌控板动态图片的。
-
-|                          如何使用？如何开发？点击查看                          |                                      安装方法                                      |                                    使用方法                                    |
-|:----------------------------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|
-| [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) | [快速安装](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html) | [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html) |
 
 # 快速浏览
 
