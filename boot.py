@@ -13,6 +13,7 @@ if button_a.value() == 0 and button_b.value() == 0:  # 两个按钮同时按下
         oled.DispChar("==Bootloader Menu==", 0, 0)
         oled.DispChar("<A> 运行备份的代码", 0, 16)
         oled.DispChar("<B> 继续代码运行", 0, 32)
+        oled.DispChar("====长按执行代码====", 0, 48)
         if button_a.value() == 0:
             try:  # 文件是否存在oDC
                 os.rename("main.py.bak", "main.py.bak_")
@@ -49,3 +50,4 @@ try:  # 文件是否存在
     os.rename("main.py.main", "main.py.main_")
 except OSError:
     pass
+

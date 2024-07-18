@@ -1,9 +1,5 @@
-import os
-import gc
-import sys
-import bluetooth
-
 from mpython import *
+
 from TaoLiSystem.core import sysgui
 from TaoLiSystem.core.config import *
 
@@ -45,6 +41,7 @@ def isEnableBluetooth():
 
 def enableBluetooth():
     global global_var
+    import bluetooth
     ble = bluetooth.BLE()
     result = ble.active(True)
     if result:
@@ -67,6 +64,7 @@ def syncTime():
 
 def delete_folder(folder):
     """文件夹，包含有文件的文件夹"""
+    import os
     if folder[-1] != "/":
         folder += "/"
     for file_info in os.ilistdir(folder):
@@ -79,6 +77,7 @@ def delete_folder(folder):
 
 def gc_collect():
     """反复清理"""
+    import gc
     m = gc.mem_free()
     n = 3
     gc.collect()
@@ -94,6 +93,7 @@ def gc_collect():
 
 def compare_and_clean_modules(imported_not_modules, KEEP_MODULES=[]):
     """比较而后清理多于的模块"""
+    import sys
     for m in list(sys.modules.keys()):
         if m not in imported_not_modules and m not in KEEP_MODULES:
             i = 0
@@ -147,3 +147,31 @@ def debug(g, l, v=None):
             cmd = " ".join(user[1:])
             print("exec返回结果:", exec(cmd, globals(), locals()))
 
+def lightsleep_irc(tip=True, callback=None):
+    """浅度睡眠"""
+    import time, machine
+    try:
+        button_a.__pin.irq(trigger=Pin.WAKE_LOW, wake=machine.PIN_WAKE)
+    except ValueError:
+        pass
+    time.sleep_ms(1000)
+    oled.fill(0)
+    machine.lightsleep()
+    button_a.__pin.irq(wake=None)
+    button_a.__pin.irq(trigger=Pin.IRQ_FALLING | Pin.IRQ_RISING, handler=button_a.__irq_handler)
+    print("已从浅度睡眠中唤醒。")
+    if tip:
+        sysgui.tipBox("已从浅度睡眠中唤醒。")
+    if callback:
+        callback()
+
+def deepsleep_irc(wake=4):
+    """深度睡眠"""
+    import time,machine
+    try:
+        button_a.__pin.irq(trigger=Pin.WAKE_LOW, wake=machine.PIN_WAKE)
+    except ValueError:
+        passs
+    time.sleep_ms(1000)
+    oled.fill(0)
+    machine.deepsleep()

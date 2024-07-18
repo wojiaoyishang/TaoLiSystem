@@ -13,7 +13,6 @@ page_id = 1  # 当前页面
 wait_close = False  # 是否准备关闭
 
 imported_not_modules = list(sys.modules.keys())  # 此模块加载的模块，结束后释放
-imported_page = utils.importModule(pages[page_id])  # 此刻的模块
 
 def load_plugin():
     """
@@ -46,20 +45,16 @@ def after_init():
         load_plugin()
     
     # 绑定按钮事件
-    button_a.event_pressed = button_a_callback
-    button_b.event_pressed = button_b_callback
-    
-    # 感谢 @罗米奇
-    if configData.read("system", "ScreenOffStatus") == "1" and configData.read("system", "ScreenOffTimeout") != "0":
-        button_a_callback(None)  # 模拟按键A被按下
-        button_b_callback(None)  # 模拟按键B被按下，保证熄屏功能不出Bug
-    
+    button_a.event_pressed, button_b.event_pressed = button_a_callback, button_b_callback
+  
     print("加载完毕运存大小:", utils.gc_collect())
 
 def init():
     """
     系统初始化
     """
+    # 调整屏幕亮度
+    oled.contrast(int(configData.read("system", "ScreenContrast", "255")))
     # 连接 WIFI
     if configData.read("system", "autoConnectWIFI") == "1":
         utils.enableWIFI()
@@ -138,7 +133,7 @@ def close_module():
         
         imported_page.close()
         
-        utils.compare_and_clean_modules(imported_not_modules)
+        utils.compare_and_clean_modules(imported_not_modules, [])
 
         print("释放页面后运存大小:", utils.gc_collect())
     
@@ -147,6 +142,9 @@ def main_loop():
     系统主循环
     """
     global pages, page_id, imported_page, wait_close
+    
+    imported_page = utils.importModule(pages[page_id])  # 系统最初的模块
+    
     while True:
         try:
             if wait_close:

@@ -39,17 +39,30 @@ def fs_put_batch_callback(file, written, src_size):
     print("正在传输文件 " + file + "...... 进度：", str(round(written / src_size * 100, 2)) + "%")
 
 
-def fs_put_batch_download(pyb, path, d, chunk_size, progress_callback):  # 结尾没有分割符号
+def fs_put_batch_download(pyb, path, d, chunk_size, progress_callback, ignore_files, delete_py=False):  # 结尾没有分割符号
     if os.path.isdir(path):
+        try:
+            if d not in ("", "/"):
+                pyb.fs_mkdir(d)
+        except:
+            pass
         for file in os.listdir(path):
-            fs_put_batch_download(pyb, path + "/" + file, d + "/" + file, chunk_size, progress_callback=progress_callback)
+            fs_put_batch_download(pyb, path + "/" + file, d + "/" + file, chunk_size,
+                                  progress_callback=progress_callback, ignore_files=ignore_files, delete_py=delete_py)
     else:
-        pyb.exec(display_cmd)
-        pyb.exec(fr"oled.fill(0);tipBox('正在传输 \n{d[d.rfind('/') + 1:]}');oled.show()")
-        pyb.fs_put(path, d, chunk_size=chunk_size, progress_callback=lambda x, y: fs_put_batch_callback(d, x, y))
+        if d not in ignore_files:
+            pyb.exec(display_cmd)
+            if d[d.rfind('.'):] == ".mpy":
+                py_file_path = d[:d.rfind('.')] + ".py"
+                if delete_py and pyb.fs_exists(py_file_path):
+                    print(f"正在删除掌控板上的 {py_file_path} ......")
+                    pyb.exec(fr"oled.fill(0);tipBox('正在删除 \n{py_file_path[py_file_path.rfind('/') + 1:]}');oled.show()")
+                    pyb.fs_rm(py_file_path)
+            pyb.exec(fr"oled.fill(0);tipBox('正在传输 \n{d[d.rfind('/') + 1:]}');oled.show()")
+            pyb.fs_put(path, d, chunk_size=chunk_size, progress_callback=lambda x, y: fs_put_batch_callback(d, x, y))
 
 
-def fs_put_batch(pyb, filelist, dest, chunk_size=256, progress_callback=None):
+def fs_put_batch(pyb, filelist, dest, chunk_size=256, progress_callback=None, ignore_files=[], delete_py=False):
     """
     批量复制文件，注意：直接覆盖原文件
 
@@ -58,6 +71,8 @@ def fs_put_batch(pyb, filelist, dest, chunk_size=256, progress_callback=None):
     :param dest: 目标地址
     :param chunk_size: 每次传输大小
     :param progress_callback: 传输回调
+    :param ignore_files: 不复制的文件
+    :param delete_py: 删除未编译文件。
     :return:
     """
     if isinstance(filelist, str):
@@ -67,6 +82,29 @@ def fs_put_batch(pyb, filelist, dest, chunk_size=256, progress_callback=None):
         progress_callback = fs_put_batch_callback
 
     for file in filelist:
-        fs_put_batch_download(pyb, file, dest, chunk_size, progress_callback)
+        fs_put_batch_download(pyb, file, dest, chunk_size, progress_callback, ignore_files=ignore_files, delete_py=delete_py)
 
     pyb.exec(fr"oled.fill(0);tipBox('全部文件传输完毕。');oled.show()")
+
+
+def fs_rm_batch(pyb, path, progress_callback=None):
+    """
+    批量删除文件
+
+    :param pyb: pyb
+    :param path: 文件路径
+    :param progress_callback: 回调
+    """
+    if progress_callback is None:
+        def progress_callback(path):
+            print(f"正在删除  Micropython 中的 {path} ......")
+
+    if pyb.fs_stat(path).st_mode == 16384:  # 是文件夹
+        for file in pyb.fs_listdir(path):
+            fs_rm_batch(pyb, path + "/" + file.name, progress_callback=progress_callback)
+        pyb.fs_rmdir(path)
+    else:
+        progress_callback(path)
+        pyb.exec(display_cmd)
+        pyb.exec(fr"oled.fill(0);tipBox('正在删除 \n{path[path.rfind('/') + 1:]}');oled.show()")
+        pyb.fs_rm(path)

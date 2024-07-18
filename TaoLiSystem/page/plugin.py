@@ -190,6 +190,7 @@ def load_plugin():
     # 记录原先按钮事件
     button_a_callback_o1, button_b_callback_o1 = button_a.event_pressed, button_b.event_pressed
     button_a.event_pressed, button_b.event_pressed = None, None
+    
     try:
         imported_module = utils.importModule("TaoLiSystem.plugins." + plugins_folder[plugin_id])
         # 记录保留的模块
@@ -211,6 +212,7 @@ def load_plugin():
         
         KEEP_MODULES = []
     sysgui.tipBox("清理内存中......", 0)
+    
     # 还原
     button_a.event_pressed, button_b.event_pressed = button_a_callback_o1, button_b_callback_o1
 
@@ -258,7 +260,6 @@ def load_plugin():
     if len(global_var['keep_modules']) == 0:
         del global_var['keep_modules']
                 
-    del m, button_a_callback_o1, button_b_callback_o1, i, KEEP_MODULES
     gc.collect()
     print("* 插件 %s (%s) 完毕，RAM:%d" % (plugins_folder[plugin_id], plugins_name[plugin_id], gc.mem_free()))
 

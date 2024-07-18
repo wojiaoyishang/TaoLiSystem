@@ -100,19 +100,20 @@ def wifi_setting():
     
     while True:
         gc.collect()
-
+        
+        wifi_options = []
+        
         # 判断 WIFI 是否开启
         if not utils.isEnableWIFI():
-            wifi_options = ["(×)WIFI状态"]
+            wifi_options.append("(×)WIFI状态")
         else:
+            wifi_options.append("(√)WIFI状态")
             if utils.isConnectWIFI():
-                wifi_options = ["(√)WIFI状态", "断开连接",
-                           "(×)自动连接" if not configData.read("system", "autoConnectWIFI") == "1" else "(√)自动连接",
-                           "查看详情"]
+                wifi_options.append("断开连接")
             else:
-                wifi_options = ["(√)WIFI状态",
-                           "(×)自动连接" if not configData.read("system", "autoConnectWIFI") == "1" else "(√)自动连接",
-                           "扫描并连接"]
+                wifi_options.append("扫描并连接")
+                
+            wifi_options.append("(×)自动连接" if not configData.read("system", "autoConnectWIFI") == "1" else "(√)自动连接")
         
         selected_option_id = sysgui.itemSelector("WIFI选项", wifi_options, selected_id=selected_option_id)
         
@@ -154,17 +155,18 @@ def wifi_setting():
                 continue 
             leave = False
             while not leave:
-                selected_network_index = sysgui.selectionBox(["WIFI名称：%s\nRSSI：%d\n(%s)" % (w[0].decode()[:5] + "..." if len(w[0].decode()) > 5 else w[0].decode(),
-                                                                  w[3],
-                                                                  ['开放', 'WEP', 'WPA_PSK', 'WPA_PSK', 'WPA_WPA2_PSK', 'MAX'][w[4]])
-                                    for w in available_networks])
+                selected_network_index = sysgui.selectionBox(
+                    ["WIFI名称：%s\nRSSI：%d\n(%s)" % (w[0].decode()[:5] + "..." if len(w[0].decode()) > 5 else w[0].decode(),
+                     w[3], ['开放', 'WEP', 'WPA_PSK', 'WPA_PSK', 'WPA_WPA2_PSK', 'MAX'][w[4]]) for w in available_networks])
                 
                 if selected_network_index is None:
                     leave = True
                     continue  # 回到 WIFI 设置
                 
-                operation_index = sysgui.itemSelector(available_networks[selected_network_index][0].decode()[:8] + "..." if len(available_networks[selected_network_index][0].decode()) > 8 else available_networks[selected_network_index][0].decode(),
-                                                    ["连接", "查看详情", "实时跟踪"])
+                operation_index = sysgui.itemSelector(available_networks[selected_network_index][0].decode()[:8] + "..."
+                                                      if len(available_networks[selected_network_index][0].decode()) > 8
+                                                      else available_networks[selected_network_index][0].decode(),
+                                                      ["连接", "查看详情", "实时跟踪"])
 
                 if operation_index is None:
                     continue  # 回到 WIFI 选择
@@ -174,7 +176,8 @@ def wifi_setting():
                     if available_networks[selected_network_index][4] != 0:
                         sysgui.messageBox("请输入WIFI密码")
                         wifi_password = sysgui.textTypeBox()
-                    
+                        
+                    utils.enableWIFI()
                     wifi().sta.connect(available_networks[selected_network_index][0].decode(), wifi_password)
                     time_ = time.time()
                     while wifi().sta.status() == 1001:
@@ -247,9 +250,6 @@ def wifi_setting():
         elif wifi_options[selected_option_id] == "(√)自动连接":
             configData.write("system", "autoConnectWIFI", "0")
 
-
-
-
 def date_setting():
     selected_option_id = 0
     
@@ -257,9 +257,11 @@ def date_setting():
     datetime = list(rtc.datetime())
     while True:
         gc.collect()
-        selected_option_id = sysgui.itemSelector("日期时间选项", ["手动设置时间", "立刻同步时间",
-                                                            "(√)自动同步时间" if configData.read("system", "autoSyncTime") == "1" else "(×)自动同步时间"],
-                                                 selected_id=selected_option_id)
+        selected_option = []
+        selected_option.append("手动设置时间")
+        selected_option.append("立刻同步时间")
+        selected_option.append("(√)自动同步时间" if configData.read("system", "autoSyncTime") == "1" else "(×)自动同步时间")
+        selected_option_id = sysgui.itemSelector("日期时间选项", selected_option, selected_id=selected_option_id)
         
         if selected_option_id is None:
             return
@@ -289,10 +291,8 @@ def date_setting():
                     # 重新映射时间，RTC时间和索引不同 Issue:I9KT1M 感谢 @FsdTS233
                     datetime[dict(zip("年月日时分秒", [0,1,2,4,5,6]))[index_name]] = value
                     
-                    
-        
         elif selected_option_id == 1:  # 立刻同步时间
-            if "wifi" not in global_var or not global_var.get("wifi").sta.isconnected():
+            if utils.isConnectWIFI():
                 sysgui.messageBox("同步时间需要\n连接WIFI。")
                 continue
             sysgui.tipBox("同步时间中......", 0)
@@ -310,38 +310,95 @@ def system_setting():
 
     while True:
         gc.collect()
-        selected_option_id = sysgui.itemSelector("掌控板设置", ["熄屏设置", "主页设置", "触摸设置", "关于此系统"],
-                                                 selected_id=selected_option_id)
+        options = ["电源选项", "屏幕设置", "主页设置", "触摸设置", "关于此系统"]
+        selected_id = sysgui.itemSelector("掌控板设置", options, selected_id=selected_option_id)
         
-        if selected_option_id is None:
-            return
+        if selected_id is None:
+            break
         
-        if selected_option_id == 0:  # 熄屏设置
+        selected_option = options[selected_id]
+        
+        if selected_option == "电源选项":
+            selected_id = sysgui.itemSelector("掌控板设置", ["硬重启", "软重启", "浅度睡眠", "深度睡眠"])
+            if selected_id == 0:
+                if sysgui.messageBox("确定硬重启？", yes_text="是的", no_text="稍后"):
+                    machine.reset()
+            elif selected_id == 1:
+                if sysgui.messageBox("确定软重启？", yes_text="是的", no_text="稍后"):
+                    machine.soft_reset()
+            elif selected_id == 2:
+                if sysgui.messageBox("确定进入浅度睡眠？\n按下 A 唤醒。", yes_text="是的", no_text="稍后"):
+                    utils.lightsleep_irc()
+            elif selected_id == 3:
+                if sysgui.messageBox("确定进入深度睡眠？\n按下 A 唤醒。", yes_text="是的", no_text="稍后"):
+                    utils.deepsleep_irc()  
+        
+        elif selected_option == "屏幕设置":  # 屏幕设置
             
-            timeout = configData.read("system", "ScreenOffTimeout")
-            if timeout is None:
-                configData.write("system", "ScreenOffTimeout", "10")
-                timeout = "10"
-            
-            sysgui.messageBox("熄屏后，\n按下A或B唤醒。")
+            # 读取所有配置项 均读取为 str 类型
+            ScreenOffStatus = configData.read("system", "ScreenOffStatus", "0")
+            ScreenOffStatus_sleep = configData.read("system", "ScreenOffStatus_sleep", "0")
+            ScreenOffTimeout = configData.read("system", "ScreenOffTimeout", "10")
+            ScreenContrast = configData.read("system", "ScreenContrast", "255")
             
             while True:
-                screen_setting_choice = sysgui.itemSelector("掌控板设置", ["(√)熄屏状态" if configData.read("system", "ScreenOffStatus") == "1" else "(×)熄屏状态"
-                                                                      , "熄屏时间：" + timeout + "s", "熄屏设置仅在首页有效"])
+                screen_setting = []
+                screen_setting.append("屏幕亮度：" + ScreenContrast)
+                screen_setting.append("(√)熄屏状态" if ScreenOffStatus == "1" else "(×)熄屏状态")
+                screen_setting.append("熄屏时间：" + ScreenOffTimeout + "s")
+                screen_setting.append("(√)熄屏进浅度睡眠" if ScreenOffStatus_sleep == "1" else "(×)熄屏进浅度睡眠")
+                screen_setting.append("熄屏设置仅在首页有效")
                 
-                if screen_setting_choice is None:
-                    break
+                screen_setting_choice = sysgui.itemSelector("掌控板设置", screen_setting)
                 
                 if screen_setting_choice == 0:
-                    configData.write("system", "ScreenOffStatus", "0" if configData.read("system", "ScreenOffStatus") == "1" else "1")
-                elif screen_setting_choice == 1:
-                    sysgui.messageBox("需要输入新熄屏时间\n为0则不启用熄屏。")
+                    sysgui.messageBox("需要输入屏幕亮度，\n最大255。")
                     value = sysgui.textTypeBox(all_text=["0123456789"])
-                    if value.strip() == "" or value.strip() == " ":
+                    if value.strip() == "" or value.strip() == " " or not value.isdigit():
+                        sysgui.tipBox("输入不合法。")
+                        continue
+                        
+                    configData.write("system", "ScreenContrast", min(int(value), 255))
+                    ScreenContrast = str(min(int(value), 255))
+                    oled.contrast(min(int(value), 255))
+                    
+                elif screen_setting_choice == 1:  # 熄屏状态
+                    configData.write("system", "ScreenOffStatus", "0" if ScreenOffStatus == "1" else "1")
+                    ScreenOffStatus = "0" if ScreenOffStatus == "1" else "1"
+                    
+                    # 顺便设置一下熄屏时间
+                    configData.write("system", "ScreenOffTimeout", int(ScreenOffTimeout))
+                    
+                    if ScreenOffStatus == "1":
+                        sysgui.messageBox("熄屏后，\n只能按下A唤醒。")  # 配合浅度睡眠
+                elif screen_setting_choice == 2:
+                    sysgui.messageBox("需要输入新熄屏时间\n为0则不启用熄屏。")
+                    value = sysgui.textTypeBox(all_text=["0123456789"]).strip()
+                    
+                    # 乱输入的情况
+                    if value == "" or not value.isdigit():
                         configData.write("system", "ScreenOffStatus", "0")  # 非法输入则拒绝，如果改配置文件强制设置，那就自作自受吧！
-                    configData.write("system", "ScreenOffTimeout", value)
-                    timeout = value
-        elif selected_option_id == 1:  # 主页设置
+                        ScreenOffStatus = "0"
+                        continue
+                    
+                    # 输入为零的情况
+                    if value == "0":
+                        configData.write("system", "ScreenOffStatus", "0")
+                        configData.write("system", "ScreenOffTimeout", "10")
+                        ScreenOffStatus = "0"
+                    else:
+                        configData.write("system", "ScreenOffTimeout", int(value))
+                        ScreenOffTimeout = value
+                        
+                elif screen_setting_choice == 3:
+                    sysgui.messageBox("睡眠可节约资源但\n部分硬件功能会暂停")
+                    
+                    configData.write("system", "ScreenOffStatus_sleep", "0" if ScreenOffStatus_sleep == "1" else "1")
+                    ScreenOffStatus_sleep = "0" if ScreenOffStatus_sleep == "1" else "1"
+                else:
+                    break
+                    
+        elif selected_option == "主页设置":  # 主页设置
             while True:
                 home = configData.read("system", "homePage", "default")
                 home_setting_choice = sysgui.itemSelector("主页设置", ["默认主页:" + home, "个性化设置"])
@@ -361,12 +418,12 @@ def system_setting():
                     else:
                         sysgui.tipBox("这个主页没有设置。")
                     sysgui.tipBox("清理中......")
-                    utils.compare_and_clean_modules(imported_modules)
+                    utils.compare_and_clean_modules(imported_modules, [])
                 else:
                     break
 
             
-        elif selected_option_id == 2:  # 触摸设置
+        elif selected_option == "触摸设置":  # 触摸设置
             button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.event_pressed  # 记录原先的按钮
             button_a.event_pressed, button_b.event_pressed = None, None
             while True:
@@ -386,7 +443,8 @@ def system_setting():
                 elif button_b.value() == 0:
                     touchPad_sensitivity += 10
             sysgui.tipBox("保存成功！")
-        elif selected_option_id == 2:  # 关于
+            
+        elif selected_option == "关于此系统":  # 关于
             try:
                 f = open("./TaoLiSystem/COPYRIGHT", "r")
                 sysgui.txtStreamReader(f, "关于此系统")

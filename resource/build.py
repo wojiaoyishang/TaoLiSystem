@@ -15,7 +15,12 @@ copy_files = [
     "boot.py"
 ]
 
-root = __file__.replace("\\", "/")
+
+if len(sys.argv) == 2 and sys.argv[1]:
+    print(os.path.abspath(sys.argv[1]))
+    root = os.path.abspath(sys.argv[1]).replace("\\", "/")
+else:
+    root = __file__.replace("\\", "/")
 
 # 文件所在目录
 build_file_path = root[:root.rfind("/")]
@@ -24,7 +29,11 @@ os.environ['PATH'] = build_file_path + os.pathsep + os.environ.get('PATH', '')
 __import__("requirements_check")  # 检测依赖
 pyboard = __import__("pyboard")
 pyboard_utils = __import__("pyboard_utils")
-serial_port = __import__('serial.tools.list_ports').tools.list_ports.comports()[0].device
+serial_ports = __import__('serial.tools.list_ports').tools.list_ports.comports()
+if len(serial_ports) != 0:
+    serial_port = serial_ports[0].device
+else:
+    serial_port = ""
 
 # 系统预编译根目录
 root = build_file_path[:build_file_path.rfind("/")]
@@ -85,8 +94,19 @@ def communicate_broad_execute(ser, msg):
     return result
 
 
+def compile_main():
+    for file in make_files:
+        compile('/', file)
+
+    # 复制文件
+    for file in copy_files:
+        print("复制文件：" + root + "/" + file)
+        shutil.copy(root + "/" + file, current_directory + "/%s/" % build_name + file)
+
+
 def compile(dir, file):
     """编译文件"""
+    global root, current_directory, build_file_path, mpy_cross_name
     if os.path.isdir(root + dir + file):
         try:
             os.mkdir(current_directory + "/%s/" % build_name + dir + file)
@@ -135,12 +155,20 @@ def choice_mpy_cross():
     global mpy_cross_name
     print("=" * 50)
     print("* 当前已经存在的 mpy-cross ：")
-
+    files = []
     for file in os.listdir(__file__[:__file__.replace("\\", "/").rfind('/')]):
         if "mpy-cross" in file and os.path.isfile(file):
-            print("* " + file)
+            files.append(file)
+
+    for i, file in enumerate(files):
+        print(f"[{i + 1}] {file}")
     print("=" * 50)
-    mpy_cross_name = input("> 请手动输入 mpy-cross 文件名或路径（为空自动退出）：").strip()
+    mpy_cross_name = input("> 请手动输入 mpy-cross 编号或者文件名（路径）（为空自动退出）：").strip()
+    if mpy_cross_name.isdigit():
+        if 0 <= int(mpy_cross_name) - 1 <= len(files) - 1:
+            mpy_cross_name = files[int(mpy_cross_name) - 1]
+        else:
+            raise RuntimeError("输入的编号不存在。")
     if mpy_cross_name == "":
         raise RuntimeError("没有选择对应版本的 mpy-cross 请自行编译或下载。")
 
@@ -148,7 +176,16 @@ def choice_mpy_cross():
 def download_files(ser, filelist):
     pyb = pyboard.Pyboard(ser)
     pyb.enter_raw_repl()
-    pyboard_utils.fs_put_batch(pyb, filelist, "")
+
+    delete_py = True
+    if input("> 是否自动删除掌控板上同名但是未编译的文件？[Y/n]：").lower() == "n":
+        delete_py = False
+
+    if pyb.fs_exists("/TaoLiSystem/data/config.ini"):
+        pyboard_utils.fs_put_batch(pyb, filelist, "", ignore_files=["/TaoLiSystem/data/config.ini"],
+                                   delete_py=delete_py)
+    else:
+        pyboard_utils.fs_put_batch(pyb, filelist, "", delete_py=delete_py)
     if input("> 传输完成，是否重启掌控板？[Y/n]：").lower() != "n":
         pyb.enter_raw_repl(soft_reset=True)
         pyb.exec_raw_no_follow("__import__('machine').reset()")
@@ -156,23 +193,33 @@ def download_files(ser, filelist):
     pyb.close()
 
 
-if __name__ == '__main__':
+def main():
+    global serial_port, build_name, current_directory, root, make_files, mpy_cross_name
+
     # 输出提示信息
     print("=" * 50)
-    print("* Micropython-mpython-掌控板 代码编译程序与下载程序 *")
+    print("* Micropython-mpython-掌控板 代码编译程序与下载程序 24.7.8 *")
     print("将 Micropython 的 py 代码转化为 mpy 编译的机器码，\n提高速度，节约内存，有效保护源代码，减少反编译。")
     print("\033[33m白名单中预编译文件/文件夹\033[0m：" + "\033[32m" + str(make_files) + "\033[0m")
     print("\033[33m编译程序目录\033[0m：" + "\033[32m" + build_file_path + "\033[0m")
     print("\033[33m被编译目录\033[0m：" + "\033[32m" + root + "\033[0m")
     print("\033[33m编译后保存目录\033[0m：" + "\033[32m" + current_directory + "/" + build_name + "\033[0m")
-    print("\033[33m检测到的掌控板通信串口\033[0m：" + "\033[32m%s\033[0m" % serial_port)
+    if serial_port == "":
+        print("\033[33m检测到的掌控板通信串口\033[0m：" + "\033[32m%s\033[0m" % "无")
+    else:
+        print("\033[33m检测到的掌控板通信串口\033[0m：" + "\033[32m%s\033[0m" % serial_port)
     print("=" * 50)
 
-    if input("> 目前串口为\033[32m%s\033[0m，请确认对应掌控板串口是否正确？[Y/n]:" % serial_port).lower() == "n":
-        serial_port = input("> 请输入掌控板对应的串口：")
+    if serial_port == "" or input(
+            "> 目前串口为\033[32m%s\033[0m，请确认对应掌控板串口是否正确？[Y/n]：" % serial_port).lower() == "n":
+        serial_port = input("> 请输入掌控板对应的串口：").strip()
+        if serial_port == "":
+            raise RuntimeError("串口输入有误。")
+        print("> 串口设定为 \033[32m%s\033[0m。" % serial_port)
 
     if input("> 是否自动检测对应串口支持的 mpy-cross ？[Y/n]:").lower() == "n":
         choice_mpy_cross()
+        print("> 编译程序设定为 \033[32m%s\033[0m。" % mpy_cross_name)
     else:
         print("\033[38;2;135;206;235m* 与掌控板通讯中......\033[0m")
         print("=" * 50)
@@ -199,25 +246,27 @@ if __name__ == '__main__':
 
         except BaseException as e:
             traceback.print_exc()
+            print("* 无法正常获取掌控板串口数据，请查看是否串口被占用，请手动选择编译程序。")
             choice_mpy_cross()
 
         print("=" * 50)
+        print("> 编译程序设定为 \033[32m%s\033[0m。" % mpy_cross_name)
 
     input("> 设置成功，按下回车开始编译。")
 
     # 编译文件
     if not os.path.exists(current_directory + "/" + build_name):
         os.mkdir(current_directory + "/" + build_name)
-
-    for file in make_files:
-        compile('/', file)
-
-    # 复制文件
-    for file in copy_files:
-        print("复制文件：" + root + "/" + file)
-        shutil.copy(root + "/" + file, current_directory + "/%s/" % build_name + file)
-
-    print("编译完成。")
+        compile_main()
+        print("编译完成。")
+    else:
+        if input("已存在构建过的文件，是否删除并重新构建？[Y/n]").lower() != "n":
+            shutil.rmtree(current_directory + "/" + build_name)
+            os.mkdir(current_directory + "/" + build_name)
+            compile_main()
+            print("编译完成。")
+        else:
+            print("跳过编译。")
 
     print("=" * 50)
     print("下列文件/文件夹将会在确认后下载到掌控板中：")
@@ -225,9 +274,18 @@ if __name__ == '__main__':
         print("* " + file)
     print("=" * 50)
 
-    if input("> 是否自动下载到掌控板？\033[38;2;135;206;235m下载过程中请不要随意终止程序\033[0m[Y/n]：").lower() != "n":
+    if input("> 是否自动下载到掌控板？此操作不会覆盖原有的配置文件。"
+             "\033[38;2;135;206;235m下载过程中请不要随意终止程序。\033[0m[Y/n]：").lower() != "n":
         try:
             download_files(serial_port, [current_directory + "/" + build_name])
         except BaseException as e:
             traceback.print_exc()
             print("出现错误！请手动使用 Thonny 等软件下载到掌控板或者稍后再试！")
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except BaseException as e:
+        traceback.print_exc()
+        input("* 按下回车结束程序。")

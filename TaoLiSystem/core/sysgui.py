@@ -565,14 +565,12 @@ def textTypeBox(text="", all_text = ["0123456789", "abcdef", "ghijkl", "mnopqr",
         while True:
             if a_pressed:
                 a_pressed = False
-                if choice_text is None and not function_mode:
-                    if messageBox("完成输入？", yes_text="是的", no_text="再想想"):
+                if choice_text is None or function_mode:
+                    if messageBox("完成输入？", yes_text="是的", no_text="更多"):
                         button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
                         return text
-                if choice_text is None and function_mode:
-                    if not messageBox("放弃输入？", yes_text="返回", no_text="是的"):
-                        button_a.event_pressed, button_b.event_pressed = original_a_callback, original_b_callback
-                        return ""
+                    elif messageBox("清空输入？", yes_text="是的", no_text="返回"):
+                        text = ""
                 elif choice_text:
                     text, text_pos = input_callback(text, choice_text[choice_pos].upper() if capsLock else choice_text[choice_pos], text_pos)
                 break
