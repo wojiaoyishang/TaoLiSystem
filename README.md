@@ -24,6 +24,7 @@
 | ![输入图片说明](resource/IMAGES/image1.jpg) | ![输入图片说明](resource/IMAGES/image2.jpg) | ![输入图片说明](resource/IMAGES/image3.jpg) |
 | 主界面                                   | 设置界面                                  | 插件界面                                  | 
 
+
 # 更新日志
 
 > **⚠️注意** 2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇](https://gitee.com/romich) 提供的修正。
@@ -77,22 +78,20 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 
 # 快速浏览
 
++ 常见界面
 
-+ 全屏选择页面
+|                                       |                                       |                                       |
+|---------------------------------------|---------------------------------------|---------------------------------------|
+| ![输入图片说明](resource/IMAGES/image4.png) | ![输入图片说明](resource/IMAGES/image5.png) | ![输入图片说明](resource/IMAGES/image6.png) |
+| 全屏选择页面                                   | 选择器界面                                  | 插件界面                                  | 
 
-<p align="center">
-  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/resource/IMAGES/image4.png" />
-</p>
++ 使用说明
 
-+ 物品选择页面
 
-<p align="center">
-  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/resource/IMAGES/image5.png" />
-</p>
 
-+ 文字输入页面
+|   |   |
+|---|---|
+| ![输入图片说明](resource/IMAGES/image7.png)  | ![输入图片说明](resource/IMAGES/image8.png)  |
+| 物品选择页面  | 文字输入页面 |
 
-<p align="center">
-  <img src="https://gitee.com/wojiaoyishang/TaoLiSystem/raw/develop/resource/IMAGES/image6.png" />
-</p>
 
