@@ -181,8 +181,8 @@ def download_files(ser, filelist):
     if input("> 是否自动删除掌控板上同名但是未编译的文件？[Y/n]：").lower() == "n":
         delete_py = False
 
-    if pyb.fs_exists("/TaoLiSystem/data/config.ini"):
-        pyboard_utils.fs_put_batch(pyb, filelist, "", ignore_files=["/TaoLiSystem/data/config.ini"],
+    if pyb.fs_exists("/TaoLiSystem/data/config.db"):
+        pyboard_utils.fs_put_batch(pyb, filelist, "", ignore_files=["/TaoLiSystem/data/config.db"],
                                    delete_py=delete_py)
     else:
         pyboard_utils.fs_put_batch(pyb, filelist, "", delete_py=delete_py)
