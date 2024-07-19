@@ -32,17 +32,21 @@
 
 > **⚠️注意** 更新 `v2.1.0` 版本，此版本有较大的更改，如需升级请认真阅读以下说明。
 
++ **Chore：** 增加了构建工具和刷入工具，可以一键构建与刷入系统便于使用。制作了掌控板系统系统配置程序，方便调试修改配置。
++ **Chore：** 调整了目录架构，增加了 `resource` 文件夹存放开发时使用的工具、资源。
++ **Chore：** 移除了不常用的插件，放在了 `resource/plugins` 文件夹下。
 + **Enhancement：** 优化了系统起始入口的代码，引入 loader 进行加载系统，面向对象，便于开发。 相关文件： `main.py`  `TaoLiSystem/core/loader.py`
 + **Enhancement：** 优化了设置页面的代码，使代码变的更易于查看。 `TaoLiSystem/page/settingFun.py`
 + **Feature：** 允许在掌控板中切换首页（切换表盘），并同时提供了 default（默认） 和 easy（示例首页） 两种首页样式，其他首页扔在开发欢迎提交 PR 。相关文件： `TaoLiSystem/page/home.py` -> `TaoLiSystem/page/home/`
 + **Feature：** 允许首页（表盘）自定义个性化设置，相关内容请查看文档。 相关文件： `TaoLiSystem/page/home/`
 + **Feature：** 修改设置项，将 `熄屏设置` 更改为 `屏幕设置` 。 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Feature：** 新增浅度睡眠、深度睡眠、软重启、硬重启等设置项。 相关文件： `TaoLiSystem/page/settingFun.py`
++ **Feature：** 新增熄屏时自动进入浅度睡眠状态选项，**调整原本熄屏唤醒用A/B键唤醒为只能用A键唤醒。**。 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Feature：** 更新蓝牙设置功能和蓝牙信息查看（尚未测试），感谢 [我叫罗米奇](https://gitee.com/romich) 。 相关文件： `TaoLiSystem/page/settingFun.py`  `TaoLiSystem/core/utils.py`
-+ **Fix：** 修复了首页熄屏无法唤醒问题，修复熄屏设置无效的问题。`` 相关文件： `TaoLiSystem/page/settingFun.py`
++ **Fix：** 修复了首页熄屏无法唤醒问题，修复熄屏设置无效的问题。 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Fix：** 修复了时间手动设置失效的问题和无法手动同步时间的问题。 [#I9KT1M](https://gitee.com/wojiaoyishang/TaoLiSystem/issues/I9KT1M) `` 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Fix：** 修复了在文字输入页面按下 O 键无效的问题，感谢 [我叫罗米奇](https://gitee.com/romich) 的修正，并在文字输入页面增加了几个可以输入的字符。 `` 相关文件： `TaoLiSystem/core/sysgui.py`
-+ **Fix：** 修复了在切换页面时反复按下按钮，无法切换的问题。 `` 相关文件： `TaoLiSystem/core/loader.py`
++ **Fix：** 修复了在切换页面时反复按下按钮，无法切换的问题。 相关文件： `TaoLiSystem/core/loader.py`
 + **Refactor：** 重构了配置文件的读取与设置，使用内置的 btree 数据库进行存储设置，速度加快。相关文件： `TaoLiSystem/core/config.py`
 
 
@@ -64,11 +68,13 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 
 上面这段文字是我高一时候写的，现在已经高中毕业，回头看满是感慨，感谢每一位老师的付出！此外同时也感谢余兴光老师和陈灵敏老师在高二高三的信息指导，同时也对通用技术老师杨守坤老师和林凯老师表示感谢！
 
+
+
 # 快速浏览
 
 |                                       |                                       |                                       |
 |---------------------------------------|---------------------------------------|---------------------------------------|
-| ![输入图片说明](resource/IMAGES/image1.png) | ![输入图片说明](resource/IMAGES/image2.png) | ![输入图片说明](resource/IMAGES/image3.png) |
+| ![输入图片说明](resource/IMAGES/image1.jpg) | ![输入图片说明](resource/IMAGES/image2.jpg) | ![输入图片说明](resource/IMAGES/image3.jpg) |
 | 主界面                                   | 设置界面                                  | 插件界面                                  | 
 
 + 全屏选择页面
