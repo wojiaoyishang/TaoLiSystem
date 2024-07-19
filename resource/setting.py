@@ -138,7 +138,7 @@ def command_help():
     print("* 命令说明：")
     print(f"* set [设置项名称]=[设置项设定值] \t{format_text('更改设置项状态')}")
     print(f"* del [设置项名称] \t{format_text('删除设置项')}")
-    print(f"* outport \t{format_text('备份设置项到电脑')}")
+    print(f"* export \t{format_text('备份设置项到电脑')}")
     print(f"* import \t{format_text('从电脑恢复设置项')}")
     print(f"* show \t{format_text('展示所有配置项')}")
     print(f"* help \t{format_text('查看帮助')}")
@@ -184,9 +184,10 @@ def setting():
             elif command[0] == "help":
                 command_help()
             elif command[0] == "set":
-                if len(command) != 2:
+                if len(command) < 2:
                     raise RuntimeError("命令输入错误。需要两个参数。")
-                key, value = command[1].split('=')
+                _ = command[1].split('=')
+                key, value = _[0], _[1] + ((' ' +  ''.join(command[2:])) if len(command) > 2 else '')
                 key = key.replace("'", "\\'")
                 value = value.replace("'", "\\'")
                 pyb.exec_(
@@ -200,7 +201,7 @@ def setting():
                 print(f"已删除 \033[33m{command[1]}\033[0m 。")
             elif command[0] == "show":
                 command_show(pyb)
-            elif command[0] == "outport":
+            elif command[0] == "export":
                 pyb.fs_get(config_path, "backup.db",
                            progress_callback=lambda x, y: pyboard_utils.fs_put_batch_callback("数据库文件 ", x, y))
                 print(f"数据库文件已保存到电脑的 \033[33m{os.path.abspath('backup.db')}\033[0m 。")

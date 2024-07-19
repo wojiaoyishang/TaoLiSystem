@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>设置界面的调用 &mdash; 桃丽掌控板系统 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=67e54c1a"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="插件页面的调用" href="plugin.html" />
+    <link rel="prev" title="界面开发与主循环调用" href="page.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            桃丽掌控板系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">介绍、配置与使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/instruction.html">欢迎查看帮助文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">安装桃丽系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/detail.html">使用桃丽系统</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">项目开发说明</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="directory.html">目录结构和系统流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page.html">界面开发与主循环调用</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">设置界面的调用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">设置项的存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">界面逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugin.html">插件页面的调用</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核心模块说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core/sysgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysgui</span></code> – 系统 GUI 模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">插件开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">插件的基本格式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id2">插件的配置文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id3">插件的开发要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id4">插件的保留导入</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">桃丽掌控板系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">项目开发说明</a></li>
+      <li class="breadcrumb-item active">设置界面的调用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/develop/setting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>设置界面的调用<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>设置界面不同于主界面，它更像是一个选择器。给用户展示选项，选择，执行。这个章节将简单阐述设置界面的工作原理。</p>
+<p>设置页面源代码存储在 <cite>TaoLiSystem/page/setting.py</cite> 中，详细设置项源代码存储在 <cite>TaoLiSystem/page/settingFun.py</cite> 中。</p>
+<section id="id2">
+<h2>设置项的存储<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>所有设置项在 <cite>setting.py</cite> 中的 <code class="docutils literal notranslate"><span class="pre">settings</span></code> 列表中，列表应该会类似如下这样：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 设置项对应设置</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;无线网络选项&quot;</span><span class="p">,</span> <span class="s2">&quot;调整互联网设置&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;wifi_setting&#39;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;日期时间选项&quot;</span><span class="p">,</span> <span class="s2">&quot;调整日期时间&quot;</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="s1">&#39;date_setting&#39;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;掌控板选项&quot;</span><span class="p">,</span> <span class="s2">&quot;设定掌控板偏好&quot;</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="s1">&#39;system_setting&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>列表 <code class="docutils literal notranslate"><span class="pre">settings</span></code> 各项的小项解释如下：</p>
+<ul class="simple">
+<li><p>第一项为设置项名称。</p></li>
+<li><p>第二项为设置项的简短介绍。</p></li>
+<li><p>第三项为设置项的图标在 <cite>TaoLiSystem/static/setting.bin</cite> 中的位置。图标 bin 文件生成 -&gt; <a class="reference external" href="https://gitee.com/wojiaoyishang/new-mpython-bin-to-picture">跳转</a> 。</p></li>
+<li><p>第四项为设置项在 <cite>settingFun.py</cite> 中的函数名称，用户长按触摸 P 按键后调用。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>设置项图标大小为 32x32 。</p>
+</div>
+</section>
+<section id="id4">
+<h2>界面逻辑<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>加入设置界面后，设计界面会重新定义按键中断，并记录 <cite>main.py</cite> 的按键中断。在设置界面到底时，按下 B 键，按键中断还原，并手动调用 B 键中断函数，触发 <cite>main.py</cite> 的页面切换逻辑。部分代码如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 按钮事件</span>
+<span class="k">def</span> <span class="nf">button_b_callback</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">setting_id</span>
+    <span class="k">if</span> <span class="n">setting_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">setting_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">button_a</span><span class="o">.</span><span class="n">event_pressed</span><span class="p">,</span> <span class="n">button_b</span><span class="o">.</span><span class="n">event_pressed</span> <span class="o">=</span> <span class="n">button_a_callback_o</span><span class="p">,</span> <span class="n">button_b_callback_o</span>  <span class="c1"># 还原按钮绑定</span>
+        <span class="n">button_b</span><span class="o">.</span><span class="n">event_pressed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">setting_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">setting_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在调用设置界面的 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 函数时，会进入设置页面的自代码循环，直接在 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 循环不退出了。您会在代码中看到这样一句代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">setting_id</span>
+<span class="c1"># 等待按钮事件</span>
+<span class="k">while</span> <span class="n">_</span> <span class="o">==</span> <span class="n">setting_id</span><span class="p">:</span>   <span class="c1"># 改变说明按键中断，改变了 setting_id 的值</span>
+    <span class="c1"># 其它代码</span>
+</pre></div>
+</div>
+<p>代码中的 <code class="docutils literal notranslate"><span class="pre">setting_id</span></code> 是全局变量，在进入循环前，把值赋给了 <code class="docutils literal notranslate"><span class="pre">_</span></code> 这个局部变量，然后使用看似“死条件”的 <code class="docutils literal notranslate"><span class="pre">_</span> <span class="pre">==</span> <span class="pre">setting_id</span></code> 来循环。实际上，正是因为 <code class="docutils literal notranslate"><span class="pre">setting_id</span></code> 是全局变量，而我们又设置了按键中断，当用户按下按键时，程序被中断了，转而去执行按钮事件函数 <code class="docutils literal notranslate"><span class="pre">button_X_callback()</span></code> （X 代表 a 或 b），在函数中会改变 <code class="docutils literal notranslate"><span class="pre">setting_id</span></code> 的值，使循环条件不成立跳出循环，转而让 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 执行结束。在 <cite>main.py</cite> 再次调用 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 按照新的 <code class="docutils literal notranslate"><span class="pre">setting_id</span></code> 绘制新的设置项。</p>
+<p>这个写法在插件界面中也有出现。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="page.html" class="btn btn-neutral float-left" title="界面开发与主循环调用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plugin.html" class="btn btn-neutral float-right" title="插件页面的调用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024 Yishang. All Rights Reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

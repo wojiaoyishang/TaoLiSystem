@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>插件页面的调用 &mdash; 桃丽掌控板系统 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=67e54c1a"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="核心模块说明" href="../core/index.html" />
+    <link rel="prev" title="设置界面的调用" href="setting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            桃丽掌控板系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">介绍、配置与使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/instruction.html">欢迎查看帮助文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">安装桃丽系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/detail.html">使用桃丽系统</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">项目开发说明</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="directory.html">目录结构和系统流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="page.html">界面开发与主循环调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setting.html">设置界面的调用</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">插件页面的调用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">插件查找</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">加载插件</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核心模块说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core/sysgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysgui</span></code> – 系统 GUI 模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">插件开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">插件的基本格式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id2">插件的配置文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id3">插件的开发要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id4">插件的保留导入</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">桃丽掌控板系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">项目开发说明</a></li>
+      <li class="breadcrumb-item active">插件页面的调用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/develop/plugin.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>插件页面的调用<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>插件界面与设置界面类似，逻辑也与设置界面界面相仿。这里仅做不同于设置界面的介绍。</p>
+<p>插件界面源代码存储在 <cite>TaoLiSystem/page/plugin.py</cite> 中。</p>
+<section id="id2">
+<h2>插件查找<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>插件均存放于 <cite>TaoLiSystem/plugins</cite> 文件夹下，插件的结构在之后的章节会介绍。</p>
+<p>插件界面被加载的时候，会自动遍历 <cite>TaoLiSystem/plugins</cite> 文件夹的所有文件，然后将插件的名称与插件的文件夹路径加入到变量 <code class="docutils literal notranslate"><span class="pre">plugins_name</span></code> 与 <code class="docutils literal notranslate"><span class="pre">plugins_folder</span></code> 中。</p>
+</section>
+<section id="id3">
+<h2>加载插件<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>加载插件分为下面几个流程，流程在 <code class="docutils literal notranslate"><span class="pre">load_plugin()</span></code> 中：</p>
+<ul class="simple">
+<li><p>记录插件加载之前导入的模块。</p></li>
+<li><p>动态导入插件，进入插件的主循环。（如果插件没有循环直接退出，如果是死循环直接无法退出。）</p></li>
+<li><p>插件主循环退出后，获取插件中的 <code class="docutils literal notranslate"><span class="pre">KEEP_MODULES</span></code> 列表变量，保留其中不释放的模块。（有些插件可能需要后台运行。）</p></li>
+<li><p>对比插件加载之前导入的模块，释放不必要的模块。在比对全局变量中上一次记录的不必要的模块，如果缺少就释放缺少的模块。</p></li>
+<li><p>记录不释放的模块到全局变量中。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="setting.html" class="btn btn-neutral float-left" title="设置界面的调用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../core/index.html" class="btn btn-neutral float-right" title="核心模块说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024 Yishang. All Rights Reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

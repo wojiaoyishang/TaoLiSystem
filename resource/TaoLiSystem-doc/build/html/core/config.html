@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>config – 系统配置模块 &mdash; 桃丽掌控板系统 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=67e54c1a"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="utils – 常见功能模块" href="utils.html" />
+    <link rel="prev" title="sysgui – 系统 GUI 模块" href="sysgui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            桃丽掌控板系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">介绍、配置与使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/instruction.html">欢迎查看帮助文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">安装桃丽系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/detail.html">使用桃丽系统</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">项目开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../develop/directory.html">目录结构和系统流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/page.html">界面开发与主循环调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/setting.html">设置界面的调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/plugin.html">插件页面的调用</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核心模块说明</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sysgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysgui</span></code> – 系统 GUI 模块</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-config">变量</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config.global_var"><code class="docutils literal notranslate"><span class="pre">global_var</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config.configData"><code class="docutils literal notranslate"><span class="pre">configData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config.touchPad_sensitivity"><code class="docutils literal notranslate"><span class="pre">touchPad_sensitivity</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">类</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#config.Config.read"><code class="docutils literal notranslate"><span class="pre">Config.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#config.Config.write"><code class="docutils literal notranslate"><span class="pre">Config.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">插件开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">插件的基本格式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id2">插件的配置文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id3">插件的开发要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id4">插件的保留导入</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">桃丽掌控板系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">核心模块说明</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/core/config.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="config">
+<h1><a class="reference internal" href="#module-config" title="config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code></a> – 系统配置模块<a class="headerlink" href="#config" title="Link to this heading">¶</a></h1>
+<p><a class="reference internal" href="#module-config" title="config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code></a> 模块源代码在文件夹 <cite>TaoLiSystem/core/config.py</cite> 下，主要用于配置的写入与读取。</p>
+<section id="module-config">
+<span id="id1"></span><h2>变量<a class="headerlink" href="#module-config" title="Link to this heading">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="config.global_var">
+<span class="sig-prename descclassname"><span class="pre">config.</span></span><span class="sig-name descname"><span class="pre">global_var</span></span><a class="headerlink" href="#config.global_var" title="Link to this definition">¶</a></dt>
+<dd><p>一个字典，用于存放全局变量。</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="config.configData">
+<span class="sig-prename descclassname"><span class="pre">config.</span></span><span class="sig-name descname"><span class="pre">configData</span></span><a class="headerlink" href="#config.configData" title="Link to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#config-config"><span class="std std-ref">Config</span></a> 类的对象，用于操作系统配置文件。</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="config.touchPad_sensitivity">
+<span class="sig-prename descclassname"><span class="pre">config.</span></span><span class="sig-name descname"><span class="pre">touchPad_sensitivity</span></span><a class="headerlink" href="#config.touchPad_sensitivity" title="Link to this definition">¶</a></dt>
+<dd><p>按键灵敏度，加载代码时自动从配置文件中提取。</p>
+</dd></dl>
+
+</section>
+<section id="id2">
+<h2>类<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<dl class="py class" id="config-config">
+<dt class="sig sig-object py" id="config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#config.Config" title="Link to this definition">¶</a></dt>
+<dd><p>操作 ini 配置文件的类，提供了一些基本的操作配置的方法。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="config.Config.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#config.Config.read" title="Link to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">section</span></code> – 配置部分</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> – 配置键</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">default</span></code> – 不存在时，默认返回值，默认为 None 。</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="config.Config.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#config.Config.write" title="Link to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">section</span></code> – 配置部分</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code> – 配置键</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code> – 配置值</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sysgui.html" class="btn btn-neutral float-left" title="sysgui – 系统 GUI 模块" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils – 常见功能模块" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024 Yishang. All Rights Reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

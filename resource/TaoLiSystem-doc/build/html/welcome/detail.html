@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>使用桃丽系统 &mdash; 桃丽掌控板系统 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=67e54c1a"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="项目开发说明" href="../develop/index.html" />
+    <link rel="prev" title="安装桃丽系统" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            桃丽掌控板系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">介绍、配置与使用</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instruction.html">欢迎查看帮助文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">安装桃丽系统</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">使用桃丽系统</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader">BootLoader 模式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">原理介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">操作说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">内部逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">主界面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">界面介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">功能说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">计时器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">掷骰子</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">电压查看</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">设置界面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">界面介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">功能说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">插件界面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">功能说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">全屏选择页面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">界面介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">物品选择页面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id21">功能说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">文字输入页面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id24">功能说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id25">文本读取页面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id27">功能说明</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">项目开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../develop/directory.html">目录结构和系统流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/page.html">界面开发与主循环调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/setting.html">设置界面的调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/plugin.html">插件页面的调用</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核心模块说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core/sysgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysgui</span></code> – 系统 GUI 模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">插件开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">插件的基本格式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id2">插件的配置文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id3">插件的开发要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id4">插件的保留导入</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">桃丽掌控板系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">介绍、配置与使用</a></li>
+      <li class="breadcrumb-item active">使用桃丽系统</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/detail.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>使用桃丽系统<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>本章节将介绍如何使用桃丽系统，在这一章节，我们会将所有开发时涉及的界面内容进行讲解。界面的介绍顺序按照系统启动的流程进行。</p>
+<section id="bootloader">
+<h2>BootLoader 模式<a class="headerlink" href="#bootloader" title="Link to this heading">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>此内容针对想要开发的同学，仅使用的同学可以跳过。</p>
+</div>
+<section id="id2">
+<h3>原理介绍<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>掌控板一开始会调用 boot.py 文件，同样，我们在 boot.py 文件中也写了一些内容。boot.py 主要用于代码备份与恢复。</p>
+<p>需要知道的是 boot.py 在调用结束之后，就会调用 main.py ， main.py 是掌控板的主要代码程序，所有 micropython 的 IDE 在刷入代码时都会修改 main.py 而不是 boot.py 。所以 boot.py 自然就成了代码备份的最佳选项。通过 boot.py 可以模拟“双系统”。</p>
+<p>首先需要准备一个 main.py.bak 放在掌控板文件的根目录下，与 boot.py 和 main.py 同级。main.py.bak 文件便是我们备份的代码，而 main.py 是默认掌控板启动执行的代码。</p>
+</section>
+<section id="id3">
+<h3>操作说明<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_bootLoader.png" class="align-center" src="../_images/welcome_bootLoader.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>在掌控板重启的时候显示LOGO时，同时按下按键A和B键，并等待LOGO消失数秒后，松开A和B键。掌控板将进入 BootLoader 模式，此时长按 A 键，等待掌控板重启，便可进入备份的代码（main.py.bak）。</p>
+</section>
+<section id="id4">
+<h3>内部逻辑<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>当按下A，<code class="docutils literal notranslate"><span class="pre">main.py</span></code> 变为 <code class="docutils literal notranslate"><span class="pre">main.py.main</span></code>。<code class="docutils literal notranslate"><span class="pre">main.py.bak</span></code> 变为 <code class="docutils literal notranslate"><span class="pre">main.py</span></code> 系统重启。</p></li>
+<li><p>第一次重启时，将 <code class="docutils literal notranslate"><span class="pre">main.py.main</span></code> 变为 <code class="docutils literal notranslate"><span class="pre">main.py.main_</span></code> 表示已经运行了备份的代码，并在下一次重启时换回代码。</p></li>
+<li><p>下一次重启，程序发现有 <code class="docutils literal notranslate"><span class="pre">main.py.main_</span></code> 便将 <code class="docutils literal notranslate"><span class="pre">main.py</span></code> 变为 <code class="docutils literal notranslate"><span class="pre">main.py.bak</span></code>；将 <code class="docutils literal notranslate"><span class="pre">main.py.main_</span></code> 变为 <code class="docutils literal notranslate"><span class="pre">main.py</span></code> 。</p></li>
+<li><p>因为掌控板没有检查文件是否存在的函数，所以使用 try 语句来拦截报错。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id5">
+<h2>主界面<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_home.png" class="align-center" src="../_images/welcome_home.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="id6">
+<h3>界面介绍<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p>主界面是系统三大界面之一，在初次进入主界面时会有欢迎提示。主界面会显示时间和日期，最上面还有一行非常小的倒计时进度条。</p>
+</section>
+<section id="id7">
+<h3>功能说明<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>在主界面按下 A 可以进入 <strong>设置界面</strong> ，按下 B 可以进入 <strong>插件界面</strong> ，这两个页面在之后会介绍。</p></li>
+<li><p>在主界面按下触摸按键 P 可以打开 <strong>计时器</strong> ，按下 Y 可以 <strong>掷骰子</strong> ，按下 N 可以 <strong>查看设备电源电压</strong> （需要打开拓展板开关，3.7V为满格电压，老的拓展板不支持，按下会死机。）</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>计时器<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_countdown.png" class="align-center" src="../_images/welcome_countdown.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p>在计时器页面按下 A 键会启动计时器，B 键会退出计时器。</p></li>
+<li><p>启动后，按下 A 键会停止计时器，B 键会记录当前时间。</p></li>
+<li><p>停止后，按下 A 键继续计时器，B 键会归零。</p></li>
+<li><p>在停止时，长按触摸按键 P 可以调出历史时间记录。（在此页面按 A 或 B 退出，实际上这个归属于 <a class="reference internal" href="#id19">物品选择页面</a> 。）</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>掷骰子<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_1to6.png" class="align-center" src="../_images/welcome_1to6.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p>弹出页面后等待数字稳定，就是您投出点数。</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>电压查看<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_power.png" class="align-center" src="../_images/welcome_power.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p>长按 N 然后松开，即可查看拓展板电池电压。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id11">
+<h2>设置界面<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_setting.png" class="align-center" src="../_images/welcome_setting.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="id12">
+<h3>界面介绍<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<p>设置界面初次进入时会有使用提示，中间显示设置图标，下方会有设置项与设置项简介。左侧是切换提示，右侧也是切换提示。当界面到底时，切换提示会消失或显示“B&gt;”意味着返回主界面。</p>
+</section>
+<section id="id13">
+<h3>功能说明<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>有切换提示时，按下 A 键或 B 键切换设置项，出现“B&gt;”并按下 B 键退出设置界面。</p></li>
+<li><p>长按触摸按键 P 并等待大约三秒可以进入设置项。</p></li>
+</ul>
+<p>由于详细设置大抵相同所以此处先不多介绍，详细查看 <a class="reference internal" href="#id19">物品选择页面</a> 。</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id14">
+<h2>插件界面<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_plugins.png" class="align-center" src="../_images/welcome_plugins.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>插件界面初次进入时会有使用提示，中间显示插件图标，下方会有插件名称与插件短的简介。左侧是切换提示，右侧也是切换提示。当页面到底时，切换提示会消失或显示“&lt;A”意味着返回主界面。</p>
+<section id="id15">
+<h3>功能说明<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>有切换提示时，按下 A 键或 B 键切换设置项，出现“&lt;A”并按下 A 键退出插件界面。</p></li>
+<li><p>长按触摸按键 P 并等待大约三秒可以进入插件。</p></li>
+<li><p>长按触摸按键 N 并等待大约三秒可以查看插件详情。</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id16">
+<span id="id17"></span><h2>全屏选择页面<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_wifi.png" class="align-center" src="../_images/welcome_wifi.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="id18">
+<h3>界面介绍<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<p>全屏选择页面是桃丽系统提供的界面之一，用于获取用户的选择项，便于开发，比如扫描WIFI后会来到这个页面。</p>
+<p>全屏选择页面下方是提示，上方是选择项。</p>
+<ul class="simple">
+<li><p>A 键确认，B 键取消。</p></li>
+<li><p>触摸 P 上一个，触摸 N 下一个，触摸 T 第一个，触摸 H 最后一个。</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id19">
+<span id="id20"></span><h2>物品选择页面<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_itemselected.png" class="align-center" src="../_images/welcome_itemselected.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>物品选择页面是桃丽系统提供的界面之一，用于获取用户的选择项，便于开发，详细的函数调用查看开发部分。这里仅阐述如何使用。
+使用物品选择页面的界面有：系统的详细设置、秒表记录查看页面等。这里使用“时间设置选项”页面进行演示。</p>
+<p>物品选择页面上方显示选择器名称，横线下方是选择项。白背景黑字显示的是目前选择项。</p>
+<section id="id21">
+<h3>功能说明<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>A 键确认，B 键取消。</p></li>
+<li><p>触摸 P 选择上一项，触摸 N 选择下一个，触摸 T 选择第一项，触摸 H 选择最后一项。</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id22">
+<span id="id23"></span><h2>文字输入页面<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_type.png" class="align-center" src="../_images/welcome_type.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>文字输入页面是是桃丽系统提供的界面之一，用户获取用户的输入，便于开发。
+使用文字输入页面的界面有：WIFI密码输入页面、日期时间输入页面。</p>
+<p>横线上方是目前输入的文字，“|”是光标，横线下方是输入的字（字组）。</p>
+<section id="id24">
+<h3>功能说明<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>刚进入时，是字组选择页面。按下触摸 P 选择上一页字组，按下触摸 N 选择下一页字组。</p></li>
+<li><p>在字组选择页面，按下触摸 Y、T、H、O 选择字组进行输入。</p></li>
+<li><p>按下触摸 Y、T、H、O 任意之后，进入输入页面。按下 A 键输入文字，按下 P 向左选择文字，按下 N 向右选择文字，按下 T 选择第一个文字，按下 H 选择最后一个文字。触摸 O 是切换大小写。</p></li>
+<li><p>在输入页面或字组选择页面按下 B 键都会加入功能模式，进入后再按一次退出。</p></li>
+<li><p>在功能页面，按下 P 光标左移，N 光标右移，T 删除，H 加入空格。</p></li>
+<li><p>在功能页面或者字组选择页面按下 A 会确认输入。</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id25">
+<span id="id26"></span><h2>文本读取页面<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/welcome_reader.png" class="align-center" src="../_images/welcome_reader.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>文本读取页面是是桃丽系统提供的界面之一，便于用户读取长文本。
+使用文本读取页面的界面有：系统关于、WIFI详情等。</p>
+<section id="id27">
+<h3>功能说明<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>A 键加入功能模式，B 键退出或者获取帮助。</p></li>
+<li><p>触摸 P 键上一页，触摸 N 键下一页。</p></li>
+<li><p>触摸 T 获取阅读百分比，触摸 H 添加书签。</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="安装桃丽系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../develop/index.html" class="btn btn-neutral float-right" title="项目开发说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024 Yishang. All Rights Reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

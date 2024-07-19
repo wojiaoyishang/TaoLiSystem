@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils – 常见功能模块 &mdash; 桃丽掌控板系统 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=67e54c1a"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="插件的基本格式" href="../plugin/index.html" />
+    <link rel="prev" title="config – 系统配置模块" href="config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            桃丽掌控板系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">介绍、配置与使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/instruction.html">欢迎查看帮助文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">安装桃丽系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/detail.html">使用桃丽系统</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">项目开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../develop/directory.html">目录结构和系统流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/page.html">界面开发与主循环调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/setting.html">设置界面的调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/plugin.html">插件页面的调用</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核心模块说明</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sysgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysgui</span></code> – 系统 GUI 模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-utils">函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#utils.importModule"><code class="docutils literal notranslate"><span class="pre">importModule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.convert_ms_to_hms"><code class="docutils literal notranslate"><span class="pre">convert_ms_to_hms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.isEnableWIFI"><code class="docutils literal notranslate"><span class="pre">isEnableWIFI()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.isEnableBluetooth"><code class="docutils literal notranslate"><span class="pre">isEnableBluetooth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.enableBluetooth"><code class="docutils literal notranslate"><span class="pre">enableBluetooth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.disableBluetooth"><code class="docutils literal notranslate"><span class="pre">disableBluetooth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.enableWIFI"><code class="docutils literal notranslate"><span class="pre">enableWIFI()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.disableWIFI"><code class="docutils literal notranslate"><span class="pre">disableWIFI()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.delete_folder"><code class="docutils literal notranslate"><span class="pre">delete_folder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.gc_collect"><code class="docutils literal notranslate"><span class="pre">gc_collect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.debug"><code class="docutils literal notranslate"><span class="pre">debug()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">插件开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">插件的基本格式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id2">插件的配置文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id3">插件的开发要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id4">插件的保留导入</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">桃丽掌控板系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">核心模块说明</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/core/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utils">
+<h1><a class="reference internal" href="#module-utils" title="utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a> – 常见功能模块<a class="headerlink" href="#utils" title="Link to this heading">¶</a></h1>
+<p><a class="reference internal" href="#module-utils" title="utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a> 模块源代码在文件夹 <cite>TaoLiSystem/core/utils.py</cite> 下，汇集了系统反复调用的一些函数，便于系统开发。</p>
+<section id="module-utils">
+<span id="id1"></span><h2>函数<a class="headerlink" href="#module-utils" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.importModule">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">importModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.importModule" title="Link to this definition">¶</a></dt>
+<dd><p>动态导入一个模块，<code class="docutils literal notranslate"><span class="pre">importModule</span></code> 函数并不是在 <a class="reference internal" href="#module-utils" title="utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a> 中定义的，<cite>main.py</cite> 调用时会动态创建这个函数。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> – 导入的模块名称。</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.convert_ms_to_hms">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">convert_ms_to_hms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">milliseconds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.convert_ms_to_hms" title="Link to this definition">¶</a></dt>
+<dd><p>转化毫秒到时分秒，返回一个元组 (hours, minutes, seconds, remaining_ms) ，元组内元素均为 <cite>int</cite> 型。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">milliseconds</span></code> – 毫秒</p></li>
+</ul>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">TaoLiSystem.core</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">convert_ms_to_hms</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">ticks_ms</span><span class="p">())</span>
+<span class="go">(11, 38, 15, 650)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.isEnableWIFI">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">isEnableWIFI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.isEnableWIFI" title="Link to this definition">¶</a></dt>
+<dd><p>是否启用 WIFI ，系统内部函数。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.isEnableBluetooth">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">isEnableBluetooth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.isEnableBluetooth" title="Link to this definition">¶</a></dt>
+<dd><p>是否启用蓝牙，系统内部函数。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.enableBluetooth">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">enableBluetooth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.enableBluetooth" title="Link to this definition">¶</a></dt>
+<dd><p>启用蓝牙，是系统内部逻辑函数。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.disableBluetooth">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">disableBluetooth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.disableBluetooth" title="Link to this definition">¶</a></dt>
+<dd><p>禁用蓝牙，是系统内部逻辑函数，一般没有用，内核代码限制。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.enableWIFI">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">enableWIFI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.enableWIFI" title="Link to this definition">¶</a></dt>
+<dd><p>启用WIFI，是系统内部逻辑函数。创建一个 wifi 实例，并放在全局变量中，方便程序全局访问。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.disableWIFI">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">disableWIFI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.disableWIFI" title="Link to this definition">¶</a></dt>
+<dd><p>禁用WIFI，从全局变量中禁用 wifi 并释放。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.delete_folder">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">delete_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.delete_folder" title="Link to this definition">¶</a></dt>
+<dd><p>删除一个空或者非空文件夹下的子目录以及文件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">folder</span></code> – 文件夹路径</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.gc_collect">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">gc_collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.gc_collect" title="Link to this definition">¶</a></dt>
+<dd><p>调用 <cite>gc.collect()</cite> 反复清理内存，让清理彻底。返回清理之后的可以内存。</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.debug">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">debug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">None</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.debug" title="Link to this definition">¶</a></dt>
+<dd><p>变量监控与调试工具。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">g</span></code> – 全局变量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">l</span></code> – 局部变量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> – 额外传入的变量，用于监控变量</p></li>
+</ul>
+<p>使用方法:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">TaoLiSystem.core</span> <span class="kn">import</span> <span class="n">utils</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;你好！皮卡丘：&quot;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>代码输出:</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="../_images/core_utils.png" class="align-center" src="../_images/core_utils.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>注意直接执行 <code class="docutils literal notranslate"><span class="pre">exe</span> <span class="pre">a=10</span></code> 并不会将原代码中的a值改变，因为函数内的变量表与原代码的变量表是相互隔离的。</p>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="config.html" class="btn btn-neutral float-left" title="config – 系统配置模块" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../plugin/index.html" class="btn btn-neutral float-right" title="插件的基本格式" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024 Yishang. All Rights Reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

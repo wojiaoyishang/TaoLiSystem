@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>界面开发与主循环调用 &mdash; 桃丽掌控板系统 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=67e54c1a"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="设置界面的调用" href="setting.html" />
+    <link rel="prev" title="目录结构和系统流程" href="directory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            桃丽掌控板系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">介绍、配置与使用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/instruction.html">欢迎查看帮助文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">安装桃丽系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/detail.html">使用桃丽系统</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">项目开发说明</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="directory.html">目录结构和系统流程</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">界面开发与主循环调用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">主循环调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">界面代码设计</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setting.html">设置界面的调用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugin.html">插件页面的调用</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核心模块说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core/sysgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysgui</span></code> – 系统 GUI 模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code> – 系统配置模块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core/utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> – 常见功能模块</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">插件开发说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">插件的基本格式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id2">插件的配置文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id3">插件的开发要求</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html#id4">插件的保留导入</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">桃丽掌控板系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">项目开发说明</a></li>
+      <li class="breadcrumb-item active">界面开发与主循环调用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/develop/page.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>界面开发与主循环调用<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>系统中有三大界面：主界面、设置界面、插件界面。与其它页面不同的是，它们是直接由 <cite>main.py</cite> 循环调用的。</p>
+<p>这些界面存在于目录 <cite>TaoLiSystem/page</cite> 文件夹下，并在 <cite>main.py</cite> 代码中做了登记，查看 <cite>main.py</cite> 文件，您可以找到下面这段代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 全部页面模块</span>
+<span class="n">pages</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaoLiSystem.page.setting&quot;</span><span class="p">,</span> <span class="s2">&quot;TaoLiSystem.page.home&quot;</span><span class="p">,</span> <span class="s2">&quot;TaoLiSystem.page.plugin&quot;</span><span class="p">]</span>
+<span class="n">page_id</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 当前页面</span>
+</pre></div>
+</div>
+<section id="id2">
+<h2>主循环调用<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>系统有一个主循环，用来维持系统不会被意外代码终止而意外退出。此代码存在于 <cite>main.py</cite> 中，但 <cite>main.py</cite> 没有界面绘制的能力（没有在 <cite>main.py</cite> 中直接绘制主界面，为了面向对象，明确各个代码的分工。），所以就调用 <code class="docutils literal notranslate"><span class="pre">pages</span></code> 变量里的模块来绘制。注：pages并未直接导入上面的模块，而是根据提供的字符串来动态导入模块。</p>
+<p>比如按照上述代码，系统会调用 <cite>TaoLiSystem.page.home</cite> 模块中的 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 函数来绘制，这个是代码预先规定好的。</p>
+<p>页面加载、退出的逻辑由 <cite>main.py</cite> 引导，当切换页面时（按下 A 键或 B键）， <cite>main.py</cite> 会等待界面模块中 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 函数执行完毕，再调用界面模块中的 <code class="docutils literal notranslate"><span class="pre">close()</span></code> 函数。在 <code class="docutils literal notranslate"><span class="pre">close()</span></code> 函数执行完毕之后， <cite>main.py</cite> 会清理界面模块本身以及其导入的其它模块，清理结束后调用其它界面模块。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>模块的导入与删除，参照 <cite>main.py</cite> 文件中的，<code class="docutils literal notranslate"><span class="pre">importModule()</span></code> 函数和 <code class="docutils literal notranslate"><span class="pre">close_module()</span></code> 函数。</p>
+</div>
+</section>
+<section id="id3">
+<h2>界面代码设计<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>界面是允许动态插入与更新的，您可以自己写一个界面并插入到 <cite>main.py</cite> 页面模块列表之中。但是最好插入在 <cite>TaoLiSystem.page.setting</cite> 之后，或者 <cite>TaoLiSystem.page.plugin</cite> 之前，因为这两个界面是系统的“边界”。</p>
+<p>假设我新建了一个 <cite>testUI.py</cite> 在 <cite>TaoLiSystem/page</cite> 文件夹下，您必须至少在 <cite>testUI.py</cite> 中包含如下内容：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show</span><span class="p">():</span>
+    <span class="c1"># main.py 会反复调用这个函数</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">close</span><span class="p">():</span>
+    <span class="c1"># 界面关闭时，会先调用这里。</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>然后在 <cite>main.py</cite> 的 <code class="docutils literal notranslate"><span class="pre">pages</span></code> 列表中插入 <code class="docutils literal notranslate"><span class="pre">TaoLiSystem.page.testUI</span></code> ，如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 全部页面模块</span>
+<span class="n">pages</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaoLiSystem.page.setting&quot;</span><span class="p">,</span> <span class="s2">&quot;TaoLiSystem.page.home&quot;</span><span class="p">,</span> <span class="s2">&quot;TaoLiSystem.page.testUI&quot;</span><span class="p">,</span> <span class="s2">&quot;TaoLiSystem.page.plugin&quot;</span><span class="p">]</span>
+<span class="n">page_id</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 当前页面</span>
+</pre></div>
+</div>
+<p>然后重启掌控板，按下 B 键，就会进入到 <cite>testUI.py</cite> 中 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 函数中了。</p>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<ul class="simple">
+<li><p>因为界面的模块是动态导入与动态释放的，所以模块中的所有代码都会在导入的时候再次执行，不必当心重复导入代码不执行的问题。</p></li>
+<li><p>界面的按键判断是通过 <a class="reference external" href="https://mpython.readthedocs.io/zh/master/tutorials/basics/buttons.html">按键中断</a> 的，所以即使界面模块销毁，按键 A 或 按键 B 的按下事件仍会触发。</p></li>
+</ul>
+</div>
+<p>你可以通过下面的代码暂时禁止 <cite>main.py</cite> 设置的按键中断：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 记录原本按钮绑定函数</span>
+<span class="n">button_a_callback_o</span><span class="p">,</span> <span class="n">button_b_callback_o</span> <span class="o">=</span> <span class="n">button_a</span><span class="o">.</span><span class="n">event_pressed</span><span class="p">,</span> <span class="n">button_b</span><span class="o">.</span><span class="n">event_pressed</span>
+<span class="n">button_a</span><span class="o">.</span><span class="n">event_pressed</span><span class="p">,</span> <span class="n">button_b</span><span class="o">.</span><span class="n">event_pressed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="c1"># do something......</span>
+
+<span class="c1"># 还原按键中断</span>
+<span class="n">button_a</span><span class="o">.</span><span class="n">event_pressed</span><span class="p">,</span> <span class="n">button_b</span><span class="o">.</span><span class="n">event_pressed</span> <span class="o">=</span> <span class="n">button_a_callback_o</span><span class="p">,</span> <span class="n">button_b_callback_o</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="directory.html" class="btn btn-neutral float-left" title="目录结构和系统流程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="setting.html" class="btn btn-neutral float-right" title="设置界面的调用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024 Yishang. All Rights Reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

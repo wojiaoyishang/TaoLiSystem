@@ -1,0 +1,1 @@
+.\venv\Scripts\sphinx-build.exe .\source .\build\html

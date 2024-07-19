@@ -8,6 +8,5 @@ __pycache__
 # IDEA
 .idea
 
-
-# 只提交一个常用的
-# mpy-cross-v5.exe
+# Python 虚拟环境
+venv
