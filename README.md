@@ -221,7 +221,7 @@ Python 编译后的文件非常大，为了减少程序体积采用了 UPX 压�
 
 ### 关于编译程序 mpy-cross 为什么需要？用了什么技术？
 
-掌控板的 mpython 固件实际上就是在 Micropython 上修改加工而来的，而 mpy-cross 是 MicroPython 编译器工具链的一部分，专门用于将 MicroPython 脚本预编译成字节码，程序会将 py 文件编译成 mpy 文件，可以提高执行效率和节省存储空间。原来是用 C 语言写的，mpy-cross 程序是直接从源码编译过来的。。
+掌控板的 mpython 固件实际上就是在 Micropython 上修改加工而来的，而 mpy-cross 是 MicroPython 编译器工具链的一部分，专门用于将 MicroPython 脚本预编译成字节码，程序会将 py 文件编译成 mpy 文件，可以提高执行效率和节省存储空间。原来是用 C 语言写的，mpy-cross 程序是直接从源码编译过来的。
 
 ### 掌控板中系统先调用 mpy 文件还是 py 文件？
 
