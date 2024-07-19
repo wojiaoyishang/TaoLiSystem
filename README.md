@@ -19,6 +19,8 @@
 桃丽系统是掌控板界面设计的一个方案，旨在将零散的代码汇集起来，便于同学老师编程。将掌控板变成一个确切、功能完善的设备。系统的宗旨是简单易用、可移植、易于编译。
 此系统由以赏独立开发，特献给他高一的信息老师，陶丽老师（顺带一提，并不是百度搜到的那个陶丽老师哦！）。系统开发时参考了大量的文献资料，感谢每一位提供文献的小伙伴！
 
+> **⚠️注意** 系统目前处于公测阶段，可能存在诸多问题，如果遇到了系统的 BUG **请尽量找出 BUG 的复现方法** 方便定位问题，有问题、建议、创意请提 Issues，有能力的同学可以提交 PR。
+
 |                                       |                                       |                                       |
 |---------------------------------------|---------------------------------------|---------------------------------------|
 | ![输入图片说明](resource/IMAGES/image1.jpg) | ![输入图片说明](resource/IMAGES/image2.jpg) | ![输入图片说明](resource/IMAGES/image3.jpg) |
@@ -94,4 +96,138 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 | ![输入图片说明](resource/IMAGES/image7.png)  | ![输入图片说明](resource/IMAGES/image8.png)  |
 | 物品选择页面  | 文字输入页面 |
 
+
+# 快速开始
+
+## 克隆仓库
+
+### 使用 git 克隆
+
+如果你的电脑上有预装 git 可以使用一条命令克隆仓库
+```bash
+git clone https://gitee.com/wojiaoyishang/TaoLiSystem.git
+```
+
+### 仓库下载
+
+当然您可以选择直接在[码云仓库](https://gitee.com/wojiaoyishang/TaoLiSystem)下载，不过码云下载需要登录。如果您不想登录可以去 [Github 仓库](https://github.com/wojiaoyishang/TaoLiSystem)，代价是需要响应的网络环境。
+
+![输入图片说明](resource/IMAGES/image9.png)
+
+将下载的压缩包解压。
+
+## 下载到掌控板
+
+### 使用一键下载脚本（推荐）（仅限 Windows）
+
+#### 说明
+
+如果仅是快速体验桃丽系统的同学，推荐使用一键下载脚本。不出意外，在完成第一步后，您将会看到一下内容：
+
+![输入图片说明](resource/IMAGES/image10.png)
+
+打开 `resource` 文件夹，里面保存的是一些开发工具以及说明文档。
+
+![输入图片说明](resource/IMAGES/image11.png)
+
+其中， `@run_build.bat` 是用于编译系统以及下载到掌控板中的，对于为什么需要的编译我们将在后文解释。 `@run_setting.bat` 是用于调整掌控板中的系统设置的。
+
+**如果您的电脑有预装 Python 的环境（推荐版本 `>=3.9` ），可以直接运行相对应的 `build.py` 和 `setting.py` 源代码文件，上述的  `@run_build.bat` 和 `@run_setting.bat` 本质上就是在调用已经编译好的 `build.py` 和 `setting.py` 。**
+
+#### 安装驱动
+
+完整的安装驱动与烧录固件过程请参考官方文档的 [驱动下载](https://mpython.readthedocs.io/zh-cn/master/board/drive.html) 和 [烧录固件](https://mpython.readthedocs.io/zh-cn/master/board/flashburn.html) 章节。或者查看详细的[安装文档](https://lab.lovepikachu.top/ebook/taolisystem/welcome/quickstart.html) 。
+
+#### 断开掌控板连线（如果有提前连接掌控板）
+
+如果掌控板先前已经连接电脑请先断开，以防端口被其他程序占用（或者在其他程序中断开串口连接）。
+
+#### 打开 `@run_build.bat` 将掌控板连接电脑
+
+程序会自动检测端口，并显示在“黑窗口”中，如果端口写的是“无”，请手动输入端口，或者重新打开程序。
+
+![输入图片说明](resource/IMAGES/image12.png)
+
+#### 选择编译器
+
+如果你不知道怎么选择编译器，请按两下回车，程序会自动连接掌控板并检测所需编译器。
+
+![输入图片说明](resource/IMAGES/image13.png)
+
+编译的文件就是同一命令下的以 `mpy-cross` 开头的文件，需要根据你的掌控板中的 Micropython 版本进行选择。
+
+如果你要手动确认 Micropython 版本，请先连接掌控板，而后使用串口通讯工具（或者支持 Micropython 编程的程序中，如 Thonny）输入：
+
+```shell
+print(list(__import__('os').uname()))
+```
+
+![输入图片说明](resource/IMAGES/image14.png)
+
+找到第三项，就是 Micropython 的版本，之后按照如下的表选择对应的 mpy-cross 版本：
+
+| MicroPython release       | .mpy version | 是否已编译 |
+|:---------------------------:|:--------------:|:-----------:|
+| v1.23                     | 6.3          | √
+| v1.22                     | 6.2          ||
+| v1.20 to v1.21            | 6.1          ||
+| v1.12 to v1.18            | 5            |√|
+| v1.11                     | 4            |√|
+| v1.9.3 - v1.10            | 3            ||
+| v1.9 - v1.9.2             | 2            ||
+| v1.5.1 - v1.8.7           | 0            ||
+
+推荐使用最新的 mpython 掌控板固件，截至 2024年7月19日 ，最新的 mpython 掌控板固件支持的是 `mpy-cross-v5`，如果你需要更新或者更旧的 mpy-cross 编译程序，可能需要自行编译。
+
+#### 开始编译
+
+请等待编译完成，会在当前目录下生成 `_build` 文件夹，你可以在传输到掌控板之后删除。
+
+![输入图片说明](resource/IMAGES/image15.png)
+
+#### 下载到掌控板
+
+编译完成之后，会提示是否上传到掌控板，按下回车确定。
+
+![输入图片说明](resource/IMAGES/image16.png)
+
+**下载过程不要中断程序，直至掌控板中提示传输完成后按下回车键重启掌控板。**
+
+![输入图片说明](resource/IMAGES/image17.png)
+
+#### 完成
+
+之后你就可以使用 TaoLiSystem 了，关于 `@run_setting.bat` 等程序请查看文档中的内容。
+
+### 使用 Thonny 软件（用于开发）
+
+#### 打开 Thonny 选择 esp32 Micropython 开发环境
+
+![输入图片说明](resource/IMAGES/image18.png)
+
+#### 下载到掌控板
+
+你可以直接将源代码上传到掌控板中，当然也可以选择编译后的文件。
+
+![输入图片说明](resource/IMAGES/image19.png)
+
+## 其他说明
+
+### 关于一键下载程序和配置程序为什么使用 UPX 压缩？为什么我的杀毒软件报毒？
+
+Python 编译后的文件非常大，为了减少程序体积采用了 UPX 压缩。编译的文件主要是提供给没有预装 Python 环境的同学使用的，避免的繁琐的操作。对于杀毒软件报毒是因为 UPX 压缩技术会造成误报，如果你不放心可以直接使用 Python 相对应的 `build.py` 和 `setting.py` 。顺带一提，`build.py` 和 `setting.py` 已经经过调整，可以直接在 IDLE 中打开运行，鲁棒性很好，可以不用命令行调用。Like This：
+
+![输入图片说明](resource/IMAGES/image20.png)
+
+### 关于编译程序 mpy-cross 为什么需要？用了什么技术？
+
+掌控板的 mpython 固件实际上就是在 Micropython 上修改加工而来的，而 mpy-cross 是 MicroPython 编译器工具链的一部分，专门用于将 MicroPython 脚本预编译成字节码，程序会将 py 文件编译成 mpy 文件，可以提高执行效率和节省存储空间。原来是用 C 语言写的，mpy-cross 程序是直接从源码编译过来的。。
+
+### 掌控板中系统先调用 mpy 文件还是 py 文件？
+
+先调用 py 文件，所以在开发时可以混用非常方便。
+
+### 其他
+
+如果你的掌控板已经安装了桃丽系统并开启了浅睡眠熄屏模式，在使用下载工具时请先唤醒掌控板。
 
