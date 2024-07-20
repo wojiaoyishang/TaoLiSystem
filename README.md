@@ -8,7 +8,10 @@
     一个掌控板的UI方案
   </h4>
 
+   <!--| <p><a href="https://gitee.com/link?target=https%3A%2F%2Fwww.bilibili.com%2Fvideo%2FBV1Hi4y1f7fC">视频说明</a>   | <a href="https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html" rel="nofollow">安装方法</a> | <a href="https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html" rel="nofollow">使用说明</a> | <a href="https://gitee.com/link?target=https%3A%2F%2Flab.lovepikachu.top%2Febook%2Ftaolisystem%2Findex.html">开发文档</a></p> |-->
+  <!---->
   [视频说明](https://www.bilibili.com/video/BV1Hi4y1f7fC)   | [安装方法](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html) | [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html) | [开发文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html)
+    <!---->
 <p align="center">
     <a href="#">
        <img src="resource/IMAGES/welcome_TaoLiSystem_gif.gif" />
