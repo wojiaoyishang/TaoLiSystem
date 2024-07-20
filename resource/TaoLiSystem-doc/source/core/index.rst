@@ -6,7 +6,8 @@
 
 .. toctree::
     :maxdepth: 1
-
+	
+    loader
     sysgui
     config
     utils

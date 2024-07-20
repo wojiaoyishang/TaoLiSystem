@@ -1,2 +1,2 @@
 @echo off
-compiled\setting.exe
+binpython\binpython.exe -f setting.py

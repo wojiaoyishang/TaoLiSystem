@@ -1,2 +1,2 @@
 @echo off
-compiled\build.exe .\build.py
+binpython\binpython.exe -f build.py

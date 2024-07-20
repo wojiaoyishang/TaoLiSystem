@@ -3,6 +3,67 @@
 
 本章节将介绍如何使用桃丽系统，在这一章节，我们会将所有开发时涉及的界面内容进行讲解。界面的介绍顺序按照系统启动的流程进行。
 
+构建与下载工具 build.py 
+------------------------
+
+build.py 文件位于 `resource` 文件夹下，用于一键编译 TaoLiSystem 并上传到掌控板中。无 Python 环境的同学请双击 `resource` 目录下的 `@run_build.bat` 文件。 程序编写时的环境为 `Python 3.9` 推荐使用 `3.9.0` 及以上的 Python 版本运行、修改源代码。
+
+原理介绍
+^^^^^^^^
+
+编译使用 Micropython 源代码中编译的 mpy-cross 程序，mpy-cross 是 MicroPython 编译器工具链的一部分，专门用于将 MicroPython 脚本预编译成字节码，程序会将 py 文件编译成 mpy 文件，可以提高执行效率和节省存储空间。想要研究的同学可以前往： `Micropython 开源项目 <https://github.com/micropython/micropython>`_ 中查看，mpy-cross 位于项目的 `mpy-cross` 文件夹中。
+
+.. note:: 在 Windows 上编译 mpy-cross 需要 MSYS2 MINGW64 环境，在较早的 Micropython mpy-cross 编译可能会报错，请使用 ``make CFLAGS_EXTRA="-Wno-dangling-pointer -Wno-enum-int-mismatch"``  命令编译来禁止编译器报告悬空指针的警告和禁止编译器警告枚举类型与整数类型之间的不匹配。新版本 Micropython 中已经修复。
+
+而连接掌控板传输文件使用的是 MicroPython 官方的 `pyboard.py` 代码。
+
+操作说明
+^^^^^^^^
+
+.. image:: ../_static/image12.png
+
+.. note:: 程序在执行时默认均为 `Yes` 即确定，只有输入 `N 或者 n` 才可以标识否。
+
+具体操作请查看 `安装桃丽系统 <quickstart.html>`_ 。
+
+系统配置工具 setting.py 
+------------------------
+
+.. warning:: 由于 v2.1.0 系统将配置文件的存储方法从原生的读取 ini 配置文件改为了 btree 数据库存储，虽然加快了配置的读取和写入但是也增加了在电脑上修改配置文件的难度。所以编写了这个程序。
+
+setting.py 文件位于 `resource` 文件夹下，用于直接修改 TaoLiSystem 在掌控板中的配置。无 Python 环境的同学请双击 `resource` 目录下的 `@run_setting.bat` 文件。 程序编写时的环境为 `Python 3.9` 推荐使用 `3.9.0` 及以上的 Python 版本运行、修改源代码。
+
+操作说明
+^^^^^^^^
+
+连接掌控板到电脑，而后打开程序，并确认端口后连按两次回车，你可以看到如图所示的内容：
+
+.. image:: ../_static/setting_dos.png
+
+注意程序一开始将输出所有配置项，如果你的系统还有进行任何设置，列表将会是空的。
+
+命令说明
+^^^^^^^^
+
++ `set` [设置项名称]=[设置项设定值]       更改设置项状态　
++ `del` [设置项名称]      删除设置项　
++ `export`        备份设置项到电脑
++ `import`        从电脑恢复设置项
++ `show`  展示所有配置项　
++ `help`  查看帮助
++ `bye`   重启掌控板，退出程序　
+
+比如你可以这样设置一项：
+
+.. image:: ../_static/setting_set.png
+	
+同时可以备份和恢复设置项：
+
+.. image:: ../_static/setting_export.png
+
+.. image:: ../_static/setting_import.png
+
+
 BootLoader 模式
 ---------------
 
@@ -247,3 +308,89 @@ BootLoader 模式
 * 触摸 P 键上一页，触摸 N 键下一页。
 * 触摸 T 获取阅读百分比，触摸 H 添加书签。
 
+.. _页面编排:
+
+页面编排
+---------
+
+切换首页
+^^^^^^^^^^
+
+首先需要在首页按下 A 键进入设置页面，在设置页面连续按下两次 A 键找到 “掌控板选项” 。
+
+|
+
+.. image:: ../_static/设置首页1.png
+   :align: center
+
+|
+
+长按 P 触摸按键进入设置项，并在选择页面按下 N 切换至 `主页设置` 。
+
+|
+
+.. image:: ../_static/设置首页2.png
+   :align: center
+
+|
+
+按下 A 键，进入 `主页设置` 。
+
+.. note:: 在打开后看到的页面中可以按下 P N 触摸按键进行左右切换选择页面不同的页面进行调整。
+
+|
+
+.. image:: ../_static/设置首页3.png
+   :align: center
+
+|
+
+|
+
+.. image:: ../_static/设置首页4.png
+   :align: center
+
+|
+
+按下 A 键，并选择 `替换页面` 。
+
+.. note:: 在这里你可以对选择的页面进行替换、删除以及个性化设置，还能在前面插入或者在后面插入页面。
+
+
+|
+
+.. image:: ../_static/设置首页6.png
+   :align: center
+
+|
+
+你可以看到可供替换的页面，如果你想要自定义页面，或者添加更多页面，请参照 :ref:`自定义主页` 。
+
+按下 A 键就可以替换页面：
+
+|
+
+.. image:: ../_static/设置首页7.png
+   :align: center
+
+|
+
+按下 A 确认之后，会自动返回页面选择页面。
+
+|
+
+.. image:: ../_static/设置首页8.png
+   :align: center
+
+|
+
+按下 B 键，再按下 A 键保存更改。
+
+|
+
+.. image:: ../_static/设置首页9.png
+   :align: center
+
+|
+
+完成之后，页面就已经更新了。

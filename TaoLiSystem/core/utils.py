@@ -92,7 +92,7 @@ def gc_collect():
     return m
 
 def compare_and_clean_modules(imported_not_modules, KEEP_MODULES=[]):
-    """比较而后清理多于的模块"""
+    """比较而后清理多余加载的模块"""
     import sys
     for m in list(sys.modules.keys()):
         if m not in imported_not_modules and m not in KEEP_MODULES:
@@ -165,7 +165,7 @@ def lightsleep_irc(tip=True, callback=None):
     if callback:
         callback()
 
-def deepsleep_irc(wake=4):
+def deepsleep_irc():
     """深度睡眠"""
     import time,machine
     try:

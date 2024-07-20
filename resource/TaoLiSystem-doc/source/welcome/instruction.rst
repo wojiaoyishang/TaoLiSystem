@@ -24,7 +24,13 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 何为桃丽系统
 ------------
 
-桃丽系统是掌控板界面设计的一个方案，旨在将零散的代码汇集起来，便于同学老师编程。将掌控板变成一个确切、功能完善的设备。此系统由以赏独立开发，特献给他高一的信息老师，陶丽老师（顺带一提，并不是百度搜到的那个陶丽老师哦！）。系统开发时参考了大量的文献资料，感谢每一位提供文献的小伙伴！
+桃丽系统又称“陶丽系统”，在信息技术必修二的某一章中有关于开发板micro:bit的介绍，这吸引了我的注意。便促使了我从信息老师陶丽那里“借”了一本信息技术必修二的教师用书，并开始了一系列的探索。
+
+.. raw:: html
+
+	从教师用书里面发现了一个叫做掌控板的开发板。于是在高一的寒假我打算制作一个“掌控板系统”来送给我们貌美如花、聪明、美丽、睿智、优雅、智商堪比爱因斯坦<del>（此处省略一万字彩虹屁）</del>、像桃（陶） 花一样美 丽 的信息老师陶丽。在征得了她的同意后，我决定将她的名字引用为系统的名字——“桃丽系统 TaoLiSystem”（简称 “TLCS”）。
+
+上面这段文字是我高一时候写的，现在已经高中毕业，回头看满是感慨，感谢每一位老师的付出！此外同时也感谢余兴光老师和陈灵敏老师在高二高三的信息指导，同时也对通用技术老师杨守坤老师和林凯老师表示感谢！
 
 桃丽系统是完全开源的，在 **码云** 开源地址为：`https://gitee.com/wojiaoyishang/TaoLiSystem <https://gitee.com/wojiaoyishang/TaoLiSystem/>`_ 
 
@@ -36,7 +42,7 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 这份文档不仅仅是一份使用说明文档，也是一份开发文档。为了便于您对系统二次开发，您必须熟知一些预备知识。这些知识都可以在 `mPython掌控板文档 <https://mpython.readthedocs.io/>`_ 中得知，下面的知识点可以便于您快速入门开发。
 
 * 掌控板基于 ESP32 开发板开发，并以 micropython 语言为基础，经过简单修改后作为掌控板的默认编程语言（也可以称为 mPython 语言）。所以部分资料可以通过添加关键词 “micropython esp32” 来查询。
-* 掌控板重新定义了 ESP32 开发板的引脚，部分引脚作为内部硬件使用。引脚的重定义可以参考官方的 `硬件概述 <https://mpython.readthedocs.io/zh/master/board/hardware.html>`_ ，内部硬件使用硬件情况可以查看官方的 `掌控板原理图 <https://mpython.readthedocs.io/zh/master/_downloads/acc90a174707bea8bb175a84ad2f9393/%E6%8E%8C%E6%8E%A7%E6%9D%BF-V2.0.3.pdf>`_ 。
+* 掌控板重新定义了 ESP32 开发板的引脚，部分引脚作为内部硬件使用。引脚的重定义可以参考官方的 `硬件概述 <https://mpython.readthedocs.io/zh-cn/master/board/hardware.html>`_ ，内部硬件使用硬件情况可以查看官方的 `掌控板原理图 <https://mpython.readthedocs.io/zh-cn/master/_downloads/acc90a174707bea8bb175a84ad2f9393/%E6%8E%8C%E6%8E%A7%E6%9D%BF-V2.0.3.pdf>`_ 。
 * 掌控板的比较底层硬件编写可以在 `mPython 语言开源仓库 <https://github.com/labplus-cn/mpython>`_ 的 port/boards/mpython 目录找到。
 * 在 `mPython 语言开源仓库 <https://github.com/labplus-cn/mpython>`_ 的 port/modules 目录中有掌控板自带的一些模块，大部分没有在 `mPython掌控板文档 <https://mpython.readthedocs.io/>`_ 公开，需要自行查看（因为文档是向重要、实用的方向编写的，一部分冷门模块没有提及）。
 

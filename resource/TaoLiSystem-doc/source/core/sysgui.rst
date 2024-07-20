@@ -3,7 +3,9 @@
 
 :mod:`sysgui` 模块源代码在文件夹 `TaoLiSystem/core/sysgui.py` 下，用于系统的GUI绘制。
 
-这个模块不依附于系统存在，可以单独提取使用。唯一依赖的变量是 ``touchPad_sensitivity`` 可以手动设置为全局变量然后提取。
+.. note:: 这个模块不依附于系统存在，可以单独提取使用。唯一依赖的变量是 ``touchPad_sensitivity`` 可以手动设置为全局变量然后提取。
+
+.. important:: 2024.7.18 修复了在文字输入页面按下 O 键无效的问题，感谢 `我叫罗米奇 <https://gitee.com/romich>`_ 的修正，并在文字输入页面增加了几个可以输入的字符。
 
 .. module:: sysgui
 
@@ -26,7 +28,7 @@
 	
 	* ``text`` -- 要绘制的文字
 	* ``y`` -- 绘制的 y 坐标
-	* ``mode`` -- 文字绘制的方式，默认为 TextMode.normal，此参数移步 `oled.DispChar() <https://mpython.readthedocs.io/zh/master/library/mPython/mpython.html#mpython.oled.DispChar>`_ 。
+	* ``mode`` -- 文字绘制的方式，默认为 TextMode.normal，此参数移步 `oled.DispChar() <https://mpython.readthedocs.io/zh-cn/master/library/mPython/mpython.html#mpython.oled.DispChar>`_ 。
 	* ``ex`` -- 从中间位置向上平移，默认为 False ，如果为 True，则文字会从屏幕中间向上平移 y 参数个像素。
 	
 .. function:: draw_rect_empty(x1, y1, x2, y2, [function, no_fill])
@@ -51,7 +53,7 @@
 	启动一个选择器，让用户全屏选择。返回用户选择的项在 ``items`` 下标。操作方法查看 :ref:`全屏选择页面` 介绍。
 	
 	* ``items`` -- 要给用户选择的物品列表
-	* ``selected_id`` -- 默认选择项，默认为 0 ，就是第一项。
+	* ``selected_id`` -- 默认选择项，默认为 0 ，就是第一项。 如果用户取消选择，则返回None。
 	
 	|
 
@@ -73,7 +75,7 @@
 	
 	* ``title`` -- 选择器标题
 	* ``items`` -- 要给用户选择的物品列表
-	* ``selected_id`` -- 默认选择项，默认为 0 ，就是第一项。
+	* ``selected_id`` -- 默认选择项，默认为 0 ，就是第一项。 如果用户取消选择，则返回None。
 	
 	|
 

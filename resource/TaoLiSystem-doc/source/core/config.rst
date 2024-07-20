@@ -3,6 +3,8 @@
 
 :mod:`config` 模块源代码在文件夹 `TaoLiSystem/core/config.py` 下，主要用于配置的写入与读取。
 
+.. important:: 2024.7.18 修改原有的 ini 存储为 btree 数据库存储，加快了读写速率。
+
 .. module:: config
 
 变量

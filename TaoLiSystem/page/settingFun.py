@@ -399,29 +399,7 @@ def system_setting():
                     break
                     
         elif selected_option == "主页设置":  # 主页设置
-            while True:
-                home = configData.read("system", "homePage", "default")
-                home_setting_choice = sysgui.itemSelector("主页设置", ["默认主页:" + home, "个性化设置"])
-                
-                if home_setting_choice == 0:  # 选择主页
-                    homes = [file for file in os.listdir("TaoLiSystem/page/home")]
-                    home = homes[sysgui.itemSelector("选择默认主页", homes)]
-                    configData.write("system", "homePage", home)
-                    if sysgui.messageBox("设置成功，\n是否立刻重启？", yes_text="是的", no_text="稍后"):
-                        machine.reset()
-                elif home_setting_choice == 1:  # 主页设置
-                    sysgui.tipBox("加载中......")
-                    imported_modules = list(sys.modules.keys())
-                    setting = getattr(utils.importModule("TaoLiSystem.page.home." + home), "setting")
-                    if setting:
-                        setting()
-                    else:
-                        sysgui.tipBox("这个主页没有设置。")
-                    sysgui.tipBox("清理中......")
-                    utils.compare_and_clean_modules(imported_modules, [])
-                else:
-                    break
-
+            homePage_setting()
             
         elif selected_option == "触摸设置":  # 触摸设置
             button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.event_pressed  # 记录原先的按钮
@@ -469,3 +447,153 @@ def system_setting():
             except OSError:
                 sysgui.tipBox("版权文件不存在！", 1)
  
+
+def homePage_setting():
+    sysgui.messageBox("你将调整系统页面\n按下B保存更改")
+    
+    # 读取全部配置
+    homePages = __import__('json').loads(configData.read('system', 'homePages', '["default"]'))
+    page_id = int(configData.read('system', 'page_id', '1'))  # 默认页面 
+
+    while True:
+        print("当前界面顺序：", homePages)
+        print("当前默认页面ID：", page_id)
+        
+        choices = []  # 选择对象
+
+        for i, homePage in enumerate(["setting"] + homePages + ["plugin"]):
+            if i == page_id:
+                name = "首页\n" + homePage
+            else:
+                name = homePage
+            
+            if i in (0, len(homePages) + 1):  # 设置或者插件页面
+                name += "\n系统界面"
+            else:
+                name += "\n自定义页面"
+            
+            choices.append(name)
+        
+        choice = sysgui.selectionBox(choices, selected_id=page_id)
+        
+        if choice is None:
+            if sysgui.messageBox("保存并退出？", yes_text="是的", no_text="更多"):
+                sysgui.tipBox("正在保存......", 0)
+                
+                # 写到配置文件
+                configData.write('system', 'homePages',  __import__('json').dumps(homePages))
+                configData.write('system', 'page_id',  page_id)
+                
+                # 同步主页
+                from TaoLiSystem.core.loader import pages
+                
+                # 删掉所有
+                for _ in range(len(pages)):
+                    pages.pop()
+                
+                # 重新写入
+                pages.append("TaoLiSystem.page.setting")
+                for _ in homePages:
+                    pages.append("TaoLiSystem.page.home." + _)
+                pages.append("TaoLiSystem.page.plugin")
+                
+                break
+            elif sysgui.messageBox("你要？", yes_text="放弃更改", no_text="继续修改", button_line=True):
+                break
+            else:
+                continue
+        
+        while True:
+            operates = []
+            
+            if choice == 0 or choice == len(choices) - 1:  # 设置或者插件页面
+                operates.append("设为首页")
+                operates.append("在前面插入页面")
+                operates.append("在后面插入页面")
+            else:
+                operates.append("替换页面")
+                operates.append("设为首页")
+                operates.append("个性化设置")
+                operates.append("删除")
+                operates.append("在前面插入页面")
+                operates.append("在后面插入页面")
+            
+            if choice == 0:
+                operate = sysgui.itemSelector("ID:0 设置界面", operates)
+            elif choice == len(homePages) + 1:
+                operate = sysgui.itemSelector("ID:%d 插件界面" % (len(homePages) + 1), operates)
+            else:
+                operate = sysgui.itemSelector("ID:%d %s" % (choice, homePages[choice - 1]), operates)
+            
+            if operate is None:  # 没有选择
+                break
+            
+            if operates[operate] == "替换页面":
+                while True:
+                    homes = [file for file in os.listdir("TaoLiSystem/page/home")]
+                    home = sysgui.itemSelector("选择默认主页", homes)
+                    
+                    if home is None:
+                        break
+                    else:
+                        homePages[choice - 1] = homes[home]  # homePages 与 choices 差 1
+                        sysgui.messageBox("页面调整为:\n" + homes[home])
+                        break
+                    
+            elif operates[operate] == "设为首页":
+                page_id = choice
+                sysgui.messageBox("页面设置为首页")
+            
+            elif operates[operate] == "个性化设置":
+                sysgui.tipBox("加载中......")
+                imported_modules = list(sys.modules.keys())
+                print("TaoLiSystem.page.home." + homePages[choice - 1])
+                setting = getattr(utils.importModule("TaoLiSystem.page.home." + homePages[choice - 1]), "setting")
+                if setting:
+                    setting()
+                else:
+                    sysgui.tipBox("这个主页没有个性化设置。")
+                sysgui.tipBox("清理中......")
+                utils.compare_and_clean_modules(imported_modules, [])
+                
+            elif operates[operate] == "删除":
+                if sysgui.messageBox("确定删除\n" + "ID:%s %s" % (choice, homePages[choice - 1]) + "？", yes_text="是的", no_text="取消"):
+                    del homePages[choice - 1]
+                    if page_id == choice:  # 如果删除的是首页
+                        page_id -= 1
+                    break
+                
+            elif operates[operate] == "在前面插入页面":
+                if choice == 0:  # 如果是设置
+                    sysgui.messageBox("设置界面前面\n不允许插入页面")
+                    continue
+                while True:
+                    homes = [file for file in os.listdir("TaoLiSystem/page/home")]
+                    home = sysgui.itemSelector("选择插入的页面", homes)
+                    
+                    if home is None:
+                        break
+                    else:
+                        homePages.insert(choice - 1, homes[home])
+                        sysgui.messageBox("已插入页面:\n" + homes[home])
+                        choice += 1  # 插入之后跟进
+                        page_id += 1
+                        break
+                    
+            elif operates[operate] == "在后面插入页面":
+                if choice == len(homePages) + 1:  # 如果是设置
+                    sysgui.messageBox("插件界面后面\n不允许插入页面")
+                    continue
+                while True:
+                    homes = [file for file in os.listdir("TaoLiSystem/page/home")]
+                    home = sysgui.itemSelector("选择插入的页面", homes)
+                    
+                    if home is None:
+                        break
+                    else:
+                        homePages.insert(choice, homes[home])
+                        sysgui.messageBox("已插入页面:\n" + homes[home])
+                        choice -= 1  # 插入之后跟进
+                        page_id -= 1
+                        break
+            

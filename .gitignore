@@ -1,5 +1,6 @@
 # 系统配置文件
 TaoLiSystem/config/*
+backup.db
 
 # 构建文件和 Python 的缓存文件
 _build

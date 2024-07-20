@@ -15,16 +15,19 @@ copy_files = [
     "boot.py"
 ]
 
+root = __file__.replace("\\", "/")
 
-if len(sys.argv) == 2 and sys.argv[1]:
-    print(os.path.abspath(sys.argv[1]))
-    root = os.path.abspath(sys.argv[1]).replace("\\", "/")
-else:
-    root = __file__.replace("\\", "/")
+if root[root.rfind("/") + 1:] == "binpython for TaoLiSystem.py":  # 如果是在 binpython 中
+    root = root[:root.rfind("/")]
 
 # 文件所在目录
 build_file_path = root[:root.rfind("/")]
+# 系统预编译根目录
+root = build_file_path[:build_file_path.rfind("/")]
 os.environ['PATH'] = build_file_path + os.pathsep + os.environ.get('PATH', '')
+os.environ['PATH'] = root + os.pathsep + os.environ.get('PATH', '')
+sys.path.append(build_file_path)
+sys.path.append(root)
 # 导入文件当前目录包，这样做是为了防止程序不在 resource 下运行时出现问题
 __import__("requirements_check")  # 检测依赖
 pyboard = __import__("pyboard")
@@ -34,9 +37,6 @@ if len(serial_ports) != 0:
     serial_port = serial_ports[0].device
 else:
     serial_port = ""
-
-# 系统预编译根目录
-root = build_file_path[:build_file_path.rfind("/")]
 
 # 获取当前目录
 current_directory = os.getcwd()

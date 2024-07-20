@@ -6,13 +6,21 @@ from mpython import *
 from TaoLiSystem.core import sysgui, utils
 from TaoLiSystem.core.config import *
 
-pages = ["TaoLiSystem.page.setting",
-         "TaoLiSystem.page.home." + configData.read("system", "homePage", "default"),
-         "TaoLiSystem.page.plugin"]  # 全部页面模块
-page_id = 1  # 当前页面
-wait_close = False  # 是否准备关闭
-
 imported_not_modules = list(sys.modules.keys())  # 此模块加载的模块，结束后释放
+
+# ==========================页面模块配置加载开始==========================
+pages = []
+
+pages.append("TaoLiSystem.page.setting")
+for _ in __import__('json').loads(configData.read('system', 'homePages', '["default"]')):
+    pages.append("TaoLiSystem.page.home." + _)
+pages.append("TaoLiSystem.page.plugin")
+
+page_id = int(configData.read('system', 'page_id', '1'))  # 当前页面
+
+wait_close = False  # 是否准备关闭
+bootconfig = {}  # 注意这里一段只是为了提醒末尾还有一句 bootconfig 配置读取
+# ==========================页面模块配置加载结束==========================
 
 def load_plugin():
     """

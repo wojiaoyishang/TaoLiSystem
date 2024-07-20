@@ -8,7 +8,6 @@ from TaoLiSystem.modules import bin2picture
 from TaoLiSystem.core.config import *
 
 # ===================================开始初始化桌面===================================
-from .function import *
 
 # 清理一下掌控板启动完毕之后的内存冗余
 utils.gc_collect()
@@ -41,7 +40,7 @@ button_a_callback_o, button_b_callback_o = button_a.event_pressed, button_b.even
 # ===================================初始化桌面结束===================================
 
 def show():
-    global pre_time, screenOff_timeout
+    global pre_time, screenOff_timeout, screenOff_countdown
     
     t = time.localtime()
     
@@ -105,5 +104,3 @@ def setting():
 
 def close():
     albbhp_font_fp.close()
-
-

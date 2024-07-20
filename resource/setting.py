@@ -5,40 +5,29 @@ import ctypes
 import operator
 import traceback
 
-# 配置项对应的说明
-instructions = {
-    "system:settingTipped": "设置页面新手提示",
-    "system:homeTipped": "设置页面新手提示",
-    "system:ScreenOffTimeout": "屏幕熄屏时间",
-    "system:touchPad_sensitivity": "触摸按键敏感度",
-    "system:ScreenOffStatus": "屏幕是否启用熄屏",
-    "system:itemSelectorTipped": "选择器新手提示",
-    "system:ScreenOffStatus_sleep": "是否启用熄屏浅睡眠",
-    "system:autoConnectWIFI": "是否自动连接WIFI",
-    "system:autoConnectWIFI_password": "自动连接WIFI密码",
-    "system:autoConnectWIFI_ssid": "自动连接WIFI名称",
-    "system:autoSyncTime": "是否自动同步时间",
-    "FlappyBird:score": "插件飞行小鸟的最高分数",
-    "weather:location": "天气插件的天气获取位置"
-}
-
 root = __file__.replace("\\", "/")
+
+if root[root.rfind("/") + 1:] == "binpython for TaoLiSystem.py":  # 如果是在 binpython 中
+    root = root[:root.rfind("/")]
 
 # 文件所在目录
 build_file_path = root[:root.rfind("/")]
+# 系统预编译根目录
+root = build_file_path[:build_file_path.rfind("/")]
 os.environ['PATH'] = build_file_path + os.pathsep + os.environ.get('PATH', '')
+os.environ['PATH'] = root + os.pathsep + os.environ.get('PATH', '')
+sys.path.append(build_file_path)
+sys.path.append(root)
 # 导入文件当前目录包，这样做是为了防止程序不在 resource 下运行时出现问题
 __import__("requirements_check")  # 检测依赖
-pyboard = __import__("pyboard");
+pyboard = __import__("pyboard")
 pyboard_utils = __import__("pyboard_utils")
 serial_ports = __import__('serial.tools.list_ports').tools.list_ports.comports()
+instructions = __import__("setting_instructions").instructions
 if len(serial_ports) != 0:
     serial_port = serial_ports[0].device
 else:
     serial_port = ""
-
-# 系统预编译根目录
-root = build_file_path[:build_file_path.rfind("/")]
 
 # 掌控板配置文件位置
 config_path = "TaoLiSystem/data/config.db"
@@ -187,7 +176,7 @@ def setting():
                 if len(command) < 2:
                     raise RuntimeError("命令输入错误。需要两个参数。")
                 _ = command[1].split('=')
-                key, value = _[0], _[1] + ((' ' +  ''.join(command[2:])) if len(command) > 2 else '')
+                key, value = _[0], _[1] + ((' ' + ''.join(command[2:])) if len(command) > 2 else '')
                 key = key.replace("'", "\\'")
                 value = value.replace("'", "\\'")
                 pyb.exec_(
@@ -197,7 +186,7 @@ def setting():
                 if len(command) != 2:
                     raise RuntimeError("命令输入错误。需要两个参数。")
                 pyb.exec_(
-                    f"del configData.db[('{command[1]}').encode()]")
+                    f"del configData.db[('{command[1]}').encode()];configData.db.flush()")
                 print(f"已删除 \033[33m{command[1]}\033[0m 。")
             elif command[0] == "show":
                 command_show(pyb)
