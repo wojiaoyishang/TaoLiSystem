@@ -103,17 +103,17 @@
 
 .. code-block:: python
 	
-    def show():
-        # main.py 会反复调用这个函数
-        pass
-	
+	def show():
+		# main.py 会反复调用这个函数
+		pass
+
 	def setting():  #  这个函数如果没有就不会调用，默认禁用 “个性化设置” 选项。
 		# 设置页面的 “个性化设置” 选项会调用这里
 		pass
-	
-    def close():
-        # 界面关闭时，会先调用这里。
-        pass
+
+	def close():
+		# 界面关闭时，会先调用这里。
+		pass
 
 .. important:: 你设计的页面如果只包含以上内容那只有最简单的“绘制”功能，如果还需要熄屏等功能，需要自行处理其他逻辑，你可以参考 `easy/__init__.py` 的内容，学习一个简单的界面是如何处理逻辑的：
 
