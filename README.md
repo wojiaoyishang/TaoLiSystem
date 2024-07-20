@@ -45,7 +45,7 @@
 + **Chore：** 移除了不常用的插件，放在了 `resource/plugins` 文件夹下。
 + **Enhancement：** 优化了系统起始入口的代码，引入 loader 进行加载系统，面向对象，便于开发。 相关文件： `main.py`  `TaoLiSystem/core/loader.py`
 + **Enhancement：** 优化了设置页面的代码，使代码变的更易于查看。 `TaoLiSystem/page/settingFun.py`
-+ **Feature：** 允许在掌控板中切换首页（切换表盘），并同时提供了 default（默认） 和 easy（示例首页） 两种首页样式，其他首页扔在开发欢迎提交 PR 。相关文件： `TaoLiSystem/page/home.py` -> `TaoLiSystem/page/home/`
++ **Feature：** 允许在掌控板中切换首页（切换表盘）和编排页面，并且支持热更新，并同时提供了 default（默认） 和 easy（示例首页） 两种首页样式，其他首页扔在开发欢迎提交 PR 。相关文件： `TaoLiSystem/page/home.py` -> `TaoLiSystem/page/home/`
 + **Feature：** 允许首页（表盘）自定义个性化设置，相关内容请查看文档。 相关文件： `TaoLiSystem/page/home/`
 + **Feature：** 修改设置项，将 `熄屏设置` 更改为 `屏幕设置` 。 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Feature：** 新增浅度睡眠、深度睡眠、软重启、硬重启等设置项。 相关文件： `TaoLiSystem/page/settingFun.py`
