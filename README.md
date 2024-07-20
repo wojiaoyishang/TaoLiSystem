@@ -19,7 +19,13 @@
 桃丽系统是掌控板界面设计的一个方案，旨在将零散的代码汇集起来，便于同学老师编程。将掌控板变成一个确切、功能完善的设备。系统的宗旨是简单易用、可移植、易于编译。
 此系统由以赏独立开发，特献给他高一的信息老师，陶丽老师（顺带一提，并不是百度搜到的那个陶丽老师哦！）。系统开发时参考了大量的文献资料，感谢每一位提供文献的小伙伴！
 
+<!--|
+[admonition title="注意" icon="exclamation-triangle" color="red"]<p>系统目前处于公测阶段，可能存在诸多问题，如果遇到了系统的 BUG **请尽量找出 BUG 的复现方法** 方便定位问题，有问题、建议、创意请提 Issues，有能力的同学可以提交 PR。</p>[/admonition]
+|-->
+
+<!---->
 > **⚠️注意** 系统目前处于公测阶段，可能存在诸多问题，如果遇到了系统的 BUG **请尽量找出 BUG 的复现方法** 方便定位问题，有问题、建议、创意请提 Issues，有能力的同学可以提交 PR。
+<!---->
 
 |                                       |                                       |                                       |
 |---------------------------------------|---------------------------------------|---------------------------------------|
@@ -29,16 +35,32 @@
 
 # 更新日志
 
+<!--|
+[admonition title="注意" icon="exclamation-triangle" color="red"]<p>2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇(https://gitee.com/romich) 提供的修正。另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。点击这里查看 [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) 。</p>[/admonition]
+|-->
+
+<!--|
+[admonition title="注意" icon="exclamation-triangle" color="red"]<p>2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 ，v1.0.0 版本已不再更新和维护。</p>[/admonition]
+|-->
+
+<!---->
 > **⚠️注意** 2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇](https://gitee.com/romich) 提供的修正。
 > 另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行
 > Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。
 > 点击这里查看 [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) 。
 
 > **⚠️注意** 2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 ，v1.0.0 版本已不再更新和维护。
+<!---->
 
 ## 2024.7.19
 
+<!--|
+[admonition title="注意" icon="exclamation-triangle" color="red"]<p>更新 <code>v2.1.0</code> 版本，此版本有较大的更改，如需升级请认真阅读以下说明。</p>[/admonition]
+|-->
+
+<!---->
 > **⚠️注意** 更新 `v2.1.0` 版本，此版本有较大的更改，如需升级请认真阅读以下说明。
+<!---->
 
 + **Chore：** 增加了构建工具和刷入工具，可以一键构建与刷入系统便于使用。制作了掌控板系统系统配置程序，方便调试修改配置。
 + **Chore：** 调整了目录架构，增加了 `resource` 文件夹存放开发时使用的工具、资源。
@@ -52,7 +74,7 @@
 + **Feature：** 新增熄屏时自动进入浅度睡眠状态选项，**调整原本熄屏唤醒用A/B键唤醒为只能用A键唤醒。**。 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Feature：** 更新蓝牙设置功能和蓝牙信息查看（尚未测试），感谢 [我叫罗米奇](https://gitee.com/romich) 。 相关文件： `TaoLiSystem/page/settingFun.py`  `TaoLiSystem/core/utils.py`
 + **Fix：** 修复了首页熄屏无法唤醒问题，修复熄屏设置无效的问题。 相关文件： `TaoLiSystem/page/settingFun.py`
-+ **Fix：** 修复了时间手动设置失效的问题和无法手动同步时间的问题。 [#I9KT1M](https://gitee.com/wojiaoyishang/TaoLiSystem/issues/I9KT1M) `` 相关文件： `TaoLiSystem/page/settingFun.py`
++ **Fix：** 修复了时间手动设置失效的问题和无法手动同步时间的问题。 [#I9KT1M](https://gitee.com/wojiaoyishang/TaoLiSystem/issues/I9KT1M) 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Fix：** 修复了在文字输入页面按下 O 键无效的问题，感谢 [我叫罗米奇](https://gitee.com/romich) 的修正，并在文字输入页面增加了几个可以输入的字符。 `` 相关文件： `TaoLiSystem/core/sysgui.py`
 + **Fix：** 修复了在切换页面时反复按下按钮，无法切换的问题。 相关文件： `TaoLiSystem/core/loader.py`
 + **Refactor：** 重构了配置文件的读取与设置，使用内置的 btree 数据库进行存储设置，速度加快。相关文件： `TaoLiSystem/core/config.py`
