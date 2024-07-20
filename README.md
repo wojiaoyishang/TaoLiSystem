@@ -96,6 +96,73 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 | ![输入图片说明](resource/IMAGES/image7.png)  | ![输入图片说明](resource/IMAGES/image8.png)  |
 | 物品选择页面  | 文字输入页面 |
 
+# 目录架构
+
+## 仓库目录
+
+```
+仓库根目录
+│
+├─TaoLiSystem
+│
+└─resource  # 开发资源
+	│      @run_build.bat   #  一键写入脚本
+	│      @run_setting.bat  #  一键设置脚本
+	│      build.py  #  写入脚本源代码
+	│      setting.py  #  设置脚本源代码
+	│      setting_instructions.py  #  设置脚本源代码中的设置项简介
+	│      mpy-cross-vN.exe  #  编译程序
+	│      pyboard.py  # 脚本要使用的 pyboard 支持库
+	│      pyboard_utils.py  # 拓展的 pyboard 支持库
+	│      requirements_check.py  # 脚本进行依赖检查的模块
+	│
+	├─IMAGES  # 仓库的图片存放文件夹
+	├─plugins  # 可选用的插件，需要请拷到 TaoLiSystem 的 plugins 文件夹下
+	├─TaoLiSystem-doc  # 开发文档源文件
+	└─compiled  # 编译的一键脚本源程序存放文件夹
+```
+
+## 系统目录
+
+```
+掌控板根目录
+│  boot.py  # 启动文件，内有 BootLoader 模式。
+│  main.py  # 入口文件，将会调用 loader.py 进行加载。
+│
+└─TaoLiSystem  # 桃丽系统的代码文件夹
+	│  COPYRIGHT  # 版权文件，用于系统关于
+	│
+	├─core  # 系统核心文件夹
+	│      config.py  # 系统配置文件读取工具、全局变量存放位置
+	│      sysgui.py  # 系统 GUI 绘制，所有常见 GUI 界面都在这里
+	│      utils.py  # 系统零碎的代码集合
+	│      loader.py  # 用于分配显示的页面与处理系统逻辑
+	│
+	├─data  # 数据存放文件夹
+	│      config.ini  # 系统配置文件
+	│
+	├─modules  # 系统外接的模块文件夹存放位置
+	├─page  # 系统的主要页面
+	│  └─home  # 主页面
+	│      ├─default
+	│      │    __init__.py  # 默认主页，原来的 home.py
+	│      │    function.py  # 原来的 homeFun.py
+	│      │
+	│      └─easy
+	│           __init__.py  # 简单示例页面
+	│
+	│  plugin.py  # 插件页面
+	│  setting.py  # 设置页面
+	│  settingFun.py  # 详细设置项
+	│
+	├─plugins  # 文件文件夹
+	│  └─HelloWorld  # 示例插件文件夹
+	│         ico.bin  # 插件图标、图片存放文件
+	│         __init__.json  # 插件信息文件
+	│         __init__.py  # 插件启动代码
+	│
+	└─static  # 资源文件存放位置
+```
 
 # 快速开始
 
