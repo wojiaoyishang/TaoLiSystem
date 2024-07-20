@@ -280,6 +280,10 @@ print(list(__import__('os').uname()))
 
 ## 其他说明
 
+### 如何自定义主页？！
+
+请看 [页面编排](https://lab.lovepikachu.top/ebook/taolisystem/welcome/detail.html#id33 )，和 [自定义页面开发](https://lab.lovepikachu.top/ebook/taolisystem/develop/page.html#id5) 。
+
 ### 关于 binpython 程序为什么使用 UPX 压缩？为什么我的杀毒软件报毒？
 
 Python 编译后的文件非常大，为了减少程序体积采用了 UPX 压缩。编译的文件主要是提供给没有预装 Python 环境的同学使用的，避免的繁琐的操作。对于杀毒软件报毒是因为 UPX 压缩技术会造成误报，如果你不放心可以直接使用 Python 运行相对应的 `build.py` 和 `setting.py` 。顺带一提，`build.py` 和 `setting.py` 已经经过调整，可以直接在 IDLE 中打开运行，鲁棒性很好，可以不用命令行调用。Like This：
