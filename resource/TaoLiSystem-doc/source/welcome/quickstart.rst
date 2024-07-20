@@ -85,7 +85,7 @@
 
 其中， `@run_build.bat` 是用于编译系统以及下载到掌控板中的，对于为什么需要的编译我们将在后文解释。 `@run_setting.bat` 是用于调整掌控板中的系统设置的。
 
-**如果您的电脑有预装 Python 的环境（推荐版本 `>=3.9` ），可以直接运行相对应的 `build.py` 和 `setting.py` 源代码文件，上述的  `@run_build.bat` 和 `@run_setting.bat` 本质上就是在调用已经编译好的 `build.py` 和 `setting.py` 。**
+**如果您的电脑有预装 Python 的环境（推荐版本 `>=3.9` ），可以直接运行相对应的 `build.py` 和 `setting.py` 源代码文件，上述的  `@run_build.bat` 和 `@run_setting.bat` 本质上就是在调用已经编译好的微型 Python 来执行 `build.py` 和 `setting.py` 。**
 
 断开掌控板连线（如果有提前连接掌控板）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
