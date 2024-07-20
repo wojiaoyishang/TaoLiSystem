@@ -78,7 +78,7 @@
 + **Feature：** 更新蓝牙设置功能和蓝牙信息查看（尚未测试），感谢 [我叫罗米奇](https://gitee.com/romich) 。 相关文件： `TaoLiSystem/page/settingFun.py`  `TaoLiSystem/core/utils.py`
 + **Fix：** 修复了首页熄屏无法唤醒问题，修复熄屏设置无效的问题。 相关文件： `TaoLiSystem/page/settingFun.py`
 + **Fix：** 修复了时间手动设置失效的问题和无法手动同步时间的问题。 [#I9KT1M](https://gitee.com/wojiaoyishang/TaoLiSystem/issues/I9KT1M) 相关文件： `TaoLiSystem/page/settingFun.py`
-+ **Fix：** 修复了在文字输入页面按下 O 键无效的问题，感谢 [我叫罗米奇](https://gitee.com/romich) 的修正，并在文字输入页面增加了几个可以输入的字符。 `` 相关文件： `TaoLiSystem/core/sysgui.py`
++ **Fix：** 修复了在文字输入页面按下 O 键无效的问题，感谢 [我叫罗米奇](https://gitee.com/romich) 的修正，并在文字输入页面增加了几个可以输入的字符。 相关文件： `TaoLiSystem/core/sysgui.py`
 + **Fix：** 修复了在切换页面时反复按下按钮，无法切换的问题。 相关文件： `TaoLiSystem/core/loader.py`
 + **Refactor：** 重构了配置文件的读取与设置，使用内置的 btree 数据库进行存储设置，速度加快。相关文件： `TaoLiSystem/core/config.py`
 
@@ -110,7 +110,7 @@ mPython掌控板是一块MicroPython微控制器板，它集成ESP32高性能双
 |                                       |                                       |                                       |
 |---------------------------------------|---------------------------------------|---------------------------------------|
 | ![输入图片说明](resource/IMAGES/image4.png) | ![输入图片说明](resource/IMAGES/image5.png) | ![输入图片说明](resource/IMAGES/image6.png) |
-| 全屏选择页面                                   | 选择器界面                                  | 插件界面                                  | 
+| 全屏选择页面                                   | 选择器页面                                  | 文字输入页面                                  | 
 
 + 使用说明
 
