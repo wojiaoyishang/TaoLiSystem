@@ -10,7 +10,7 @@
 
    <!--| <p><a href="https://gitee.com/link?target=https%3A%2F%2Fwww.bilibili.com%2Fvideo%2FBV1Hi4y1f7fC">视频说明</a>   | <a href="https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html" rel="nofollow">安装方法</a> | <a href="https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html" rel="nofollow">使用说明</a> | <a href="https://gitee.com/link?target=https%3A%2F%2Flab.lovepikachu.top%2Febook%2Ftaolisystem%2Findex.html">开发文档</a></p> |-->
   <!---->
-  [视频说明](https://www.bilibili.com/video/BV1Hi4y1f7fC)   | [安装方法](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html) | [使用说明](https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html) | [开发文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html)
+  [视频说明](https://www.bilibili.com/video/BV1Hi4y1f7fC)   | [安装方法](https://lab.zhangyishang.top/ebook/taolisystem/welcome/quickstart.html) | [使用说明](https://lab.zhangyishang.top/ebook/taolisystem/welcome/detail.html) | [开发文档](https://lab.zhangyishang.top/ebook/taolisystem/index.html)
     <!---->
 <p align="center">
     <a href="#">
@@ -50,7 +50,7 @@
 > **⚠️注意** 2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇](https://gitee.com/romich) 提供的修正。
 > 另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行
 > Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。
-> 点击这里查看 [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) 。
+> 点击这里查看 [帮助文档](https://lab.zhangyishang.top/ebook/taolisystem/index.html) 。
 
 > **⚠️注意** 2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 ，v1.0.0 版本已不再更新和维护。
 <!---->
