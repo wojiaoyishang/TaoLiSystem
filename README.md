@@ -10,7 +10,7 @@
 
    <!--| <p><a href="https://gitee.com/link?target=https%3A%2F%2Fwww.bilibili.com%2Fvideo%2FBV1Hi4y1f7fC">视频说明</a>   | <a href="https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/quickstart.html" rel="nofollow">安装方法</a> | <a href="https://wojiaoyishang.gitee.io/taolisystem-doc/welcome/detail.html" rel="nofollow">使用说明</a> | <a href="https://gitee.com/link?target=https%3A%2F%2Flab.lovepikachu.top%2Febook%2Ftaolisystem%2Findex.html">开发文档</a></p> |-->
   <!---->
-  [视频说明](https://www.bilibili.com/video/BV1Hi4y1f7fC)   | [安装方法](https://lab.zhangyishang.top/ebook/taolisystem/welcome/quickstart.html) | [使用说明](https://lab.zhangyishang.top/ebook/taolisystem/welcome/detail.html) | [开发文档](https://lab.zhangyishang.top/ebook/taolisystem/index.html)
+  [视频说明](https://www.bilibili.com/video/BV1Hi4y1f7fC)   | [安装方法](http://lab.lovepikachu.top/document/TaoLiSystem/welcome/quickstart.html) | [使用说明](http://lab.lovepikachu.top/document/TaoLiSystem/welcome/detail.html) | [开发文档](http://lab.lovepikachu.top/document/TaoLiSystem/index.html)
     <!---->
 <p align="center">
     <a href="#">
@@ -39,7 +39,7 @@
 # 更新日志
 
 <!--|
-[admonition title="注意" icon="exclamation-triangle" color="red"]<p>2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇(https://gitee.com/romich) 提供的修正。另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。点击这里查看 [帮助文档](https://lab.lovepikachu.top/ebook/taolisystem/index.html) 。</p>[/admonition]
+[admonition title="注意" icon="exclamation-triangle" color="red"]<p>2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇(https://gitee.com/romich) 提供的修正。另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。点击这里查看 [帮助文档](http://lab.lovepikachu.top/document/TaoLiSystem/index.html) 。</p>[/admonition]
 |-->
 
 <!--|
@@ -50,7 +50,7 @@
 > **⚠️注意** 2024年7月优化了掌控板代码，修正了部分 BUG ，感谢 [我叫罗米奇](https://gitee.com/romich) 提供的修正。
 > 另外，增加了新的构建工具，可以自动下载代码到掌控板，不需要下载额外的工具，但是您的计算机必须装有 Python 或者其他可以运行
 > Python 代码的工具。 关于桃丽系统文档，由于 Gitee Page 的服务调整，帮助文档已迁移到我自己的服务器上。
-> 点击这里查看 [帮助文档](https://lab.zhangyishang.top/ebook/taolisystem/index.html) 。
+> 点击这里查看 [帮助文档](http://lab.lovepikachu.top/document/TaoLiSystem/index.html) 。
 
 > **⚠️注意** 2023年8月更新了桃丽系统 v2.0.0 版本，进行了全面重置，原版本查看分支 v1.0.0 ，v1.0.0 版本已不再更新和维护。
 <!---->
@@ -223,7 +223,7 @@ git clone https://gitee.com/wojiaoyishang/TaoLiSystem.git
 
 #### 安装驱动
 
-完整的安装驱动与烧录固件过程请参考官方文档的 [驱动下载](https://mpython.readthedocs.io/zh-cn/master/board/drive.html) 和 [烧录固件](https://mpython.readthedocs.io/zh-cn/master/board/flashburn.html) 章节。或者查看详细的[安装文档](https://lab.lovepikachu.top/ebook/taolisystem/welcome/quickstart.html) 。
+完整的安装驱动与烧录固件过程请参考官方文档的 [驱动下载](https://mpython.readthedocs.io/zh-cn/master/board/drive.html) 和 [烧录固件](https://mpython.readthedocs.io/zh-cn/master/board/flashburn.html) 章节。或者查看详细的[安装文档](http://lab.lovepikachu.top/document/TaoLiSystem/welcome/quickstart.html) 。
 
 #### 断开掌控板连线（如果有提前连接掌控板）
 
@@ -302,7 +302,7 @@ print(list(__import__('os').uname()))
 
 ### 如何自定义主页？！
 
-请看 [页面编排](https://lab.lovepikachu.top/ebook/taolisystem/welcome/detail.html#id33 )，和 [自定义页面开发](https://lab.lovepikachu.top/ebook/taolisystem/develop/page.html#id5) 。
+请看 [页面编排](http://lab.lovepikachu.top/document/TaoLiSystem/welcome/detail.html#id33 )，和 [自定义页面开发](http://lab.lovepikachu.top/document/TaoLiSystem/develop/page.html#id5) 。
 
 ### 关于 binpython 程序为什么使用 UPX 压缩？为什么我的杀毒软件报毒？
 
